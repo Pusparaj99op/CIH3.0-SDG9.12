@@ -99,6 +99,7 @@ export default function BondsPage() {
                 <select
                   value={riskFilter}
                   onChange={(e) => setRiskFilter(e.target.value)}
+                  aria-label="Filter by risk level"
                   className="w-full px-4 py-3 bg-white/5 border border-white/20 rounded-lg text-white focus:outline-none focus:border-blue-400 transition-colors"
                 >
                   <option value="all" className="bg-gray-800">All Risks</option>
@@ -114,6 +115,7 @@ export default function BondsPage() {
                 <select
                   value={sectorFilter}
                   onChange={(e) => setSectorFilter(e.target.value)}
+                  aria-label="Filter by sector"
                   className="w-full px-4 py-3 bg-white/5 border border-white/20 rounded-lg text-white focus:outline-none focus:border-blue-400 transition-colors"
                 >
                   <option value="all" className="bg-gray-800">All Sectors</option>
