@@ -75,7 +75,7 @@ function PortfolioContent() {
 
   const fetchPortfolio = async () => {
     if (!token) return;
-    
+
     try {
       const response = await fetch(`${API_URL}/portfolio`, {
         headers: {
@@ -83,7 +83,7 @@ function PortfolioContent() {
         }
       });
       const data = await response.json();
-      
+
       if (data.success) {
         setPortfolio(data.data.portfolio);
       } else {
@@ -99,7 +99,7 @@ function PortfolioContent() {
 
   const fetchTransactions = async () => {
     if (!token) return;
-    
+
     try {
       const response = await fetch(`${API_URL}/portfolio/transactions?limit=5`, {
         headers: {
@@ -107,7 +107,7 @@ function PortfolioContent() {
         }
       });
       const data = await response.json();
-      
+
       if (data.success) {
         setTransactions(data.data.transactions);
       }
@@ -171,7 +171,7 @@ function PortfolioContent() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
       <Navbar />
-      
+
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-12">
         {/* Header */}
         <div className="mb-8">
@@ -258,7 +258,7 @@ function PortfolioContent() {
               <span>+ Add More</span>
             </Link>
           </div>
-          
+
           {portfolio && portfolio.holdings.length > 0 ? (
             <div className="overflow-x-auto">
               <table className="w-full">
@@ -345,7 +345,7 @@ function PortfolioContent() {
         {/* Recent Transactions */}
         <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/20">
           <h2 className="text-xl font-bold text-white mb-6">Recent Transactions</h2>
-          
+
           {transactions.length > 0 ? (
             <div className="space-y-4">
               {transactions.map((tx) => (
@@ -386,7 +386,7 @@ function PortfolioContent() {
             <div>
               <h3 className="text-blue-300 font-semibold mb-1">Paper Trading Mode</h3>
               <p className="text-blue-200/70 text-sm">
-                You&apos;re using virtual money for paper trading. This is a simulation environment 
+                You&apos;re using virtual money for paper trading. This is a simulation environment
                 to help you learn about bond investments without any real financial risk.
               </p>
             </div>
