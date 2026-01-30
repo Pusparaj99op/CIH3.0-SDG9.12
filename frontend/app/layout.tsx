@@ -4,6 +4,7 @@ import "./globals.css";
 import { AuthProvider } from "./context/AuthContext";
 import { ToastProvider } from "./context/ToastContext";
 import { ErrorBoundary } from "./components/ErrorBoundary";
+import { SmoothScrollProvider } from "./components/SmoothScrollProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -33,7 +34,9 @@ export default function RootLayout({
         <ErrorBoundary>
           <AuthProvider>
             <ToastProvider>
-              {children}
+              <SmoothScrollProvider>
+                {children}
+              </SmoothScrollProvider>
             </ToastProvider>
           </AuthProvider>
         </ErrorBoundary>
