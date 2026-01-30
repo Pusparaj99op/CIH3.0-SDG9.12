@@ -260,54 +260,55 @@ function PortfolioContent() {
           </div>
 
           {portfolio && portfolio.holdings.length > 0 ? (
-            <div className="overflow-x-auto">
-              <table className="w-full">
-                <thead>
-                  <tr className="text-left text-gray-400 text-sm border-b border-white/10">
-                    <th className="pb-4 pr-4">Bond</th>
-                    <th className="pb-4 pr-4">Qty</th>
-                    <th className="pb-4 pr-4">Avg Price</th>
-                    <th className="pb-4 pr-4">Invested</th>
-                    <th className="pb-4 pr-4">Current Value</th>
-                    <th className="pb-4 pr-4">P&L</th>
-                    <th className="pb-4">Actions</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {portfolio.holdings.map((holding) => (
-                    <tr key={holding.id} className="border-b border-white/5 hover:bg-white/5">
-                      <td className="py-4 pr-4">
-                        <div>
-                          <p className="text-white font-medium">{holding.bond?.name}</p>
-                          <p className="text-gray-500 text-sm">{holding.bond?.issuer}</p>
-                          <span className={`text-xs ${getRiskColor(holding.bond?.riskLevel || '')}`}>
-                            {holding.bond?.riskLevel} Risk
-                          </span>
-                        </div>
-                      </td>
-                      <td className="py-4 pr-4 text-white">{holding.quantity}</td>
-                      <td className="py-4 pr-4 text-white">{formatCurrency(holding.averageBuyPrice)}</td>
-                      <td className="py-4 pr-4 text-white">{formatCurrency(holding.totalInvested)}</td>
-                      <td className="py-4 pr-4 text-white">{formatCurrency(holding.currentValue)}</td>
-                      <td className="py-4 pr-4">
-                        <div>
-                          <p className={holding.profitLoss >= 0 ? 'text-green-400' : 'text-red-400'}>
-                            {holding.profitLoss >= 0 ? '+' : ''}{formatCurrency(holding.profitLoss)}
-                          </p>
-                          <p className={`text-xs ${holding.percentageReturn >= 0 ? 'text-green-400' : 'text-red-400'}`}>
-                            ({holding.percentageReturn >= 0 ? '+' : ''}{holding.percentageReturn}%)
-                          </p>
-                        </div>
-                      </td>
-                      <td className="py-4">
-                        <div className="flex items-center gap-2">
-                          <Link
-                            href={`/bonds/${holding.bond?.id}`}
-                            className="text-sm text-blue-400 hover:text-blue-300"
-                          >
-                            View
-                          </Link>
-                          <button
+            <div className="overflow-x-auto -mx-4 sm:mx-0">
+              <div className="inline-block min-w-full align-middle">
+                <table className="min-w-full">
+                  <thead>
+                    <tr className="text-left text-gray-400 text-sm border-b border-white/10">
+                      <th className="pb-4 pr-4 pl-4 sm:pl-0 whitespace-nowrap min-w-[200px]">Bond</th>
+                      <th className="pb-4 pr-4 whitespace-nowrap">Qty</th>
+                      <th className="pb-4 pr-4 whitespace-nowrap">Avg Price</th>
+                      <th className="pb-4 pr-4 whitespace-nowrap">Invested</th>
+                      <th className="pb-4 pr-4 whitespace-nowrap">Current Value</th>
+                      <th className="pb-4 pr-4 whitespace-nowrap">P&L</th>
+                      <th className="pb-4 pr-4 whitespace-nowrap">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {portfolio.holdings.map((holding) => (
+                      <tr key={holding.id} className="border-b border-white/5 hover:bg-white/5">
+                        <td className="py-4 pr-4 pl-4 sm:pl-0">
+                          <div>
+                            <p className="text-white font-medium whitespace-nowrap">{holding.bond?.name}</p>
+                            <p className="text-gray-500 text-sm whitespace-nowrap">{holding.bond?.issuer}</p>
+                            <span className={`text-xs ${getRiskColor(holding.bond?.riskLevel || '')}`}>
+                              {holding.bond?.riskLevel} Risk
+                            </span>
+                          </div>
+                        </td>
+                        <td className="py-4 pr-4 text-white whitespace-nowrap">{holding.quantity}</td>
+                        <td className="py-4 pr-4 text-white whitespace-nowrap">{formatCurrency(holding.averageBuyPrice)}</td>
+                        <td className="py-4 pr-4 text-white whitespace-nowrap">{formatCurrency(holding.totalInvested)}</td>
+                        <td className="py-4 pr-4 text-white whitespace-nowrap">{formatCurrency(holding.currentValue)}</td>
+                        <td className="py-4 pr-4 whitespace-nowrap">
+                          <div>
+                            <p className={holding.profitLoss >= 0 ? 'text-green-400' : 'text-red-400'}>
+                              {holding.profitLoss >= 0 ? '+' : ''}{formatCurrency(holding.profitLoss)}
+                            </p>
+                            <p className={`text-xs ${holding.percentageReturn >= 0 ? 'text-green-400' : 'text-red-400'}`}>
+                              ({holding.percentageReturn >= 0 ? '+' : ''}{holding.percentageReturn}%)
+                            </p>
+                          </div>
+                        </td>
+                        <td className="py-4 pr-4">
+                          <div className="flex items-center gap-2 whitespace-nowrap">
+                            <Link
+                              href={`/bonds/${holding.bond?.id}`}
+                              className="text-sm text-blue-400 hover:text-blue-300"
+                            >
+                              View
+                            </Link>
+                            <button
                             onClick={() => handleSellClick(holding)}
                             className="text-sm text-red-400 hover:text-red-300 font-medium"
                           >
@@ -320,6 +321,7 @@ function PortfolioContent() {
                 </tbody>
               </table>
             </div>
+          </div>
           ) : (
             <div className="text-center py-12">
               <div className="w-20 h-20 bg-white/5 rounded-full flex items-center justify-center mx-auto mb-4">
