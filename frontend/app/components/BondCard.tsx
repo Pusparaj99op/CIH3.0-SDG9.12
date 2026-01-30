@@ -29,7 +29,7 @@ const getRiskIcon = (riskLevel: Bond['riskLevel']) => {
 
 export default function BondCard({ bond }: BondCardProps) {
   const bondId = getBondId(bond);
-  
+
   return (
     <Link href={`/bonds/${bondId}`} className="block">
       <div className="bg-white/10 backdrop-blur-lg rounded-xl p-6 border border-white/20 hover:border-blue-400/50 transition-all duration-300 hover:transform hover:scale-[1.02] hover:shadow-xl hover:shadow-blue-500/10 cursor-pointer">
@@ -60,8 +60,24 @@ export default function BondCard({ bond }: BondCardProps) {
             <p className="text-green-400 text-xl font-bold">{bond.returnRate}%</p>
           </div>
           <div className="bg-white/5 rounded-lg p-3">
-            <p className="text-gray-400 text-xs mb-1">Maturity</p>
-            <p className="text-white text-xl font-bold">{bond.maturityYears}Y</p>
+            <p className="text-gray-400 text-xs mb-1">Risk Score</p>
+            <div className="flex items-center gap-2">
+              <p className={`text-xl font-bold ${
+                (bond.riskScore || 50) <= 33 ? 'text-green-400' :
+                (bond.riskScore || 50) <= 66 ? 'text-yellow-400' : 'text-red-400'
+              }`}>
+                {bond.riskScore || 50}
+              </p>
+              <span className="text-gray-500 text-xs">/100</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Maturity */}
+        <div className="mb-4">
+          <div className="flex items-center justify-between text-sm">
+            <span className="text-gray-400">Maturity</span>
+            <span className="text-white font-medium">{bond.maturityYears} Years</span>
           </div>
         </div>
 
