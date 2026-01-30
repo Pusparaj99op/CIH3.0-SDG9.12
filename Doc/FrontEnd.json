@@ -1,1125 +1,294 @@
 {
   "project": {
-    "name": "Infrastructure Bond Platform - Frontend",
-    "framework": "Next.js 14+ with App Router",
-    "language": "TypeScript",
-    "version": "1.0.0",
-    "description": "Modern, responsive, and highly animated frontend for infrastructure bond tokenization platform"
+    "name": "Mudra Frontend",
+    "framework": "Next.js 14",
+    "approach": "Incremental Development"
   },
-  "technology_stack": {
-    "core": {
-      "framework": "Next.js 14+",
-      "react_version": "18.2+",
-      "typescript": "5.0+",
-      "node_version": "18+"
+  "development_phases": {
+    "phase_1_basic": {
+      "description": "Get it working first",
+      "iterations": "0-4",
+      "technologies": ["Next.js", "Tailwind CSS"],
+      "no_extras": "No animations, no fancy UI libraries yet"
     },
-    "styling": {
-      "primary": "Tailwind CSS 3.4+",
-      "methodology": "Utility-first CSS",
-      "css_modules": "Enabled for component-specific styles",
-      "preprocessor": "PostCSS",
-      "plugins": [
-        "autoprefixer",
-        "tailwindcss-animate",
-        "@tailwindcss/forms",
-        "@tailwindcss/typography",
-        "@tailwindcss/aspect-ratio"
-      ]
+    "phase_2_functional": {
+      "description": "Add core features",
+      "iterations": "5-10",
+      "additions": ["React Context", "Form validation"],
+      "still_simple": "Keep UI simple, focus on functionality"
     },
-    "ui_components": {
-      "component_library": "shadcn/ui",
-      "headless_ui": "Radix UI",
-      "icons": "Lucide React + React Icons",
-      "data_visualization": "Recharts + Chart.js + D3.js",
-      "forms": "React Hook Form + Zod validation",
-      "tables": "TanStack Table (React Table v8)",
-      "calendar": "React Day Picker",
-      "toast": "Sonner"
+    "phase_3_polish": {
+      "description": "Make it look good",
+      "iterations": "11-15",
+      "additions": ["Recharts", "Better UI components"],
+      "focus": "User experience improvements"
     },
-    "animation_libraries": {
-      "gsap": {
-        "version": "3.12+",
-        "plugins": [
-          "ScrollTrigger",
-          "ScrollSmoother",
-          "SplitText",
-          "MotionPathPlugin",
-          "DrawSVGPlugin",
-          "MorphSVGPlugin"
-        ],
-        "use_cases": [
-          "Complex timeline animations",
-          "Scroll-triggered animations",
-          "SVG morphing and drawing",
-          "Text splitting and animation",
-          "Parallax effects",
-          "Hero section animations"
-        ]
-      },
-      "three_js": {
-        "version": "0.160+",
-        "libraries": [
-          "@react-three/fiber",
-          "@react-three/drei",
-          "@react-three/postprocessing",
-          "three-stdlib"
-        ],
-        "use_cases": [
-          "3D bond visualization",
-          "Interactive globe for infrastructure projects",
-          "Particle effects for background",
-          "3D charts and data visualization",
-          "Animated logo and branding",
-          "WebGL backgrounds"
-        ]
-      },
-      "lenis": {
-        "version": "1.0+",
-        "package": "@studio-freight/lenis",
-        "integration": "@studio-freight/react-lenis",
-        "use_cases": [
-          "Smooth scrolling experience",
-          "Momentum-based scrolling",
-          "Integration with GSAP ScrollTrigger",
-          "Enhanced user experience on long pages"
-        ]
-      },
-      "framer_motion": {
-        "version": "11.0+",
-        "use_cases": [
-          "Page transitions",
-          "Component enter/exit animations",
-          "Gesture-based interactions",
-          "Layout animations",
-          "Shared element transitions",
-          "Drag and drop interactions",
-          "Modal and dialog animations"
-        ],
-        "features": [
-          "useAnimation hook",
-          "AnimatePresence for exit animations",
-          "Layout animations",
-          "useScroll hook",
-          "useTransform hook",
-          "Spring animations"
-        ]
-      },
-      "additional_libraries": {
-        "auto_animate": "@formkit/auto-animate - Automatic animations for list items",
-        "react_spring": "react-spring - Physics-based animations",
-        "anime_js": "anime.js - Lightweight animation library",
-        "particles_js": "@tsparticles/react - Particle backgrounds",
-        "aos": "AOS (Animate On Scroll) - Scroll animations",
-        "locomotive_scroll": "locomotive-scroll - Alternative smooth scroll"
-      }
-    },
-    "state_management": {
-      "global_state": "Zustand",
-      "server_state": "TanStack Query (React Query)",
-      "form_state": "React Hook Form",
-      "url_state": "Next.js router (useSearchParams)",
-      "local_storage": "zustand/persist middleware"
-    },
-    "data_fetching": {
-      "client_side": "TanStack Query with Axios",
-      "server_side": "Next.js Server Components",
-      "websocket": "Socket.io-client",
-      "caching": "React Query cache + SWR fallback"
-    },
-    "web3_integration": {
-      "libraries": [
-        "ethers.js v6",
-        "wagmi",
-        "viem",
-        "@web3modal/react"
-      ],
-      "wallet_connectors": [
-        "MetaMask",
-        "WalletConnect",
-        "Coinbase Wallet",
-        "Rainbow Wallet"
-      ]
-    },
-    "performance": {
-      "image_optimization": "next/image",
-      "font_optimization": "next/font with Google Fonts",
-      "code_splitting": "Dynamic imports",
-      "lazy_loading": "React.lazy + Suspense",
-      "bundle_analyzer": "@next/bundle-analyzer",
-      "compression": "Built-in Next.js compression"
+    "phase_4_advanced": {
+      "description": "Add impressive features",
+      "iterations": "16-20",
+      "additions": ["Socket.io", "Framer Motion", "GSAP"],
+      "optional": "Only if time permits"
     }
   },
-  "responsive_design": {
-    "approach": "Mobile-first responsive design",
-    "breakpoints": {
-      "xs": "320px - Extra small phones",
-      "sm": "640px - Small phones (Tailwind default)",
-      "md": "768px - Tablets",
-      "lg": "1024px - Small laptops",
-      "xl": "1280px - Large laptops",
-      "2xl": "1536px - Desktop monitors",
-      "3xl": "1920px - Large desktop monitors"
-    },
-    "device_optimization": {
-      "mobile_phones": {
-        "target_devices": [
-          "iPhone 13/14/15 (390x844)",
-          "iPhone SE (375x667)",
-          "Samsung Galaxy S23 (360x800)",
-          "Google Pixel 7 (412x915)",
-          "OnePlus (1080x2400)"
-        ],
-        "optimizations": [
-          "Touch-friendly UI (min 44x44px touch targets)",
-          "Bottom navigation for easy thumb access",
-          "Swipeable cards and carousels",
-          "Collapsible sections to save space",
-          "Simplified navigation (hamburger menu)",
-          "Full-width CTAs",
-          "Reduced animation complexity for performance",
-          "Portrait-first layouts"
-        ],
-        "gestures": {
-          "swipe": "Navigation between pages, card dismissal",
-          "pinch_zoom": "Chart magnification",
-          "long_press": "Context menus",
-          "pull_to_refresh": "Data refresh"
-        }
-      },
-      "tablets": {
-        "target_devices": [
-          "iPad Air (820x1180)",
-          "iPad Pro (1024x1366)",
-          "Samsung Galaxy Tab (800x1280)"
-        ],
-        "optimizations": [
-          "Two-column layouts",
-          "Side navigation drawer",
-          "Larger typography",
-          "Split-screen support",
-          "Landscape-optimized views"
-        ]
-      },
-      "desktop": {
-        "optimizations": [
-          "Multi-column layouts (3-4 columns)",
-          "Persistent sidebar navigation",
-          "Hover states and tooltips",
-          "Keyboard shortcuts",
-          "Mouse-optimized interactions",
-          "Full-featured dashboards"
-        ]
-      }
-    },
-    "responsive_typography": {
-      "fluid_typography": "clamp() based sizing",
-      "base_size": "16px (1rem)",
-      "scale": {
-        "mobile": "1.125 (major second)",
-        "desktop": "1.25 (major third)"
-      },
-      "headings": {
-        "h1": "clamp(2rem, 5vw, 3.5rem)",
-        "h2": "clamp(1.75rem, 4vw, 2.5rem)",
-        "h3": "clamp(1.5rem, 3vw, 2rem)",
-        "h4": "clamp(1.25rem, 2.5vw, 1.5rem)",
-        "h5": "clamp(1.125rem, 2vw, 1.25rem)",
-        "h6": "clamp(1rem, 1.5vw, 1.125rem)"
-      }
-    },
-    "responsive_spacing": {
-      "container_padding": {
-        "mobile": "1rem (16px)",
-        "tablet": "2rem (32px)",
-        "desktop": "4rem (64px)"
-      },
-      "section_spacing": {
-        "mobile": "3rem",
-        "tablet": "4rem",
-        "desktop": "6rem"
-      }
-    },
-    "performance_mobile": {
-      "image_formats": "WebP with PNG/JPG fallback",
-      "lazy_loading": "Intersection Observer API",
-      "code_splitting": "Route-based splitting",
-      "prefetching": "Link prefetching for faster navigation",
-      "service_worker": "PWA for offline capability"
-    }
-  },
-  "animation_architecture": {
-    "gsap_implementation": {
-      "initialization": {
-        "setup": "Global GSAP context in _app.tsx",
-        "plugins": "Register ScrollTrigger, ScrollSmoother globally",
-        "kill_on_unmount": "Cleanup animations on component unmount"
-      },
-      "scroll_animations": {
-        "landing_hero": {
-          "animation": "Parallax background with 3D perspective",
-          "trigger": "On load + scroll",
-          "elements": [
-            "Hero title: fade in + slide up",
-            "Subtitle: fade in with delay",
-            "CTA buttons: scale in with bounce",
-            "Background particles: float animation"
-          ]
-        },
-        "bond_cards": {
-          "animation": "Stagger fade-in as user scrolls",
-          "trigger": "ScrollTrigger at 80% viewport",
-          "effect": "Each card slides up with 0.1s stagger"
-        },
-        "statistics_section": {
-          "animation": "Counter animation from 0 to value",
-          "trigger": "When section enters viewport",
-          "effect": "Number morphing with easing"
-        },
-        "feature_showcase": {
-          "animation": "Pin section + horizontal scroll",
-          "trigger": "Scroll-based progression",
-          "effect": "Horizontal carousel while section is pinned"
-        }
-      },
-      "svg_animations": {
-        "logo": "DrawSVG plugin - line drawing effect",
-        "charts": "MorphSVG for smooth transitions between data states",
-        "icons": "Hover animations with scale and rotation"
-      },
-      "text_animations": {
-        "split_text": "SplitText plugin for character-by-character animations",
-        "typewriter_effect": "Sequential character reveal",
-        "scramble_effect": "Text scramble on hover"
-      }
-    },
-    "three_js_implementation": {
-      "scenes": {
-        "landing_background": {
-          "type": "Particle field with depth",
-          "geometry": "BufferGeometry with 10,000 particles",
-          "material": "PointsMaterial with gradient colors",
-          "animation": "Floating + mouse parallax",
-          "performance": "Reduced particle count on mobile (2,000)"
-        },
-        "bond_visualization": {
-          "type": "3D bar chart with interactive rotation",
-          "library": "@react-three/fiber + @react-three/drei",
-          "interaction": "Click to view bond details",
-          "animation": "Smooth rotation on mouse move"
-        },
-        "globe_view": {
-          "type": "Interactive globe showing infrastructure projects",
-          "library": "react-globe.gl",
-          "features": [
-            "Markers for each project location",
-            "Arc lines connecting related projects",
-            "Auto-rotation with pause on hover",
-            "Clickable markers for details"
-          ]
-        },
-        "loading_screen": {
-          "type": "3D animated logo",
-          "animation": "Rotation + scale pulse",
-          "duration": "2-3 seconds"
-        }
-      },
-      "performance_optimization": {
-        "mobile": "Disable 3D on devices < 768px or low GPU",
-        "lod": "Level of Detail - reduce complexity at distance",
-        "frustum_culling": "Don't render off-screen objects",
-        "gpu_detection": "Detect GPU capabilities and adjust quality"
-      }
-    },
-    "lenis_implementation": {
-      "setup": {
-        "provider": "<ReactLenis> wrapper in _app.tsx",
-        "options": {
-          "duration": 1.2,
-          "easing": "(t) => Math.min(1, 1.001 - Math.pow(2, -10 * t))",
-          "direction": "vertical",
-          "smooth": true,
-          "smoothTouch": false,
-          "touchMultiplier": 2
-        }
-      },
-      "integration": {
-        "gsap": "Lenis.scrollTo() with GSAP ScrollTrigger",
-        "anchors": "Smooth scroll to anchor links",
-        "sections": "Section-based navigation"
-      },
-      "mobile_behavior": {
-        "smoothTouch": false,
-        "reason": "Native touch scrolling feels better on mobile"
-      }
-    },
-    "framer_motion_patterns": {
-      "page_transitions": {
-        "variants": {
-          "initial": "{ opacity: 0, x: -100 }",
-          "animate": "{ opacity: 1, x: 0 }",
-          "exit": "{ opacity: 0, x: 100 }"
-        },
-        "transition": "{ type: 'spring', stiffness: 300, damping: 30 }"
-      },
-      "modal_animations": {
-        "backdrop": "Fade in/out",
-        "content": "Scale from 0.8 to 1 with spring",
-        "exit": "Scale to 0.9 and fade out"
-      },
-      "card_hover": {
-        "whileHover": "{ scale: 1.05, y: -5 }",
-        "whileTap": "{ scale: 0.98 }",
-        "transition": "{ type: 'spring', stiffness: 400 }"
-      },
-      "list_animations": {
-        "container": "Stagger children by 0.1s",
-        "item": "Fade in + slide up",
-        "exit": "Fade out + slide down"
-      },
-      "shared_layout": {
-        "use_case": "Expanding cards to full-page view",
-        "layoutId": "Unique ID for element matching"
-      },
-      "gesture_animations": {
-        "drag": "Draggable cards with snap-back",
-        "swipe": "Swipe to dismiss notifications",
-        "pan": "Pan to reveal options"
-      }
-    },
-    "animation_performance": {
-      "gpu_acceleration": "transform and opacity only",
-      "will_change": "Applied strategically to animating elements",
-      "reduce_motion": "Respect prefers-reduced-motion media query",
-      "fps_target": "60fps on desktop, 30fps acceptable on mobile",
-      "lazy_animation": "Initialize animations when element is in viewport"
-    }
-  },
-  "page_structure": {
-    "public_pages": {
-      "landing_page": {
-        "route": "/",
-        "sections": [
-          {
-            "name": "Hero Section",
-            "components": ["HeroTitle", "CTAButtons", "ParticleBackground"],
-            "animations": {
-              "gsap": "Parallax background, text reveal",
-              "three_js": "Particle field",
-              "framer": "CTA button scale on load"
-            }
+  "incremental_structure": {
+    "iteration_0": {
+      "folder_structure": {
+        "frontend/": {
+          "app/": {
+            "page.tsx": "Simple 'Hello World' + API status",
+            "layout.tsx": "Basic layout",
+            "globals.css": "Tailwind imports only"
           },
-          {
-            "name": "Features Section",
-            "components": ["FeatureCard", "FeatureGrid"],
-            "animations": {
-              "gsap": "Scroll-triggered stagger",
-              "framer": "Card hover effects"
-            }
-          },
-          {
-            "name": "How It Works",
-            "components": ["StepCard", "Timeline"],
-            "animations": {
-              "gsap": "Horizontal scroll section (pinned)",
-              "framer": "Step transitions"
-            }
-          },
-          {
-            "name": "Statistics",
-            "components": ["CounterCard", "StatsGrid"],
-            "animations": {
-              "gsap": "Number counter animation",
-              "framer": "Card entrance"
-            }
-          },
-          {
-            "name": "Bond Showcase",
-            "components": ["BondCarousel", "BondCard3D"],
-            "animations": {
-              "three_js": "3D bond visualization",
-              "gsap": "Carousel scroll"
-            }
-          },
-          {
-            "name": "Testimonials",
-            "components": ["TestimonialCard", "Carousel"],
-            "animations": {
-              "framer": "Auto-scrolling carousel",
-              "gsap": "Fade in on scroll"
-            }
-          },
-          {
-            "name": "CTA Section",
-            "components": ["CTABanner"],
-            "animations": {
-              "gsap": "Parallax effect",
-              "framer": "Button pulse animation"
-            }
+          "components/": {
+            "note": "Empty for now"
           }
-        ],
-        "mobile_adaptations": [
-          "Hamburger menu instead of full navbar",
-          "Vertical scroll only (no horizontal sections on mobile)",
-          "Simplified 3D graphics or static images",
-          "Larger touch targets",
-          "Bottom sticky CTA"
-        ]
-      },
-      "pricing_page": {
-        "route": "/pricing",
-        "components": ["PricingCard", "FeatureComparison", "ToggleSwitch"],
-        "animations": {
-          "framer": "Card flip for monthly/yearly toggle",
-          "gsap": "Price number morph on toggle",
-          "hover": "Card lift on hover"
-        },
-        "responsive": [
-          "Mobile: Stack cards vertically",
-          "Tablet: 2 columns",
-          "Desktop: 4 columns side-by-side"
-        ]
-      },
-      "about_page": {
-        "route": "/about",
-        "sections": ["Team", "Mission", "Timeline"],
-        "animations": {
-          "gsap": "Timeline scroll progression",
-          "framer": "Team member card hover",
-          "three_js": "Animated background shapes"
         }
       },
-      "docs_page": {
-        "route": "/docs",
-        "components": ["Sidebar", "DocContent", "TableOfContents"],
-        "animations": {
-          "framer": "Smooth section transitions",
-          "gsap": "Scroll progress indicator"
-        },
-        "mobile": "Collapsible sidebar, full-width content"
-      }
+      "files_to_create": 3,
+      "complexity": "Minimal"
     },
-    "authenticated_pages": {
-      "dashboard": {
-        "route": "/dashboard",
-        "layout": "DashboardLayout with sidebar",
-        "sections": [
-          {
-            "name": "Portfolio Overview",
-            "components": ["PortfolioCard", "ChartWidget", "StatsCard"],
-            "animations": {
-              "framer": "Card entrance stagger",
-              "recharts": "Chart line drawing animation",
-              "gsap": "Number counter for portfolio value"
-            }
-          },
-          {
-            "name": "Recent Transactions",
-            "components": ["TransactionTable", "FilterBar"],
-            "animations": {
-              "framer": "Row slide-in on load",
-              "auto_animate": "Automatic reorder animation"
-            }
-          },
-          {
-            "name": "Quick Actions",
-            "components": ["QuickActionButton", "ShortcutGrid"],
-            "animations": {
-              "framer": "Button hover scale",
-              "gsap": "Icon rotation on click"
-            }
-          }
-        ],
-        "mobile_layout": [
-          "Bottom tab navigation",
-          "Swipeable cards",
-          "Collapsible widgets",
-          "Priority info above the fold"
-        ]
-      },
-      "bonds_page": {
-        "route": "/bonds",
-        "components": ["BondGrid", "FilterSidebar", "SearchBar", "SortDropdown"],
-        "animations": {
-          "framer": "Grid item entrance animation",
-          "gsap": "Filter slide-in from side",
-          "three_js": "3D bond preview on hover (desktop only)"
+    "iteration_1": {
+      "additions": {
+        "components/": {
+          "BondCard.tsx": "Simple card component",
+          "Navbar.tsx": "Basic navigation"
         },
-        "mobile": [
-          "List view instead of grid",
-          "Bottom sheet for filters",
-          "Sticky search bar",
-          "Infinite scroll"
-        ]
-      },
-      "bond_details": {
-        "route": "/bonds/[id]",
-        "sections": [
-          {
-            "name": "Bond Header",
-            "components": ["BondTitle", "PriceCard", "ActionButtons"],
-            "animations": {
-              "framer": "Page transition from list",
-              "gsap": "Price update pulse"
-            }
-          },
-          {
-            "name": "Charts & Analytics",
-            "components": ["PriceChart", "ReturnsChart", "RiskGauge"],
-            "animations": {
-              "recharts": "Animated line/area charts",
-              "d3": "Animated risk gauge",
-              "gsap": "Chart tooltip animations"
-            }
-          },
-          {
-            "name": "AI Recommendations",
-            "components": ["RecommendationCard", "ScoreBar"],
-            "animations": {
-              "framer": "Card slide-in",
-              "gsap": "Progress bar fill animation"
-            }
-          },
-          {
-            "name": "Documents",
-            "components": ["DocumentList", "PDFViewer"],
-            "animations": {
-              "framer": "Accordion expand/collapse"
-            }
-          }
-        ],
-        "mobile": [
-          "Tabbed interface for sections",
-          "Simplified charts",
-          "Bottom sticky buy/sell buttons"
-        ]
-      },
-      "trading_page": {
-        "route": "/trading",
-        "components": ["OrderBook", "TradingForm", "PriceChart", "OrderHistory"],
-        "real_time": {
-          "websocket": "Live price updates",
-          "animations": {
-            "gsap": "Price flash on update (green/red)",
-            "framer": "Order book row insertion",
-            "auto_animate": "Order history updates"
-          }
+        "app/": {
+          "page.tsx": "Update to show bond grid"
         },
-        "mobile": [
-          "Tabbed layout (Chart, Order Book, Trade)",
-          "Swipe between tabs",
-          "Simplified order form",
-          "Bottom sheet for advanced options"
-        ]
+        "data/": {
+          "bonds.ts": "Static bond data array"
+        }
       },
-      "portfolio_page": {
-        "route": "/portfolio",
-        "components": ["HoldingsTable", "PerformanceChart", "AssetAllocation", "TransactionHistory"],
-        "animations": {
-          "recharts": "Pie chart animated slices",
-          "gsap": "Table row highlight on change",
-          "framer": "Chart type transition"
-        },
-        "mobile": [
-          "Card-based holdings view",
-          "Swipeable charts",
-          "Collapsible transaction history"
-        ]
-      },
-      "profile_page": {
-        "route": "/profile",
-        "sections": ["PersonalInfo", "Security", "Preferences", "KYC"],
-        "animations": {
-          "framer": "Section transitions",
-          "gsap": "Form field focus animations"
-        },
-        "mobile": "Accordion-style sections"
-      }
+      "files_to_create": 4,
+      "complexity": "Low"
     },
-    "special_pages": {
-      "loading": {
-        "component": "LoadingScreen",
-        "animations": {
-          "three_js": "3D logo rotation",
-          "gsap": "Progress bar",
-          "framer": "Pulse effect"
+    "iteration_2": {
+      "additions": {
+        "lib/": {
+          "api.ts": "Fetch helper functions"
+        },
+        "hooks/": {
+          "useBonds.ts": "Custom hook for bond fetching"
+        },
+        "components/": {
+          "LoadingSpinner.tsx": "Simple spinner",
+          "ErrorMessage.tsx": "Error display"
         }
       },
-      "error_404": {
-        "animations": {
-          "three_js": "Floating 404 text",
-          "gsap": "Glitch effect"
+      "files_to_create": 4,
+      "complexity": "Low"
+    },
+    "iteration_4": {
+      "additions": {
+        "app/bonds/[id]/": {
+          "page.tsx": "Bond details page"
+        },
+        "components/": {
+          "BondDetails.tsx": "Full bond information display"
         }
       },
-      "maintenance": {
-        "animations": {
-          "lottie": "Maintenance illustration",
-          "gsap": "Countdown timer"
+      "files_to_create": 2,
+      "complexity": "Medium"
+    },
+    "iteration_5": {
+      "additions": {
+        "app/register/": {
+          "page.tsx": "Registration form"
+        },
+        "app/login/": {
+          "page.tsx": "Login form"
+        },
+        "components/auth/": {
+          "LoginForm.tsx": "Login form component",
+          "RegisterForm.tsx": "Register form component"
         }
-      }
+      },
+      "files_to_create": 4,
+      "complexity": "Medium"
+    },
+    "iteration_6": {
+      "additions": {
+        "context/": {
+          "AuthContext.tsx": "Authentication state management"
+        },
+        "components/": {
+          "ProtectedRoute.tsx": "Route protection wrapper"
+        }
+      },
+      "files_to_create": 2,
+      "complexity": "Medium"
+    },
+    "iteration_7": {
+      "additions": {
+        "app/dashboard/": {
+          "page.tsx": "Main dashboard",
+          "layout.tsx": "Dashboard layout with sidebar"
+        },
+        "components/dashboard/": {
+          "Sidebar.tsx": "Dashboard navigation",
+          "UserCard.tsx": "User info display"
+        }
+      },
+      "files_to_create": 4,
+      "complexity": "Medium"
+    },
+    "iteration_8_9_10": {
+      "additions": {
+        "app/dashboard/portfolio/": {
+          "page.tsx": "Portfolio page"
+        },
+        "components/trading/": {
+          "BuyModal.tsx": "Buy confirmation modal",
+          "SellModal.tsx": "Sell confirmation modal",
+          "HoldingsTable.tsx": "Portfolio holdings display"
+        },
+        "hooks/": {
+          "usePortfolio.ts": "Portfolio data hook",
+          "useTrading.ts": "Trading operations hook"
+        }
+      },
+      "files_to_create": 6,
+      "complexity": "High"
+    },
+    "iteration_11": {
+      "additions": {
+        "components/search/": {
+          "SearchBar.tsx": "Search input",
+          "FilterPanel.tsx": "Filter options",
+          "SortDropdown.tsx": "Sorting"
+        }
+      },
+      "files_to_create": 3,
+      "complexity": "Medium"
+    },
+    "iteration_12": {
+      "additions": {
+        "components/charts/": {
+          "AllocationPieChart.tsx": "Portfolio allocation",
+          "HistoryLineChart.tsx": "Value over time"
+        }
+      },
+      "new_dependency": "recharts",
+      "files_to_create": 2,
+      "complexity": "Medium"
+    },
+    "iteration_15": {
+      "additions": {
+        "app/": {
+          "page.tsx": "Complete redesign to landing page"
+        },
+        "components/landing/": {
+          "Hero.tsx": "Hero section",
+          "Features.tsx": "Features grid",
+          "HowItWorks.tsx": "Steps section",
+          "Stats.tsx": "Statistics",
+          "Footer.tsx": "Page footer"
+        }
+      },
+      "files_to_create": 6,
+      "complexity": "Medium"
     }
   },
-  "component_library": {
-    "layout_components": {
-      "Navbar": {
-        "mobile": "Hamburger menu with slide-in drawer",
-        "desktop": "Horizontal menu with dropdowns",
-        "animations": {
-          "framer": "Menu slide animation",
-          "gsap": "Logo hover effect"
-        }
-      },
-      "Sidebar": {
-        "mobile": "Bottom navigation or drawer",
-        "desktop": "Persistent left sidebar",
-        "animations": {
-          "framer": "Collapse/expand animation",
-          "auto_animate": "Menu item reordering"
-        }
-      },
-      "Footer": {
-        "responsive": "Multi-column to single column",
-        "animations": {
-          "gsap": "Scroll-triggered reveal"
-        }
-      }
-    },
-    "ui_components": {
-      "Button": {
-        "variants": ["primary", "secondary", "outline", "ghost", "link"],
-        "sizes": ["xs", "sm", "md", "lg", "xl"],
-        "animations": {
-          "framer": "whileHover, whileTap",
-          "gsap": "Ripple effect on click"
-        }
-      },
-      "Card": {
-        "animations": {
-          "framer": "Hover lift and shadow",
-          "gsap": "Content reveal on scroll"
-        }
-      },
-      "Modal": {
-        "animations": {
-          "framer": "Backdrop fade + content scale",
-          "focus_trap": "Auto-focus first input"
-        },
-        "mobile": "Full-screen on small devices"
-      },
-      "Toast": {
-        "library": "Sonner",
-        "animations": {
-          "framer": "Slide in from top/bottom",
-          "auto_dismiss": "Progress bar animation"
-        }
-      },
-      "Dropdown": {
-        "animations": {
-          "framer": "Height animation",
-          "gsap": "Stagger menu items"
-        }
-      },
-      "Tabs": {
-        "mobile": "Swipeable tabs",
-        "animations": {
-          "framer": "Sliding indicator",
-          "content": "Fade transition"
-        }
-      },
-      "Accordion": {
-        "animations": {
-          "framer": "Height auto animation",
-          "gsap": "Icon rotation"
-        }
-      },
-      "Slider": {
-        "library": "Radix UI Slider",
-        "animations": {
-          "framer": "Thumb scale on drag",
-          "gsap": "Value change animation"
-        }
-      }
-    },
-    "data_visualization": {
-      "LineChart": {
-        "library": "Recharts",
-        "animations": {
-          "recharts": "Line drawing animation",
-          "framer": "Tooltip appearance",
-          "gsap": "Axis label fade-in"
-        }
-      },
-      "BarChart": {
-        "library": "Recharts + Three.js (3D version)",
-        "animations": {
-          "recharts": "Bar growth animation",
-          "three_js": "3D bar rotation"
-        }
-      },
-      "PieChart": {
-        "library": "Recharts + D3.js",
-        "animations": {
-          "d3": "Slice separation on hover",
-          "gsap": "Percentage counter"
-        }
-      },
-      "AreaChart": {
-        "library": "Recharts",
-        "animations": {
-          "gradient": "Animated gradient fill"
-        }
-      },
-      "Gauge": {
-        "library": "D3.js custom",
-        "animations": {
-          "gsap": "Needle rotation animation",
-          "d3": "Arc drawing"
-        }
-      }
-    },
-    "form_components": {
-      "Input": {
-        "animations": {
-          "framer": "Label float on focus",
-          "gsap": "Border glow"
-        }
-      },
-      "Select": {
-        "animations": {
-          "framer": "Dropdown slide",
-          "auto_animate": "Option list changes"
-        }
-      },
-      "Checkbox": {
-        "animations": {
-          "framer": "Check mark draw",
-          "gsap": "Box fill"
-        }
-      },
-      "RadioGroup": {
-        "animations": {
-          "framer": "Selection transition",
-          "gsap": "Ripple effect"
-        }
-      },
-      "DatePicker": {
-        "library": "React Day Picker",
-        "animations": {
-          "framer": "Calendar slide-in",
-          "gsap": "Date selection highlight"
-        }
-      }
-    },
-    "specialized_components": {
-      "BondCard": {
-        "animations": {
-          "three_js": "3D flip on hover (desktop)",
-          "framer": "Elevation change on hover",
-          "gsap": "Price update pulse"
-        },
-        "mobile": "Swipeable for quick actions"
-      },
-      "PriceTracker": {
-        "animations": {
-          "gsap": "Real-time price animation",
-          "color": "Flash green (up) or red (down)"
-        }
-      },
-      "NotificationBell": {
-        "animations": {
-          "framer": "Shake on new notification",
-          "gsap": "Badge count animation"
-        }
-      },
-      "WalletConnector": {
-        "animations": {
-          "framer": "Modal slide-up",
-          "gsap": "Wallet icon pulse"
-        }
-      },
-      "KYCUploader": {
-        "animations": {
-          "framer": "Drag & drop zone",
-          "gsap": "Upload progress bar"
-        }
-      }
-    }
-  },
-  "mobile_specific_features": {
-    "pwa": {
-      "enabled": true,
-      "manifest": {
-        "name": "Infrastructure Bond Platform",
-        "short_name": "BondPlatform",
-        "description": "Trade infrastructure bonds on the go",
-        "theme_color": "#1E40AF",
-        "background_color": "#FFFFFF",
-        "display": "standalone",
-        "orientation": "portrait"
-      },
-      "features": [
-        "Add to home screen",
-        "Offline mode (cached data)",
-        "Push notifications",
-        "Background sync"
-      ]
-    },
-    "touch_gestures": {
-      "swipe_left_right": "Navigate between pages/tabs",
-      "swipe_down": "Pull to refresh",
-      "swipe_up": "Load more (infinite scroll)",
-      "long_press": "Context menu",
-      "pinch_zoom": "Chart zoom",
-      "double_tap": "Like/favorite"
-    },
-    "mobile_navigation": {
-      "pattern": "Bottom tab navigation",
-      "tabs": ["Home", "Bonds", "Portfolio", "Trading", "Profile"],
-      "animations": {
-        "framer": "Tab switch transition",
-        "gsap": "Icon animation on selection"
-      }
-    },
-    "mobile_optimizations": {
-      "lazy_load_images": "Intersection Observer",
-      "code_splitting": "Route-based chunks",
-      "prefetch": "Critical routes only",
-      "reduce_animations": "Simpler animations on low-end devices",
-      "adaptive_quality": "Lower quality images on slow networks"
-    }
-  },
-  "accessibility_animations": {
-    "prefers_reduced_motion": {
-      "detection": "@media (prefers-reduced-motion: reduce)",
-      "behavior": [
-        "Disable GSAP scroll animations",
-        "Disable Three.js 3D effects",
-        "Disable Lenis smooth scroll",
-        "Use simple Framer Motion transitions only",
-        "Instant transitions instead of animated"
-      ]
-    },
-    "focus_management": {
-      "visible_focus": "Custom focus rings with GSAP",
-      "keyboard_navigation": "All interactive elements accessible",
-      "skip_links": "Skip to main content"
-    }
-  },
-  "performance_optimization": {
-    "animation_performance": {
-      "use_transform": "Transform and opacity only (GPU accelerated)",
-      "avoid_layout_thrashing": "Batch DOM reads and writes",
-      "requestAnimationFrame": "All animations use RAF",
-      "intersection_observer": "Lazy load animations when in view",
-      "passive_listeners": "Passive event listeners for scroll"
-    },
-    "bundle_optimization": {
-      "tree_shaking": "Remove unused code",
-      "code_splitting": "Dynamic imports for heavy components",
-      "lazy_load_3d": "Load Three.js only when needed",
-      "gsap_plugins": "Import plugins individually",
-      "cdn_offload": "Use CDN for large libraries (fallback)"
-    },
-    "image_optimization": {
-      "next_image": "Automatic optimization and lazy loading",
-      "webp": "WebP format with fallback",
-      "responsive_images": "srcSet for different screen sizes",
-      "blur_placeholder": "BlurDataURL for smooth loading"
-    },
-    "lighthouse_targets": {
-      "performance": "> 90",
-      "accessibility": "> 95",
-      "best_practices": "> 95",
-      "seo": "> 90"
-    }
-  },
-  "dark_mode": {
-    "implementation": "next-themes",
-    "modes": ["light", "dark", "system"],
-    "animations": {
-      "framer": "Smooth color transitions",
-      "gsap": "Theme toggle animation"
-    },
-    "persistence": "localStorage",
-    "mobile": "Respect system preference by default"
-  },
-  "file_structure": {
-    "app_directory": {
-      "(auth)": "Auth group - login, signup, forgot-password",
-      "(dashboard)": "Dashboard group - protected routes",
-      "(marketing)": "Marketing pages - landing, pricing, about",
-      "api": "API routes for server actions",
-      "fonts": "Custom fonts",
-      "layout.tsx": "Root layout with providers",
-      "page.tsx": "Landing page"
-    },
-    "components": {
-      "ui": "shadcn/ui components",
-      "layout": "Navbar, Sidebar, Footer",
-      "common": "Reusable components",
-      "animations": {
-        "gsap": "GSAP animation components",
-        "three": "Three.js scenes and components",
-        "framer": "Framer Motion wrappers",
-        "lenis": "Lenis scroll components"
-      },
-      "bonds": "Bond-specific components",
-      "dashboard": "Dashboard widgets",
-      "forms": "Form components",
-      "charts": "Chart components"
-    },
-    "lib": {
-      "animations": {
-        "gsap-config.ts": "GSAP global configuration",
-        "three-utils.ts": "Three.js utilities",
-        "lenis-provider.tsx": "Lenis context provider",
-        "motion-variants.ts": "Framer Motion variants"
-      },
-      "api": "API client functions",
-      "hooks": "Custom React hooks",
-      "utils": "Utility functions",
-      "stores": "Zustand stores"
-    },
-    "styles": {
-      "globals.css": "Global styles + Tailwind imports",
-      "animations.css": "Custom CSS animations"
-    },
-    "public": {
-      "images": "Static images",
-      "models": "3D models for Three.js",
-      "fonts": "Custom fonts",
-      "icons": "App icons"
-    }
-  },
-  "development_workflow": {
-    "dev_server": "next dev -p 3000",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint + eslint",
-    "type_check": "tsc --noEmit",
-    "test": "jest + React Testing Library",
-    "storybook": "Component development in isolation"
-  },
-  "dependencies": {
-    "core": {
-      "next": "^14.0.0",
-      "react": "^18.2.0",
-      "react-dom": "^18.2.0",
-      "typescript": "^5.0.0"
-    },
-    "animations": {
-      "gsap": "^3.12.0",
-      "three": "^0.160.0",
-      "@react-three/fiber": "^8.15.0",
-      "@react-three/drei": "^9.92.0",
-      "@studio-freight/lenis": "^1.0.0",
-      "@studio-freight/react-lenis": "^1.0.0",
-      "framer-motion": "^11.0.0",
-      "@formkit/auto-animate": "^0.8.0"
-    },
-    "ui": {
-      "@radix-ui/react-accordion": "^1.1.0",
-      "@radix-ui/react-dialog": "^1.0.0",
-      "@radix-ui/react-dropdown-menu": "^2.0.0",
-      "@radix-ui/react-tabs": "^1.0.0",
-      "@radix-ui/react-tooltip": "^1.0.0",
-      "lucide-react": "^0.300.0",
-      "sonner": "^1.0.0"
-    },
-    "styling": {
-      "tailwindcss": "^3.4.0",
-      "autoprefixer": "^10.4.0",
-      "postcss": "^8.4.0",
-      "tailwind-merge": "^2.0.0",
-      "clsx": "^2.0.0"
-    },
-    "data": {
-      "@tanstack/react-query": "^5.0.0",
-      "@tanstack/react-table": "^8.0.0",
-      "axios": "^1.6.0",
-      "socket.io-client": "^4.6.0",
-      "recharts": "^2.10.0",
-      "d3": "^7.8.0"
-    },
-    "forms": {
-      "react-hook-form": "^7.48.0",
-      "zod": "^3.22.0",
-      "@hookform/resolvers": "^3.3.0"
-    },
-    "state": {
-      "zustand": "^4.4.0"
-    },
-    "web3": {
-      "ethers": "^6.9.0",
-      "wagmi": "^2.0.0",
-      "viem": "^2.0.0",
-      "@web3modal/react": "^3.0.0"
-    },
-    "utilities": {
-      "date-fns": "^3.0.0",
-      "lodash": "^4.17.0",
-      "react-intersection-observer": "^9.5.0"
-    }
-  },
-  "mobile_testing": {
-    "devices": [
-      "iPhone 15 Pro (390x844)",
-      "iPhone SE (375x667)",
-      "Samsung Galaxy S23 (360x800)",
-      "iPad Air (820x1180)",
-      "Google Pixel 7 (412x915)"
+  "components_roadmap": {
+    "start_simple": [
+      "BondCard - Basic card",
+      "Navbar - Simple links",
+      "LoadingSpinner - CSS animation",
+      "ErrorMessage - Red text box"
     ],
-    "browsers": [
-      "Chrome Mobile",
-      "Safari iOS",
-      "Samsung Internet",
-      "Firefox Mobile"
+    "add_with_auth": [
+      "LoginForm",
+      "RegisterForm",
+      "ProtectedRoute",
+      "UserCard"
     ],
-    "tools": [
-      "Chrome DevTools Device Mode",
-      "BrowserStack for real device testing",
-      "Lighthouse Mobile audit"
+    "add_with_trading": [
+      "BuyModal",
+      "SellModal",
+      "HoldingsTable",
+      "PortfolioSummary"
+    ],
+    "add_for_polish": [
+      "SearchBar",
+      "FilterPanel",
+      "Charts",
+      "Leaderboard"
+    ],
+    "optional_advanced": [
+      "3D Background (Three.js)",
+      "Page transitions (Framer Motion)",
+      "Scroll animations (GSAP)"
     ]
   },
-  "animation_showcase": {
-    "landing_experience": {
-      "load_sequence": [
-        "1. Three.js particle background fades in (2s)",
-        "2. GSAP hero text splits and animates character by character (1.5s)",
-        "3. Lenis smooth scroll activates",
-        "4. CTA buttons scale in with Framer Motion spring (0.8s)",
-        "5. Scroll indicator pulse animation (infinite)"
-      ],
-      "scroll_experience": [
-        "1. Hero parallax effect (GSAP + Lenis)",
-        "2. Feature cards stagger in (GSAP ScrollTrigger + Framer)",
-        "3. Stats counter animation (GSAP)",
-        "4. Horizontal scroll showcase (GSAP ScrollTrigger pinned)",
-        "5. 3D bond visualization (Three.js on hover)",
-        "6. Testimonial auto-carousel (Framer Motion)",
-        "7. Footer reveal (GSAP)"
-      ]
+  "styling_approach": {
+    "iteration_0_4": {
+      "method": "Pure Tailwind CSS",
+      "colors": "Use Tailwind defaults",
+      "principle": "Functional over beautiful"
     },
-    "dashboard_experience": {
-      "page_load": [
-        "1. Framer Motion page transition from route change",
-        "2. Portfolio value counter (GSAP)",
-        "3. Chart line drawing (Recharts + GSAP)",
-        "4. Card entrance stagger (Framer Motion)",
-        "5. WebSocket real-time updates with flash animation (GSAP)"
-      ],
-      "interactions": [
-        "1. Card hover: Framer Motion scale + shadow",
-        "2. Button click: GSAP ripple effect",
-        "3. Chart tooltip: Framer Motion fade + position",
-        "4. Tab switch: Framer Motion slide",
-        "5. Modal open: Framer Motion backdrop + content scale"
-      ]
+    "iteration_5_10": {
+      "method": "Tailwind + Custom classes",
+      "colors": "Define brand colors",
+      "principle": "Consistent look"
+    },
+    "iteration_11_15": {
+      "method": "Tailwind + shadcn/ui consideration",
+      "colors": "Full color palette",
+      "principle": "Professional appearance"
+    },
+    "iteration_16_20": {
+      "method": "Full design system",
+      "animations": "Framer Motion for key interactions",
+      "principle": "Impressive demo"
     }
   },
-  "notes": {
-    "mobile_first": "All animations tested and optimized for mobile devices",
-    "performance": "Animations disabled or simplified on low-end devices",
-    "accessibility": "Respects prefers-reduced-motion preference",
-    "progressive_enhancement": "Basic functionality works without JS, animations enhance"
+  "state_management": {
+    "iteration_0_4": "useState only - simple local state",
+    "iteration_5_6": "React Context for auth",
+    "iteration_7_10": "Context + custom hooks",
+    "iteration_11_15": "Same, keep it simple",
+    "iteration_16_20": "Consider Zustand if needed"
+  },
+  "api_integration": {
+    "pattern": "Centralized fetch helpers",
+    "location": "lib/api.ts",
+    "approach": {
+      "iteration_2": "Basic fetch wrapper",
+      "iteration_5": "Add auth headers",
+      "iteration_8": "Add error handling",
+      "iteration_14": "Add request caching"
+    }
+  },
+  "pages_by_iteration": {
+    "iteration_0": ["/ (Hello World)"],
+    "iteration_1": ["/ (Bond grid)"],
+    "iteration_4": ["/bonds/[id]"],
+    "iteration_5": ["/login", "/register"],
+    "iteration_7": ["/dashboard"],
+    "iteration_9": ["/dashboard/portfolio"],
+    "iteration_14": ["/dashboard/transactions"],
+    "iteration_15": ["/ (Landing page)", "/bonds (New)"],
+    "iteration_17": ["/dashboard/profile"],
+    "iteration_18": ["/pricing"],
+    "iteration_20": ["/leaderboard"]
+  },
+  "technical_decisions": {
+    "app_router": "Use Next.js 14 App Router from start",
+    "typescript": "Optional - can start with JS, add types later",
+    "api_calls": "Client-side fetching initially, SSR later if time",
+    "forms": "Native HTML forms first, react-hook-form later"
+  },
+  "quick_start_commands": {
+    "create_project": "npx create-next-app@latest frontend --typescript --tailwind --app",
+    "run_dev": "cd frontend && npm run dev",
+    "port": 3000
+  },
+  "files_count_progression": {
+    "iteration_0": 3,
+    "iteration_5": 15,
+    "iteration_10": 30,
+    "iteration_15": 45,
+    "iteration_20": 55
   }
 }

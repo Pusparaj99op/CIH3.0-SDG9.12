@@ -5,1464 +5,1080 @@
     "version": "1.0.0",
     "last_updated": "2026-01-30"
   },
-  "task_overview": {
-    "total_tasks": 85,
-    "categories": [
-      "Setup & Configuration",
-      "Backend Development",
-      "Frontend Development",
-      "Database",
-      "Blockchain",
-      "AI/Analytics",
-      "Testing",
-      "Documentation",
-      "DevOps"
-    ],
-    "priority_levels": {
-      "P0": "Critical - Must have for hackathon demo",
-      "P1": "High - Important for functionality",
-      "P2": "Medium - Nice to have",
-      "P3": "Low - Future enhancement"
-    },
+  "development_approach": {
+    "methodology": "Incremental Development",
+    "principle": "Each iteration = Working Application",
+    "workflow": "Build → Test → Deploy → Next Iteration"
+  },
+  "task_organization": {
+    "by_iteration": true,
     "status_codes": {
-      "NOT_STARTED": "Task not yet begun",
-      "IN_PROGRESS": "Currently being worked on",
-      "IN_REVIEW": "Awaiting code review",
-      "COMPLETED": "Task finished",
+      "TODO": "Not yet started",
+      "DOING": "In progress",
+      "DONE": "Completed and tested",
       "BLOCKED": "Waiting on dependency"
     }
   },
-  "tasks": {
-    "setup_configuration": {
-      "category": "Setup & Configuration",
+  "iterations": {
+    "iteration_0": {
+      "name": "Hello World - Basic Setup",
+      "status": "TODO",
+      "goal": "Frontend and backend running and connected",
       "tasks": [
         {
-          "id": "SETUP-001",
-          "title": "Initialize Monorepo Structure",
-          "description": "Create root project structure with frontend, backend, blockchain, and shared directories",
-          "priority": "P0",
-          "estimated_hours": 1,
-          "status": "NOT_STARTED",
-          "assigned_to": "Team Leader",
-          "subtasks": [
-            "Create root package.json with workspaces",
-            "Setup pnpm-workspace.yaml or turbo.json",
-            "Create .gitignore with all necessary patterns",
-            "Create .env.example template",
-            "Initialize git repository"
-          ],
-          "acceptance_criteria": [
-            "Directory structure matches Structure.json specification",
-            "Package manager configured correctly",
-            "Git repository initialized"
-          ]
+          "id": "T0.1",
+          "task": "Create project root folder structure",
+          "status": "TODO",
+          "time": "15 min",
+          "details": "Create /frontend and /backend folders"
         },
         {
-          "id": "SETUP-002",
-          "title": "Setup Next.js Frontend Project",
-          "description": "Initialize Next.js 14 with App Router, TypeScript, and Tailwind CSS",
-          "priority": "P0",
-          "estimated_hours": 1,
-          "status": "NOT_STARTED",
-          "assigned_to": "Frontend Lead",
-          "dependencies": ["SETUP-001"],
-          "subtasks": [
-            "Run npx create-next-app@latest with TypeScript",
-            "Configure tailwind.config.ts",
-            "Install shadcn/ui components",
-            "Setup path aliases in tsconfig.json",
-            "Create folder structure (app, components, lib)"
-          ],
-          "acceptance_criteria": [
-            "Next.js dev server runs without errors",
-            "Tailwind CSS classes apply correctly",
-            "TypeScript compiles without errors"
-          ]
+          "id": "T0.2",
+          "task": "Initialize Next.js frontend",
+          "status": "TODO",
+          "time": "20 min",
+          "details": "npx create-next-app@latest frontend --typescript --tailwind --app"
         },
         {
-          "id": "SETUP-003",
-          "title": "Setup Express.js Backend Project",
-          "description": "Initialize Express server with TypeScript, middleware, and folder structure",
-          "priority": "P0",
-          "estimated_hours": 1.5,
-          "status": "NOT_STARTED",
-          "assigned_to": "Backend Lead",
-          "dependencies": ["SETUP-001"],
-          "subtasks": [
-            "Initialize npm project with TypeScript",
-            "Install Express, cors, helmet, morgan dependencies",
-            "Create MVC folder structure (controllers, models, routes, services)",
-            "Setup nodemon for development",
-            "Create basic server.ts entry point"
-          ],
-          "acceptance_criteria": [
-            "Server starts on port 3210",
-            "Basic health check endpoint works",
-            "TypeScript compilation successful"
-          ]
+          "id": "T0.3",
+          "task": "Initialize Express backend",
+          "status": "TODO",
+          "time": "20 min",
+          "details": "npm init, install express cors, create server.js"
         },
         {
-          "id": "SETUP-004",
-          "title": "Configure MongoDB Connection",
-          "description": "Setup MongoDB connection with Mongoose and connection pooling",
-          "priority": "P0",
-          "estimated_hours": 1,
-          "status": "NOT_STARTED",
-          "assigned_to": "Backend Lead",
-          "dependencies": ["SETUP-003"],
-          "subtasks": [
-            "Install mongoose package",
-            "Create database.ts configuration file",
-            "Setup connection with retry logic",
-            "Add environment variables for connection string",
-            "Test connection on server startup"
-          ],
-          "acceptance_criteria": [
-            "MongoDB connection established on startup",
-            "Connection errors handled gracefully",
-            "Environment variables used correctly"
-          ]
+          "id": "T0.4",
+          "task": "Create health check API",
+          "status": "TODO",
+          "time": "15 min",
+          "details": "GET /api/health returns { status: 'ok' }"
         },
         {
-          "id": "SETUP-005",
-          "title": "Setup Docker Development Environment",
-          "description": "Create Docker and Docker Compose configuration for local development",
-          "priority": "P1",
-          "estimated_hours": 2,
-          "status": "NOT_STARTED",
-          "assigned_to": "Team Leader",
-          "dependencies": ["SETUP-002", "SETUP-003"],
-          "subtasks": [
-            "Create Dockerfile for frontend",
-            "Create Dockerfile for backend",
-            "Create docker-compose.yml with all services",
-            "Add MongoDB and Redis containers",
-            "Configure volume mounts for hot reload"
-          ],
-          "acceptance_criteria": [
-            "docker-compose up starts all services",
-            "Hot reload works in development",
-            "Services communicate correctly"
-          ]
+          "id": "T0.5",
+          "task": "Frontend calls backend API",
+          "status": "TODO",
+          "time": "30 min",
+          "details": "Fetch health endpoint, display connection status"
         },
         {
-          "id": "SETUP-006",
-          "title": "Install and Configure Animation Libraries",
-          "description": "Setup GSAP, Framer Motion, Three.js, and Lenis for animations",
-          "priority": "P1",
-          "estimated_hours": 1.5,
-          "status": "NOT_STARTED",
-          "assigned_to": "Frontend Lead",
-          "dependencies": ["SETUP-002"],
-          "subtasks": [
-            "Install gsap and @gsap/react",
-            "Install framer-motion",
-            "Install @react-three/fiber, @react-three/drei",
-            "Install @studio-freight/lenis",
-            "Create animation config files and providers"
-          ],
-          "acceptance_criteria": [
-            "All animation libraries import without errors",
-            "Basic test animation works",
-            "No bundle size issues"
-          ]
-        },
-        {
-          "id": "SETUP-007",
-          "title": "Configure Redis for Caching",
-          "description": "Setup Redis connection for session management and caching",
-          "priority": "P2",
-          "estimated_hours": 1,
-          "status": "NOT_STARTED",
-          "assigned_to": "Backend Lead",
-          "dependencies": ["SETUP-005"],
-          "subtasks": [
-            "Install ioredis package",
-            "Create redis.ts configuration",
-            "Setup cache middleware",
-            "Test Redis connection"
-          ],
-          "acceptance_criteria": [
-            "Redis connection successful",
-            "Cache operations work correctly"
-          ]
+          "id": "T0.6",
+          "task": "Test both servers running",
+          "status": "TODO",
+          "time": "15 min",
+          "details": "Verify no errors, API responds correctly"
         }
-      ]
+      ],
+      "total_time": "2 hours",
+      "deliverable": "Two servers running and communicating"
     },
-    "backend_development": {
-      "category": "Backend Development",
+    "iteration_1": {
+      "name": "Static Bond Display",
+      "status": "TODO",
+      "goal": "Display bond cards on homepage",
       "tasks": [
         {
-          "id": "BE-001",
-          "title": "Implement User Model and Schema",
-          "description": "Create MongoDB schema for users with all required fields",
-          "priority": "P0",
-          "estimated_hours": 1.5,
-          "status": "NOT_STARTED",
-          "assigned_to": "Backend Lead",
-          "dependencies": ["SETUP-004"],
-          "subtasks": [
-            "Define User schema with mongoose",
-            "Add fields: email, password, name, role, kyc, wallet_address",
-            "Create password hashing pre-save hook",
-            "Add indexes for email and wallet_address",
-            "Create user validation methods"
-          ],
-          "acceptance_criteria": [
-            "Schema matches DataBase.json specification",
-            "Password hashing works correctly",
-            "Validation rules enforced"
-          ]
+          "id": "T1.1",
+          "task": "Create sample bond data array",
+          "status": "TODO",
+          "time": "15 min",
+          "details": "5 bonds with name, issuer, returnRate, riskLevel, price"
         },
         {
-          "id": "BE-002",
-          "title": "Implement Authentication Controller",
-          "description": "Create auth endpoints for register, login, logout, and password reset",
-          "priority": "P0",
-          "estimated_hours": 4,
-          "status": "NOT_STARTED",
-          "assigned_to": "Backend Lead",
-          "dependencies": ["BE-001"],
-          "subtasks": [
-            "POST /auth/register - User registration",
-            "POST /auth/login - User login with JWT",
-            "POST /auth/logout - Token invalidation",
-            "POST /auth/refresh - Refresh JWT token",
-            "POST /auth/forgot-password - Send reset email",
-            "POST /auth/reset-password - Reset with token"
-          ],
-          "acceptance_criteria": [
-            "Registration creates new user with hashed password",
-            "Login returns valid JWT tokens",
-            "Password reset flow works end-to-end"
-          ]
+          "id": "T1.2",
+          "task": "Create BondCard component",
+          "status": "TODO",
+          "time": "45 min",
+          "details": "Card showing bond info with Tailwind styling"
         },
         {
-          "id": "BE-003",
-          "title": "Implement JWT Authentication Middleware",
-          "description": "Create middleware for JWT token verification and route protection",
-          "priority": "P0",
-          "estimated_hours": 2,
-          "status": "NOT_STARTED",
-          "assigned_to": "Backend Lead",
-          "dependencies": ["BE-002"],
-          "subtasks": [
-            "Create auth.middleware.ts",
-            "Verify JWT token from Authorization header",
-            "Attach user object to request",
-            "Handle token expiration",
-            "Create role-based access middleware"
-          ],
-          "acceptance_criteria": [
-            "Protected routes require valid JWT",
-            "Invalid tokens return 401",
-            "User info available in req.user"
-          ]
+          "id": "T1.3",
+          "task": "Create bonds grid layout",
+          "status": "TODO",
+          "time": "30 min",
+          "details": "Responsive grid: 1/2/3 columns"
         },
         {
-          "id": "BE-004",
-          "title": "Implement Bond Model and Schema",
-          "description": "Create MongoDB schema for infrastructure bonds",
-          "priority": "P0",
-          "estimated_hours": 2,
-          "status": "NOT_STARTED",
-          "assigned_to": "Backend Lead",
-          "dependencies": ["SETUP-004"],
-          "subtasks": [
-            "Define Bond schema with all fields",
-            "Add issuer, project, financial, supply, risk sections",
-            "Create proper indexes",
-            "Add validation rules",
-            "Create virtual fields for calculations"
-          ],
-          "acceptance_criteria": [
-            "Schema matches DataBase.json specification",
-            "All indexes created",
-            "Virtual fields calculate correctly"
-          ]
+          "id": "T1.4",
+          "task": "Create simple Navbar",
+          "status": "TODO",
+          "time": "30 min",
+          "details": "Logo, Home, Bonds, Login links"
         },
         {
-          "id": "BE-005",
-          "title": "Implement Bond Controller and Routes",
-          "description": "Create CRUD operations for bonds with filtering and search",
-          "priority": "P0",
-          "estimated_hours": 4,
-          "status": "NOT_STARTED",
-          "assigned_to": "Backend Lead",
-          "dependencies": ["BE-004"],
-          "subtasks": [
-            "GET /bonds - List all bonds with pagination",
-            "GET /bonds/:id - Get single bond details",
-            "GET /bonds/search - Search with filters",
-            "GET /bonds/recommendations - AI recommendations",
-            "POST /bonds/compare - Compare multiple bonds",
-            "Implement filter by risk, return, maturity, issuer"
-          ],
-          "acceptance_criteria": [
-            "All endpoints return correct data",
-            "Filtering works with multiple criteria",
-            "Pagination implemented correctly"
-          ]
-        },
-        {
-          "id": "BE-006",
-          "title": "Implement Transaction Model",
-          "description": "Create schema for buy/sell transactions",
-          "priority": "P0",
-          "estimated_hours": 1.5,
-          "status": "NOT_STARTED",
-          "assigned_to": "Backend Lead",
-          "dependencies": ["BE-004"],
-          "subtasks": [
-            "Define Transaction schema",
-            "Include user_id, bond_id, type, quantity, price",
-            "Add payment and blockchain fields",
-            "Create indexes for user and timestamp queries"
-          ],
-          "acceptance_criteria": [
-            "Schema captures all transaction details",
-            "Proper references to User and Bond"
-          ]
-        },
-        {
-          "id": "BE-007",
-          "title": "Implement Trading Controller",
-          "description": "Create buy/sell order processing endpoints",
-          "priority": "P0",
-          "estimated_hours": 6,
-          "status": "NOT_STARTED",
-          "assigned_to": "Backend Lead",
-          "dependencies": ["BE-006", "BE-003"],
-          "subtasks": [
-            "POST /trading/buy - Execute buy order",
-            "POST /trading/sell - Execute sell order",
-            "GET /trading/order-book - Get current orders",
-            "GET /trading/trades - User trade history",
-            "POST /trading/cancel-order - Cancel pending order",
-            "Implement fee calculation (0.25%)"
-          ],
-          "acceptance_criteria": [
-            "Buy/sell orders execute correctly",
-            "Portfolio updates after trade",
-            "Transaction recorded properly"
-          ]
-        },
-        {
-          "id": "BE-008",
-          "title": "Implement Portfolio Model and Controller",
-          "description": "Track user holdings and portfolio performance",
-          "priority": "P0",
-          "estimated_hours": 3,
-          "status": "NOT_STARTED",
-          "assigned_to": "Backend Lead",
-          "dependencies": ["BE-007"],
-          "subtasks": [
-            "Define Portfolio schema with holdings array",
-            "GET /portfolio - Get portfolio summary",
-            "GET /portfolio/holdings - Get all holdings",
-            "GET /portfolio/performance - Performance metrics",
-            "Calculate total value, P&L, returns"
-          ],
-          "acceptance_criteria": [
-            "Holdings update after trades",
-            "P&L calculations accurate",
-            "Performance metrics correct"
-          ]
-        },
-        {
-          "id": "BE-009",
-          "title": "Implement Paper Trading System",
-          "description": "Create virtual trading with fake money for practice",
-          "priority": "P0",
-          "estimated_hours": 4,
-          "status": "NOT_STARTED",
-          "assigned_to": "Backend Lead",
-          "dependencies": ["BE-007"],
-          "subtasks": [
-            "Create PaperTrade model",
-            "Initialize virtual balance (₹10 Lakh)",
-            "POST /paper-trading/buy - Virtual buy",
-            "POST /paper-trading/sell - Virtual sell",
-            "GET /paper-trading/portfolio - Virtual portfolio",
-            "GET /paper-trading/leaderboard - Top performers"
-          ],
-          "acceptance_criteria": [
-            "Paper trades don't affect real balance",
-            "Virtual P&L tracked separately",
-            "Leaderboard shows top performers"
-          ]
-        },
-        {
-          "id": "BE-010",
-          "title": "Implement WebSocket for Real-time Updates",
-          "description": "Setup Socket.io for live price updates and notifications",
-          "priority": "P1",
-          "estimated_hours": 3,
-          "status": "NOT_STARTED",
-          "assigned_to": "Backend Lead",
-          "dependencies": ["BE-005"],
-          "subtasks": [
-            "Install and configure Socket.io",
-            "Create WebSocket connection handler",
-            "Emit price updates on bond changes",
-            "Emit trade notifications",
-            "Handle connection/disconnection"
-          ],
-          "acceptance_criteria": [
-            "WebSocket connections established",
-            "Price updates received in real-time",
-            "Multiple clients supported"
-          ]
-        },
-        {
-          "id": "BE-011",
-          "title": "Implement User Profile Controller",
-          "description": "Create user profile management endpoints",
-          "priority": "P1",
-          "estimated_hours": 2,
-          "status": "NOT_STARTED",
-          "assigned_to": "Backend Lead",
-          "dependencies": ["BE-003"],
-          "subtasks": [
-            "GET /users/profile - Get current user profile",
-            "PUT /users/profile - Update profile",
-            "POST /users/avatar - Upload profile picture",
-            "PUT /users/preferences - Update preferences"
-          ],
-          "acceptance_criteria": [
-            "Profile data retrieved correctly",
-            "Updates persist to database",
-            "Avatar upload works"
-          ]
-        },
-        {
-          "id": "BE-012",
-          "title": "Implement Subscription Controller",
-          "description": "Manage subscription plans and user subscriptions",
-          "priority": "P1",
-          "estimated_hours": 3,
-          "status": "NOT_STARTED",
-          "assigned_to": "Backend Lead",
-          "dependencies": ["BE-001"],
-          "subtasks": [
-            "Create Subscription model",
-            "GET /subscriptions/plans - List available plans",
-            "POST /subscriptions/subscribe - Subscribe to plan",
-            "GET /subscriptions/current - Get user subscription",
-            "Implement subscription check middleware"
-          ],
-          "acceptance_criteria": [
-            "Plans returned correctly",
-            "Subscription status tracked",
-            "Premium features gated correctly"
-          ]
-        },
-        {
-          "id": "BE-013",
-          "title": "Implement Rate Limiting Middleware",
-          "description": "Add API rate limiting based on subscription tier",
-          "priority": "P1",
-          "estimated_hours": 2,
-          "status": "NOT_STARTED",
-          "assigned_to": "Backend Lead",
-          "dependencies": ["SETUP-007", "BE-012"],
-          "subtasks": [
-            "Create rateLimit.middleware.ts",
-            "Configure limits by subscription tier",
-            "Use Redis for rate tracking",
-            "Return proper 429 responses"
-          ],
-          "acceptance_criteria": [
-            "Rate limits enforced correctly",
-            "Different limits for different tiers",
-            "Proper error messages returned"
-          ]
-        },
-        {
-          "id": "BE-014",
-          "title": "Implement Input Validation Middleware",
-          "description": "Add request validation using Joi",
-          "priority": "P1",
-          "estimated_hours": 2,
-          "status": "NOT_STARTED",
-          "assigned_to": "Backend Lead",
-          "dependencies": ["SETUP-003"],
-          "subtasks": [
-            "Install Joi validation library",
-            "Create validation schemas for all endpoints",
-            "Create validation.middleware.ts",
-            "Return proper validation error messages"
-          ],
-          "acceptance_criteria": [
-            "Invalid requests rejected with 400",
-            "Clear error messages returned",
-            "All endpoints validated"
-          ]
-        },
-        {
-          "id": "BE-015",
-          "title": "Implement Analytics Service",
-          "description": "Create AI analytics endpoints for bond recommendations",
-          "priority": "P0",
-          "estimated_hours": 4,
-          "status": "NOT_STARTED",
-          "assigned_to": "Backend Lead",
-          "dependencies": ["BE-005"],
-          "subtasks": [
-            "GET /analytics/bond/:id/prediction - AI predictions",
-            "GET /analytics/bond/:id/risk - Risk assessment",
-            "Implement risk scoring algorithm (0-100)",
-            "Calculate expected returns",
-            "Create recommendation logic"
-          ],
-          "acceptance_criteria": [
-            "Risk scores generated correctly",
-            "Recommendations based on user profile",
-            "Analytics data stored for caching"
-          ]
-        },
-        {
-          "id": "BE-016",
-          "title": "Create API Documentation with Swagger",
-          "description": "Document all API endpoints with OpenAPI/Swagger",
-          "priority": "P1",
-          "estimated_hours": 2,
-          "status": "NOT_STARTED",
-          "assigned_to": "Backend Lead",
-          "dependencies": ["BE-005", "BE-007", "BE-008"],
-          "subtasks": [
-            "Install swagger-ui-express and swagger-jsdoc",
-            "Add JSDoc comments to all endpoints",
-            "Create API documentation page at /api-docs",
-            "Include request/response examples"
-          ],
-          "acceptance_criteria": [
-            "Swagger UI accessible at /api-docs",
-            "All endpoints documented",
-            "Try-it-out feature works"
-          ]
+          "id": "T1.5",
+          "task": "Style and test",
+          "status": "TODO",
+          "time": "30 min",
+          "details": "Polish UI, test responsiveness"
         }
-      ]
+      ],
+      "total_time": "2.5 hours",
+      "deliverable": "Homepage with 5 bond cards"
     },
-    "frontend_development": {
-      "category": "Frontend Development",
+    "iteration_2": {
+      "name": "Backend API for Bonds",
+      "status": "TODO",
+      "goal": "Fetch bonds from backend",
       "tasks": [
         {
-          "id": "FE-001",
-          "title": "Create Base Layout Components",
-          "description": "Build Navbar, Footer, Sidebar, and Layout wrapper components",
-          "priority": "P0",
-          "estimated_hours": 3,
-          "status": "NOT_STARTED",
-          "assigned_to": "Frontend Lead",
-          "dependencies": ["SETUP-002"],
-          "subtasks": [
-            "Create Navbar.tsx with logo and navigation",
-            "Create Footer.tsx with links and copyright",
-            "Create Sidebar.tsx for dashboard",
-            "Create MobileNav.tsx for mobile",
-            "Create RootLayout with providers"
-          ],
-          "acceptance_criteria": [
-            "Navigation works on all pages",
-            "Responsive on all screen sizes",
-            "Active link highlighting works"
-          ]
+          "id": "T2.1",
+          "task": "Create bonds.json data file",
+          "status": "TODO",
+          "time": "20 min",
+          "details": "10 sample bonds in JSON file"
         },
         {
-          "id": "FE-002",
-          "title": "Build Landing Page",
-          "description": "Create animated landing page with hero, features, and CTA sections",
-          "priority": "P0",
-          "estimated_hours": 6,
-          "status": "NOT_STARTED",
-          "assigned_to": "Frontend Lead",
-          "dependencies": ["FE-001", "SETUP-006"],
-          "subtasks": [
-            "Hero section with particle background",
-            "Features section with scroll animations",
-            "How it works timeline",
-            "Statistics with counter animation",
-            "Bond showcase carousel",
-            "CTA section",
-            "GSAP scroll trigger animations"
-          ],
-          "acceptance_criteria": [
-            "All sections render correctly",
-            "Animations smooth on scroll",
-            "Mobile responsive",
-            "Page loads under 3 seconds"
-          ]
+          "id": "T2.2",
+          "task": "Create GET /api/bonds endpoint",
+          "status": "TODO",
+          "time": "30 min",
+          "details": "Return all bonds from JSON file"
         },
         {
-          "id": "FE-003",
-          "title": "Build Authentication Pages",
-          "description": "Create login, signup, and password reset pages",
-          "priority": "P0",
-          "estimated_hours": 4,
-          "status": "NOT_STARTED",
-          "assigned_to": "Frontend Lead",
-          "dependencies": ["FE-001"],
-          "subtasks": [
-            "Create /login page with form",
-            "Create /signup page with validation",
-            "Create /forgot-password page",
-            "Create /reset-password page",
-            "Implement form validation with Zod",
-            "Add OAuth buttons (future)"
-          ],
-          "acceptance_criteria": [
-            "Forms validate input correctly",
-            "Error messages displayed clearly",
-            "Redirect to dashboard after login",
-            "Password visibility toggle works"
-          ]
+          "id": "T2.3",
+          "task": "Frontend: fetch bonds from API",
+          "status": "TODO",
+          "time": "30 min",
+          "details": "useEffect to fetch on page load"
         },
         {
-          "id": "FE-004",
-          "title": "Implement Auth State Management",
-          "description": "Create auth store with Zustand for user state",
-          "priority": "P0",
-          "estimated_hours": 2,
-          "status": "NOT_STARTED",
-          "assigned_to": "Frontend Lead",
-          "dependencies": ["FE-003"],
-          "subtasks": [
-            "Create auth-store.ts with Zustand",
-            "Store user info and tokens",
-            "Create useAuth hook",
-            "Implement logout functionality",
-            "Persist to localStorage"
-          ],
-          "acceptance_criteria": [
-            "User state persists across refresh",
-            "Logout clears all state",
-            "Protected routes redirect when not logged in"
-          ]
+          "id": "T2.4",
+          "task": "Add loading state",
+          "status": "TODO",
+          "time": "20 min",
+          "details": "Show spinner while fetching"
         },
         {
-          "id": "FE-005",
-          "title": "Create API Client with Axios",
-          "description": "Setup Axios instance with interceptors for API calls",
-          "priority": "P0",
-          "estimated_hours": 2,
-          "status": "NOT_STARTED",
-          "assigned_to": "Frontend Lead",
-          "dependencies": ["FE-004"],
-          "subtasks": [
-            "Create axios-client.ts with base URL",
-            "Add request interceptor for JWT",
-            "Add response interceptor for errors",
-            "Handle token refresh automatically",
-            "Create API endpoint functions"
-          ],
-          "acceptance_criteria": [
-            "API calls include auth token",
-            "401 errors trigger token refresh",
-            "Network errors handled gracefully"
-          ]
-        },
-        {
-          "id": "FE-006",
-          "title": "Build Dashboard Page",
-          "description": "Create main dashboard with portfolio overview and quick actions",
-          "priority": "P0",
-          "estimated_hours": 5,
-          "status": "NOT_STARTED",
-          "assigned_to": "Frontend Lead",
-          "dependencies": ["FE-005"],
-          "subtasks": [
-            "Portfolio value card with chart",
-            "Holdings summary table",
-            "Recent transactions list",
-            "Quick action buttons",
-            "Market overview widget",
-            "Stagger entrance animations"
-          ],
-          "acceptance_criteria": [
-            "Data loads from API correctly",
-            "Charts render with animation",
-            "Responsive grid layout",
-            "Loading states shown"
-          ]
-        },
-        {
-          "id": "FE-007",
-          "title": "Build Bond Listing Page",
-          "description": "Create bonds page with grid, filters, and search",
-          "priority": "P0",
-          "estimated_hours": 5,
-          "status": "NOT_STARTED",
-          "assigned_to": "Frontend Lead",
-          "dependencies": ["FE-005"],
-          "subtasks": [
-            "BondCard component with risk badge",
-            "BondGrid layout with responsive columns",
-            "Filter sidebar (risk, return, maturity)",
-            "Search bar with debounce",
-            "Sort dropdown",
-            "Pagination",
-            "Grid animation on filter change"
-          ],
-          "acceptance_criteria": [
-            "Bonds load and display correctly",
-            "Filters work independently and combined",
-            "Search returns relevant results",
-            "Smooth animations on interactions"
-          ]
-        },
-        {
-          "id": "FE-008",
-          "title": "Build Bond Details Page",
-          "description": "Create bond details page with charts and AI insights",
-          "priority": "P0",
-          "estimated_hours": 6,
-          "status": "NOT_STARTED",
-          "assigned_to": "Frontend Lead",
-          "dependencies": ["FE-007"],
-          "subtasks": [
-            "Bond header with price and actions",
-            "Price history chart (Recharts)",
-            "Risk gauge component",
-            "AI recommendation card",
-            "Project details section",
-            "Documents list",
-            "Buy/sell quick action buttons"
-          ],
-          "acceptance_criteria": [
-            "Bond data loads correctly",
-            "Charts animate on load",
-            "AI insights displayed",
-            "Buy/sell buttons functional"
-          ]
-        },
-        {
-          "id": "FE-009",
-          "title": "Build Trading Interface",
-          "description": "Create trading page with order form and order book",
-          "priority": "P0",
-          "estimated_hours": 6,
-          "status": "NOT_STARTED",
-          "assigned_to": "Frontend Lead",
-          "dependencies": ["FE-008"],
-          "subtasks": [
-            "TradingForm component (buy/sell tabs)",
-            "OrderBook component with live updates",
-            "Price chart with live data",
-            "Order history table",
-            "Trade confirmation modal",
-            "Real-time WebSocket integration"
-          ],
-          "acceptance_criteria": [
-            "Order form submits correctly",
-            "Real-time price updates",
-            "Trade confirmation shows details",
-            "Order book updates live"
-          ]
-        },
-        {
-          "id": "FE-010",
-          "title": "Build Portfolio Page",
-          "description": "Create portfolio page with holdings and performance",
-          "priority": "P0",
-          "estimated_hours": 4,
-          "status": "NOT_STARTED",
-          "assigned_to": "Frontend Lead",
-          "dependencies": ["FE-006"],
-          "subtasks": [
-            "Holdings table with current values",
-            "Asset allocation pie chart",
-            "Performance line chart",
-            "P&L summary cards",
-            "Transaction history with filters"
-          ],
-          "acceptance_criteria": [
-            "All holdings displayed correctly",
-            "P&L calculations accurate",
-            "Charts render properly",
-            "Export functionality works"
-          ]
-        },
-        {
-          "id": "FE-011",
-          "title": "Build Paper Trading Page",
-          "description": "Create paper trading interface with virtual portfolio",
-          "priority": "P0",
-          "estimated_hours": 4,
-          "status": "NOT_STARTED",
-          "assigned_to": "Frontend Lead",
-          "dependencies": ["FE-009"],
-          "subtasks": [
-            "Virtual balance display",
-            "Paper trading form",
-            "Virtual portfolio holdings",
-            "P&L tracker",
-            "Leaderboard component",
-            "Clear visual distinction from real trading"
-          ],
-          "acceptance_criteria": [
-            "Paper mode clearly indicated",
-            "Virtual trades don't affect real balance",
-            "Leaderboard shows rankings"
-          ]
-        },
-        {
-          "id": "FE-012",
-          "title": "Build Pricing Page",
-          "description": "Create pricing page with subscription tiers",
-          "priority": "P1",
-          "estimated_hours": 3,
-          "status": "NOT_STARTED",
-          "assigned_to": "Frontend Lead",
-          "dependencies": ["FE-001"],
-          "subtasks": [
-            "PricingCard component for each tier",
-            "Monthly/yearly toggle with price animation",
-            "Feature comparison table",
-            "CTA buttons for each plan",
-            "FAQ accordion"
-          ],
-          "acceptance_criteria": [
-            "All tiers displayed correctly",
-            "Price toggle works with animation",
-            "CTAs link to signup/upgrade"
-          ]
-        },
-        {
-          "id": "FE-013",
-          "title": "Build Profile and Settings Pages",
-          "description": "Create user profile management and settings pages",
-          "priority": "P1",
-          "estimated_hours": 3,
-          "status": "NOT_STARTED",
-          "assigned_to": "Frontend Lead",
-          "dependencies": ["FE-004"],
-          "subtasks": [
-            "Profile page with avatar upload",
-            "Edit profile form",
-            "Settings page with preferences",
-            "Theme toggle (dark/light)",
-            "Notification preferences"
-          ],
-          "acceptance_criteria": [
-            "Profile updates save correctly",
-            "Theme persists across sessions",
-            "Settings changes apply immediately"
-          ]
-        },
-        {
-          "id": "FE-014",
-          "title": "Implement Chart Components",
-          "description": "Create reusable chart components with Recharts",
-          "priority": "P0",
-          "estimated_hours": 4,
-          "status": "NOT_STARTED",
-          "assigned_to": "Frontend Lead",
-          "dependencies": ["SETUP-002"],
-          "subtasks": [
-            "LineChart for price history",
-            "AreaChart for portfolio value",
-            "PieChart for allocation",
-            "BarChart for returns",
-            "RiskGauge component",
-            "Add entry animations to all charts"
-          ],
-          "acceptance_criteria": [
-            "Charts render with correct data",
-            "Animations smooth on load",
-            "Responsive on all screens",
-            "Tooltips show on hover"
-          ]
-        },
-        {
-          "id": "FE-015",
-          "title": "Implement 3D Visualizations",
-          "description": "Create Three.js components for 3D effects",
-          "priority": "P2",
-          "estimated_hours": 4,
-          "status": "NOT_STARTED",
-          "assigned_to": "Frontend Lead",
-          "dependencies": ["SETUP-006"],
-          "subtasks": [
-            "ParticleBackground component",
-            "3D bond visualization on hover",
-            "Interactive globe for projects (optional)",
-            "Animated 3D logo",
-            "Performance optimization for mobile"
-          ],
-          "acceptance_criteria": [
-            "3D renders without errors",
-            "Performance acceptable (60fps desktop)",
-            "Graceful fallback on mobile/low-end devices"
-          ]
-        },
-        {
-          "id": "FE-016",
-          "title": "Implement WebSocket Client",
-          "description": "Setup Socket.io client for real-time updates",
-          "priority": "P1",
-          "estimated_hours": 2,
-          "status": "NOT_STARTED",
-          "assigned_to": "Frontend Lead",
-          "dependencies": ["FE-005"],
-          "subtasks": [
-            "Create WebSocket hook (useWebSocket)",
-            "Connect to backend Socket.io",
-            "Handle price update events",
-            "Handle trade notifications",
-            "Implement reconnection logic"
-          ],
-          "acceptance_criteria": [
-            "WebSocket connects successfully",
-            "Real-time updates received",
-            "Reconnects on disconnect"
-          ]
-        },
-        {
-          "id": "FE-017",
-          "title": "Implement Responsive Design",
-          "description": "Ensure all pages work on mobile, tablet, and desktop",
-          "priority": "P0",
-          "estimated_hours": 4,
-          "status": "NOT_STARTED",
-          "assigned_to": "Frontend Lead",
-          "dependencies": ["FE-006", "FE-007", "FE-008"],
-          "subtasks": [
-            "Test all breakpoints (sm, md, lg, xl, 2xl)",
-            "Mobile navigation (hamburger menu)",
-            "Touch-friendly interactions",
-            "Tablet-optimized layouts",
-            "Bottom navigation for mobile dashboard"
-          ],
-          "acceptance_criteria": [
-            "No horizontal scroll on any device",
-            "All features accessible on mobile",
-            "Touch targets minimum 44px"
-          ]
-        },
-        {
-          "id": "FE-018",
-          "title": "Implement Loading States and Skeletons",
-          "description": "Add loading states for better UX",
-          "priority": "P1",
-          "estimated_hours": 2,
-          "status": "NOT_STARTED",
-          "assigned_to": "Frontend Lead",
-          "dependencies": ["FE-006"],
-          "subtasks": [
-            "Create Skeleton components",
-            "Add loading state to API calls",
-            "Create loading spinners",
-            "Implement suspense boundaries"
-          ],
-          "acceptance_criteria": [
-            "Loading states shown during data fetch",
-            "Skeletons match content layout",
-            "No layout shift on load"
-          ]
-        },
-        {
-          "id": "FE-019",
-          "title": "Create Error Handling Components",
-          "description": "Build error boundaries and error states",
-          "priority": "P1",
-          "estimated_hours": 2,
-          "status": "NOT_STARTED",
-          "assigned_to": "Frontend Lead",
-          "dependencies": ["FE-005"],
-          "subtasks": [
-            "Create ErrorBoundary component",
-            "Create error.tsx for route errors",
-            "Create 404 not-found.tsx",
-            "Add toast notifications for errors",
-            "API error display components"
-          ],
-          "acceptance_criteria": [
-            "Errors caught and displayed nicely",
-            "User can retry or navigate away",
-            "No unhandled promise rejections"
-          ]
+          "id": "T2.5",
+          "task": "Add error handling",
+          "status": "TODO",
+          "time": "20 min",
+          "details": "Show error message if API fails"
         }
-      ]
+      ],
+      "total_time": "2 hours",
+      "deliverable": "Bonds loaded from backend API"
     },
-    "database": {
-      "category": "Database",
+    "iteration_3": {
+      "name": "MongoDB Integration",
+      "status": "TODO",
+      "goal": "Store and retrieve bonds from database",
       "tasks": [
         {
-          "id": "DB-001",
-          "title": "Create All MongoDB Schemas",
-          "description": "Implement all schemas as defined in DataBase.json",
-          "priority": "P0",
-          "estimated_hours": 4,
-          "status": "NOT_STARTED",
-          "assigned_to": "Backend Lead",
-          "dependencies": ["SETUP-004"],
-          "subtasks": [
-            "User.ts schema",
-            "Bond.ts schema",
-            "Transaction.ts schema",
-            "Portfolio.ts schema",
-            "Subscription.ts schema",
-            "PaperTrade.ts schema",
-            "Analytics.ts schema",
-            "Notification.ts schema"
-          ],
-          "acceptance_criteria": [
-            "All schemas match specification",
-            "Proper indexes created",
-            "Validation rules in place"
-          ]
+          "id": "T3.1",
+          "task": "Install mongoose",
+          "status": "TODO",
+          "time": "10 min",
+          "details": "npm install mongoose"
         },
         {
-          "id": "DB-002",
-          "title": "Create Seed Data",
-          "description": "Generate sample data for development and demo",
-          "priority": "P0",
-          "estimated_hours": 3,
-          "status": "NOT_STARTED",
-          "assigned_to": "Backend Lead",
-          "dependencies": ["DB-001"],
-          "subtasks": [
-            "Create 10+ sample bonds with varied data",
-            "Create test user accounts",
-            "Generate sample transactions",
-            "Create portfolio data",
-            "Add analytics seed data"
-          ],
-          "acceptance_criteria": [
-            "Seed script runs without errors",
-            "Data realistic and diverse",
-            "Demo account ready for presentation"
-          ]
+          "id": "T3.2",
+          "task": "Create MongoDB connection",
+          "status": "TODO",
+          "time": "30 min",
+          "details": "db.js with connection logic"
         },
         {
-          "id": "DB-003",
-          "title": "Setup Database Indexes",
-          "description": "Create indexes for query optimization",
-          "priority": "P1",
-          "estimated_hours": 1,
-          "status": "NOT_STARTED",
-          "assigned_to": "Backend Lead",
-          "dependencies": ["DB-001"],
-          "subtasks": [
-            "Add compound indexes for common queries",
-            "Text index for search functionality",
-            "Ensure unique constraints"
-          ],
-          "acceptance_criteria": [
-            "Query performance acceptable",
-            "Indexes used in explain output"
-          ]
+          "id": "T3.3",
+          "task": "Create Bond schema/model",
+          "status": "TODO",
+          "time": "30 min",
+          "details": "Define Bond model with all fields"
+        },
+        {
+          "id": "T3.4",
+          "task": "Create seed script",
+          "status": "TODO",
+          "time": "30 min",
+          "details": "Script to populate 10 sample bonds"
+        },
+        {
+          "id": "T3.5",
+          "task": "Update API to use MongoDB",
+          "status": "TODO",
+          "time": "30 min",
+          "details": "GET /api/bonds reads from database"
+        },
+        {
+          "id": "T3.6",
+          "task": "Create GET /api/bonds/:id",
+          "status": "TODO",
+          "time": "20 min",
+          "details": "Return single bond by ID"
+        },
+        {
+          "id": "T3.7",
+          "task": "Test database operations",
+          "status": "TODO",
+          "time": "20 min",
+          "details": "Verify CRUD works correctly"
         }
-      ]
+      ],
+      "total_time": "3 hours",
+      "deliverable": "Bonds stored in MongoDB"
     },
-    "blockchain": {
-      "category": "Blockchain",
+    "iteration_4": {
+      "name": "Bond Details Page",
+      "status": "TODO",
+      "goal": "Click bond to see full details",
       "tasks": [
         {
-          "id": "BC-001",
-          "title": "Setup Hardhat Development Environment",
-          "description": "Initialize blockchain development environment",
-          "priority": "P2",
-          "estimated_hours": 2,
-          "status": "NOT_STARTED",
-          "assigned_to": "Team Leader",
-          "dependencies": ["SETUP-001"],
-          "subtasks": [
-            "Install Hardhat and dependencies",
-            "Configure hardhat.config.ts",
-            "Setup Polygon Mumbai testnet",
-            "Configure Alchemy/Infura RPC"
-          ],
-          "acceptance_criteria": [
-            "Hardhat compiles and tests run",
-            "Can connect to testnet"
-          ]
+          "id": "T4.1",
+          "task": "Create /bonds/[id] page",
+          "status": "TODO",
+          "time": "30 min",
+          "details": "Dynamic route in Next.js"
         },
         {
-          "id": "BC-002",
-          "title": "Create BondToken Smart Contract",
-          "description": "Implement ERC-20 token for bond tokenization",
-          "priority": "P2",
-          "estimated_hours": 4,
-          "status": "NOT_STARTED",
-          "assigned_to": "Team Leader",
-          "dependencies": ["BC-001"],
-          "subtasks": [
-            "Create BondToken.sol (ERC-20)",
-            "Add minting and burning functions",
-            "Implement access control",
-            "Write unit tests",
-            "Deploy to testnet"
-          ],
-          "acceptance_criteria": [
-            "Contract compiles without errors",
-            "All tests pass",
-            "Deployed to Mumbai testnet"
-          ]
+          "id": "T4.2",
+          "task": "Fetch bond by ID",
+          "status": "TODO",
+          "time": "20 min",
+          "details": "Call GET /api/bonds/:id"
         },
         {
-          "id": "BC-003",
-          "title": "Implement Web3 Integration in Frontend",
-          "description": "Connect frontend to blockchain via wagmi",
-          "priority": "P2",
-          "estimated_hours": 3,
-          "status": "NOT_STARTED",
-          "assigned_to": "Frontend Lead",
-          "dependencies": ["BC-002"],
-          "subtasks": [
-            "Configure wagmi with Polygon",
-            "Create WalletConnector component",
-            "Implement wallet connection flow",
-            "Show wallet balance",
-            "Enable contract interactions"
-          ],
-          "acceptance_criteria": [
-            "MetaMask connects successfully",
-            "Wallet address displayed",
-            "Can interact with contract"
-          ]
+          "id": "T4.3",
+          "task": "Design bond details layout",
+          "status": "TODO",
+          "time": "45 min",
+          "details": "Show all bond information nicely"
+        },
+        {
+          "id": "T4.4",
+          "task": "Add back button",
+          "status": "TODO",
+          "time": "10 min",
+          "details": "Navigate back to bonds list"
+        },
+        {
+          "id": "T4.5",
+          "task": "Handle 404 not found",
+          "status": "TODO",
+          "time": "15 min",
+          "details": "Show error if bond doesn't exist"
+        },
+        {
+          "id": "T4.6",
+          "task": "Make BondCard clickable",
+          "status": "TODO",
+          "time": "15 min",
+          "details": "Link cards to detail page"
         }
-      ]
+      ],
+      "total_time": "2.5 hours",
+      "deliverable": "Bond details page working"
     },
-    "ai_analytics": {
-      "category": "AI/Analytics",
+    "iteration_5": {
+      "name": "User Authentication",
+      "status": "TODO",
+      "goal": "Users can register and login",
       "tasks": [
         {
-          "id": "AI-001",
-          "title": "Implement Risk Scoring Algorithm",
-          "description": "Create algorithm to calculate bond risk score (0-100)",
-          "priority": "P0",
-          "estimated_hours": 3,
-          "status": "NOT_STARTED",
-          "assigned_to": "Backend Lead",
-          "dependencies": ["BE-004"],
-          "subtasks": [
-            "Define risk factors (credit rating, maturity, volatility)",
-            "Assign weights to each factor",
-            "Calculate composite risk score",
-            "Categorize into low/medium/high"
-          ],
-          "acceptance_criteria": [
-            "Risk scores generated for all bonds",
-            "Scores consistent and logical",
-            "Categories assigned correctly"
-          ]
+          "id": "T5.1",
+          "task": "Create User model",
+          "status": "TODO",
+          "time": "30 min",
+          "details": "email, password, name, wallet fields"
         },
         {
-          "id": "AI-002",
-          "title": "Implement Return Prediction",
-          "description": "Calculate expected returns based on bond parameters",
-          "priority": "P0",
-          "estimated_hours": 3,
-          "status": "NOT_STARTED",
-          "assigned_to": "Backend Lead",
-          "dependencies": ["AI-001"],
-          "subtasks": [
-            "Calculate yield to maturity",
-            "Factor in coupon payments",
-            "Consider market conditions",
-            "Generate return range (min/max expected)"
-          ],
-          "acceptance_criteria": [
-            "Return predictions generated",
-            "Calculations mathematically correct",
-            "Confidence level indicated"
-          ]
+          "id": "T5.2",
+          "task": "Install bcryptjs & jsonwebtoken",
+          "status": "TODO",
+          "time": "10 min",
+          "details": "npm install bcryptjs jsonwebtoken"
         },
         {
-          "id": "AI-003",
-          "title": "Implement Recommendation Engine",
-          "description": "Create bond recommendation based on user profile",
-          "priority": "P0",
-          "estimated_hours": 4,
-          "status": "NOT_STARTED",
-          "assigned_to": "Backend Lead",
-          "dependencies": ["AI-002"],
-          "subtasks": [
-            "Analyze user risk tolerance",
-            "Consider investment goals",
-            "Match bonds to user profile",
-            "Rank recommendations",
-            "Explain recommendation reasons"
-          ],
-          "acceptance_criteria": [
-            "Recommendations personalized",
-            "At least 5 recommendations returned",
-            "Reasoning provided"
-          ]
+          "id": "T5.3",
+          "task": "Create POST /api/auth/register",
+          "status": "TODO",
+          "time": "45 min",
+          "details": "Hash password, create user, return token"
+        },
+        {
+          "id": "T5.4",
+          "task": "Create POST /api/auth/login",
+          "status": "TODO",
+          "time": "30 min",
+          "details": "Verify password, return JWT token"
+        },
+        {
+          "id": "T5.5",
+          "task": "Create Register page",
+          "status": "TODO",
+          "time": "45 min",
+          "details": "Form with validation"
+        },
+        {
+          "id": "T5.6",
+          "task": "Create Login page",
+          "status": "TODO",
+          "time": "30 min",
+          "details": "Form with validation"
+        },
+        {
+          "id": "T5.7",
+          "task": "Store token in localStorage",
+          "status": "TODO",
+          "time": "15 min",
+          "details": "Save token on successful login"
+        },
+        {
+          "id": "T5.8",
+          "task": "Test auth flow",
+          "status": "TODO",
+          "time": "20 min",
+          "details": "Register → Login → Verify token"
         }
-      ]
+      ],
+      "total_time": "4 hours",
+      "deliverable": "Working authentication system"
     },
-    "testing": {
-      "category": "Testing",
+    "iteration_6": {
+      "name": "Protected Routes",
+      "status": "TODO",
+      "goal": "Some pages require login",
       "tasks": [
         {
-          "id": "TEST-001",
-          "title": "Setup Jest for Backend Testing",
-          "description": "Configure Jest for API testing",
-          "priority": "P1",
-          "estimated_hours": 1,
-          "status": "NOT_STARTED",
-          "assigned_to": "Backend Lead",
-          "dependencies": ["BE-002"],
-          "subtasks": [
-            "Install Jest and supertest",
-            "Configure jest.config.js",
-            "Setup test database",
-            "Create test utilities"
-          ],
-          "acceptance_criteria": [
-            "Tests run with npm test",
-            "Coverage reports generated"
-          ]
+          "id": "T6.1",
+          "task": "Create auth middleware",
+          "status": "TODO",
+          "time": "30 min",
+          "details": "Verify JWT on protected routes"
         },
         {
-          "id": "TEST-002",
-          "title": "Write API Unit Tests",
-          "description": "Create unit tests for all API endpoints",
-          "priority": "P1",
-          "estimated_hours": 4,
-          "status": "NOT_STARTED",
-          "assigned_to": "Backend Lead",
-          "dependencies": ["TEST-001"],
-          "subtasks": [
-            "Auth endpoint tests",
-            "Bond endpoint tests",
-            "Trading endpoint tests",
-            "Portfolio endpoint tests",
-            "Aim for 80% coverage"
-          ],
-          "acceptance_criteria": [
-            "All critical endpoints tested",
-            "Coverage > 80%",
-            "All tests pass"
-          ]
+          "id": "T6.2",
+          "task": "Create AuthContext",
+          "status": "TODO",
+          "time": "45 min",
+          "details": "React context for auth state"
         },
         {
-          "id": "TEST-003",
-          "title": "Setup Cypress for E2E Testing",
-          "description": "Configure Cypress for end-to-end tests",
-          "priority": "P2",
-          "estimated_hours": 2,
-          "status": "NOT_STARTED",
-          "assigned_to": "Frontend Lead",
-          "dependencies": ["FE-009"],
-          "subtasks": [
-            "Install Cypress",
-            "Configure for Next.js",
-            "Write login flow test",
-            "Write bond purchase flow test"
-          ],
-          "acceptance_criteria": [
-            "E2E tests run successfully",
-            "Critical flows covered"
-          ]
+          "id": "T6.3",
+          "task": "Update Navbar for auth",
+          "status": "TODO",
+          "time": "30 min",
+          "details": "Show user name or login button"
+        },
+        {
+          "id": "T6.4",
+          "task": "Add logout functionality",
+          "status": "TODO",
+          "time": "20 min",
+          "details": "Clear token and redirect"
+        },
+        {
+          "id": "T6.5",
+          "task": "Create protected route wrapper",
+          "status": "TODO",
+          "time": "30 min",
+          "details": "Redirect to login if not auth"
+        },
+        {
+          "id": "T6.6",
+          "task": "Test protected access",
+          "status": "TODO",
+          "time": "15 min",
+          "details": "Verify protection works"
         }
-      ]
+      ],
+      "total_time": "3 hours",
+      "deliverable": "Auth-aware application"
     },
-    "documentation": {
-      "category": "Documentation",
+    "iteration_7": {
+      "name": "User Dashboard",
+      "status": "TODO",
+      "goal": "Dashboard for logged-in users",
       "tasks": [
         {
-          "id": "DOC-001",
-          "title": "Update README.md",
-          "description": "Create comprehensive README with setup instructions",
-          "priority": "P0",
-          "estimated_hours": 2,
-          "status": "NOT_STARTED",
-          "assigned_to": "Project Manager",
-          "dependencies": ["SETUP-005"],
-          "subtasks": [
-            "Project overview and features",
-            "Tech stack badges",
-            "Installation instructions",
-            "Environment variables list",
-            "API documentation link",
-            "Team credits"
-          ],
-          "acceptance_criteria": [
-            "New developer can setup in 15 minutes",
-            "All features documented",
-            "Screenshots included"
-          ]
+          "id": "T7.1",
+          "task": "Create /dashboard page",
+          "status": "TODO",
+          "time": "20 min",
+          "details": "Protected dashboard route"
         },
         {
-          "id": "DOC-002",
-          "title": "Create Demo Presentation",
-          "description": "Prepare hackathon demo presentation",
-          "priority": "P0",
-          "estimated_hours": 3,
-          "status": "NOT_STARTED",
-          "assigned_to": "Project Manager",
-          "dependencies": ["FE-010", "FE-011"],
-          "subtasks": [
-            "Create slide deck",
-            "Problem statement and solution",
-            "Technical architecture diagram",
-            "Feature demonstration flow",
-            "Business model explanation",
-            "Future roadmap"
-          ],
-          "acceptance_criteria": [
-            "Presentation under 10 minutes",
-            "All key features covered",
-            "Demo script prepared"
-          ]
+          "id": "T7.2",
+          "task": "Create GET /api/users/me",
+          "status": "TODO",
+          "time": "20 min",
+          "details": "Return current user info"
         },
         {
-          "id": "DOC-003",
-          "title": "Record Demo Video",
-          "description": "Create video walkthrough of platform",
-          "priority": "P1",
-          "estimated_hours": 2,
-          "status": "NOT_STARTED",
-          "assigned_to": "Project Manager",
-          "dependencies": ["DOC-002"],
-          "subtasks": [
-            "Record feature walkthrough",
-            "Add narration/captions",
-            "Edit and polish",
-            "Upload to YouTube/Drive"
-          ],
-          "acceptance_criteria": [
-            "Video under 5 minutes",
-            "All features shown",
-            "Good audio/video quality"
-          ]
+          "id": "T7.3",
+          "task": "Design dashboard layout",
+          "status": "TODO",
+          "time": "45 min",
+          "details": "Sidebar + main content area"
+        },
+        {
+          "id": "T7.4",
+          "task": "Show user info card",
+          "status": "TODO",
+          "time": "30 min",
+          "details": "Name, email, wallet balance"
+        },
+        {
+          "id": "T7.5",
+          "task": "Add placeholder sections",
+          "status": "TODO",
+          "time": "20 min",
+          "details": "Portfolio, Transactions placeholders"
         }
-      ]
+      ],
+      "total_time": "2.5 hours",
+      "deliverable": "Basic dashboard page"
     },
-    "devops": {
-      "category": "DevOps",
+    "iteration_8": {
+      "name": "Paper Trading - Buy",
+      "status": "TODO",
+      "goal": "Users can buy bonds with virtual money",
       "tasks": [
         {
-          "id": "DEVOPS-001",
-          "title": "Setup GitHub Actions CI",
-          "description": "Create CI pipeline for automated testing",
-          "priority": "P1",
-          "estimated_hours": 2,
-          "status": "NOT_STARTED",
-          "assigned_to": "Team Leader",
-          "dependencies": ["TEST-001"],
-          "subtasks": [
-            "Create .github/workflows/ci.yml",
-            "Run linting on PR",
-            "Run tests on PR",
-            "Build check"
-          ],
-          "acceptance_criteria": [
-            "CI runs on every PR",
-            "Failed tests block merge",
-            "Build status visible"
-          ]
+          "id": "T8.1",
+          "task": "Add wallet field to User model",
+          "status": "TODO",
+          "time": "15 min",
+          "details": "Default balance: 10,00,000"
         },
         {
-          "id": "DEVOPS-002",
-          "title": "Create Production Docker Configuration",
-          "description": "Optimize Docker setup for production",
-          "priority": "P2",
-          "estimated_hours": 2,
-          "status": "NOT_STARTED",
-          "assigned_to": "Team Leader",
-          "dependencies": ["SETUP-005"],
-          "subtasks": [
-            "Multi-stage Dockerfile for smaller images",
-            "docker-compose.prod.yml",
-            "Environment variable management",
-            "Health checks configuration"
-          ],
-          "acceptance_criteria": [
-            "Production build < 500MB",
-            "Images build successfully",
-            "Services start correctly"
-          ]
+          "id": "T8.2",
+          "task": "Create Transaction model",
+          "status": "TODO",
+          "time": "30 min",
+          "details": "user, bond, type, quantity, price, date"
+        },
+        {
+          "id": "T8.3",
+          "task": "Create Portfolio model",
+          "status": "TODO",
+          "time": "30 min",
+          "details": "user, holdings array"
+        },
+        {
+          "id": "T8.4",
+          "task": "Create POST /api/paper-trading/buy",
+          "status": "TODO",
+          "time": "45 min",
+          "details": "Validate balance, create transaction, update portfolio"
+        },
+        {
+          "id": "T8.5",
+          "task": "Add Buy button to bond details",
+          "status": "TODO",
+          "time": "20 min",
+          "details": "Opens quantity modal"
+        },
+        {
+          "id": "T8.6",
+          "task": "Create buy modal",
+          "status": "TODO",
+          "time": "45 min",
+          "details": "Quantity input, total price, confirm button"
+        },
+        {
+          "id": "T8.7",
+          "task": "Show success/error notification",
+          "status": "TODO",
+          "time": "20 min",
+          "details": "Toast notification on buy"
+        },
+        {
+          "id": "T8.8",
+          "task": "Test buy flow",
+          "status": "TODO",
+          "time": "20 min",
+          "details": "Buy bond, verify balance & portfolio updated"
         }
-      ]
+      ],
+      "total_time": "4 hours",
+      "deliverable": "Working buy functionality"
+    },
+    "iteration_9": {
+      "name": "Portfolio View",
+      "status": "TODO",
+      "goal": "Users see their holdings",
+      "tasks": [
+        {
+          "id": "T9.1",
+          "task": "Create GET /api/portfolio",
+          "status": "TODO",
+          "time": "30 min",
+          "details": "Return user's holdings with bond details"
+        },
+        {
+          "id": "T9.2",
+          "task": "Create /dashboard/portfolio page",
+          "status": "TODO",
+          "time": "20 min",
+          "details": "Protected portfolio route"
+        },
+        {
+          "id": "T9.3",
+          "task": "Create holdings table",
+          "status": "TODO",
+          "time": "45 min",
+          "details": "Bond name, quantity, avg price, current value"
+        },
+        {
+          "id": "T9.4",
+          "task": "Calculate total values",
+          "status": "TODO",
+          "time": "30 min",
+          "details": "Total investment, current value, P&L"
+        },
+        {
+          "id": "T9.5",
+          "task": "Add portfolio summary card",
+          "status": "TODO",
+          "time": "30 min",
+          "details": "Show totals at top of page"
+        },
+        {
+          "id": "T9.6",
+          "task": "Link from dashboard",
+          "status": "TODO",
+          "time": "10 min",
+          "details": "Navigation to portfolio"
+        }
+      ],
+      "total_time": "3 hours",
+      "deliverable": "Portfolio page showing holdings"
+    },
+    "iteration_10": {
+      "name": "Paper Trading - Sell",
+      "status": "TODO",
+      "goal": "Users can sell their holdings",
+      "tasks": [
+        {
+          "id": "T10.1",
+          "task": "Create POST /api/paper-trading/sell",
+          "status": "TODO",
+          "time": "45 min",
+          "details": "Validate holdings, create transaction, update portfolio"
+        },
+        {
+          "id": "T10.2",
+          "task": "Add Sell button to portfolio",
+          "status": "TODO",
+          "time": "20 min",
+          "details": "Button on each holding row"
+        },
+        {
+          "id": "T10.3",
+          "task": "Create sell modal",
+          "status": "TODO",
+          "time": "45 min",
+          "details": "Quantity input (max = owned), total, confirm"
+        },
+        {
+          "id": "T10.4",
+          "task": "Update wallet on sell",
+          "status": "TODO",
+          "time": "20 min",
+          "details": "Credit amount to wallet"
+        },
+        {
+          "id": "T10.5",
+          "task": "Show success notification",
+          "status": "TODO",
+          "time": "15 min",
+          "details": "Toast on successful sell"
+        },
+        {
+          "id": "T10.6",
+          "task": "Test full trading cycle",
+          "status": "TODO",
+          "time": "20 min",
+          "details": "Buy → Portfolio → Sell → Verify"
+        }
+      ],
+      "total_time": "3 hours",
+      "deliverable": "Complete buy/sell functionality"
+    },
+    "iteration_11": {
+      "name": "Search & Filter",
+      "status": "TODO",
+      "goal": "Find bonds easily",
+      "tasks": [
+        {
+          "id": "T11.1",
+          "task": "Create SearchBar component",
+          "status": "TODO",
+          "time": "30 min",
+          "details": "Input with search icon"
+        },
+        {
+          "id": "T11.2",
+          "task": "Create FilterPanel component",
+          "status": "TODO",
+          "time": "45 min",
+          "details": "Risk filter, return range slider"
+        },
+        {
+          "id": "T11.3",
+          "task": "Update API for query params",
+          "status": "TODO",
+          "time": "30 min",
+          "details": "GET /api/bonds?search=&risk=&minReturn="
+        },
+        {
+          "id": "T11.4",
+          "task": "Implement frontend filtering",
+          "status": "TODO",
+          "time": "30 min",
+          "details": "Update URL params, refetch"
+        },
+        {
+          "id": "T11.5",
+          "task": "Add sort dropdown",
+          "status": "TODO",
+          "time": "20 min",
+          "details": "Sort by return, risk, name"
+        },
+        {
+          "id": "T11.6",
+          "task": "Test search/filter",
+          "status": "TODO",
+          "time": "15 min",
+          "details": "Verify all filters work"
+        }
+      ],
+      "total_time": "3 hours",
+      "deliverable": "Searchable and filterable bonds"
+    },
+    "iteration_12": {
+      "name": "Charts",
+      "status": "TODO",
+      "goal": "Visual data representation",
+      "tasks": [
+        {
+          "id": "T12.1",
+          "task": "Install Recharts",
+          "status": "TODO",
+          "time": "10 min",
+          "details": "npm install recharts"
+        },
+        {
+          "id": "T12.2",
+          "task": "Create PieChart for allocation",
+          "status": "TODO",
+          "time": "45 min",
+          "details": "Portfolio allocation by bond"
+        },
+        {
+          "id": "T12.3",
+          "task": "Create LineChart for history",
+          "status": "TODO",
+          "time": "45 min",
+          "details": "Portfolio value over time (mock data)"
+        },
+        {
+          "id": "T12.4",
+          "task": "Add charts to dashboard",
+          "status": "TODO",
+          "time": "30 min",
+          "details": "Place charts in dashboard"
+        },
+        {
+          "id": "T12.5",
+          "task": "Make charts responsive",
+          "status": "TODO",
+          "time": "20 min",
+          "details": "Work on all screen sizes"
+        }
+      ],
+      "total_time": "2.5 hours",
+      "deliverable": "Dashboard with charts"
+    },
+    "iteration_13": {
+      "name": "Risk Score",
+      "status": "TODO",
+      "goal": "Display AI risk assessment",
+      "tasks": [
+        {
+          "id": "T13.1",
+          "task": "Add riskScore to Bond model",
+          "status": "TODO",
+          "time": "15 min",
+          "details": "Number 0-100"
+        },
+        {
+          "id": "T13.2",
+          "task": "Update seed data with scores",
+          "status": "TODO",
+          "time": "15 min",
+          "details": "Add scores to sample bonds"
+        },
+        {
+          "id": "T13.3",
+          "task": "Create RiskGauge component",
+          "status": "TODO",
+          "time": "45 min",
+          "details": "Visual gauge showing score"
+        },
+        {
+          "id": "T13.4",
+          "task": "Add gauge to bond details",
+          "status": "TODO",
+          "time": "20 min",
+          "details": "Show in bond details page"
+        },
+        {
+          "id": "T13.5",
+          "task": "Add risk badge to BondCard",
+          "status": "TODO",
+          "time": "20 min",
+          "details": "Color-coded risk indicator"
+        }
+      ],
+      "total_time": "2 hours",
+      "deliverable": "Risk scores displayed"
+    },
+    "iteration_14": {
+      "name": "Transaction History",
+      "status": "TODO",
+      "goal": "View all transactions",
+      "tasks": [
+        {
+          "id": "T14.1",
+          "task": "Create GET /api/transactions",
+          "status": "TODO",
+          "time": "30 min",
+          "details": "Return user's transactions"
+        },
+        {
+          "id": "T14.2",
+          "task": "Create transactions page",
+          "status": "TODO",
+          "time": "20 min",
+          "details": "/dashboard/transactions"
+        },
+        {
+          "id": "T14.3",
+          "task": "Create transactions table",
+          "status": "TODO",
+          "time": "45 min",
+          "details": "Date, bond, type, quantity, amount"
+        },
+        {
+          "id": "T14.4",
+          "task": "Add type filter",
+          "status": "TODO",
+          "time": "20 min",
+          "details": "Filter by buy/sell"
+        },
+        {
+          "id": "T14.5",
+          "task": "Add pagination",
+          "status": "TODO",
+          "time": "30 min",
+          "details": "10 per page with navigation"
+        }
+      ],
+      "total_time": "2.5 hours",
+      "deliverable": "Transaction history page"
+    },
+    "iteration_15": {
+      "name": "Landing Page",
+      "status": "TODO",
+      "goal": "Professional landing page",
+      "tasks": [
+        {
+          "id": "T15.1",
+          "task": "Create Hero section",
+          "status": "TODO",
+          "time": "45 min",
+          "details": "Headline, subtext, CTA buttons"
+        },
+        {
+          "id": "T15.2",
+          "task": "Create Features section",
+          "status": "TODO",
+          "time": "45 min",
+          "details": "4-6 feature cards with icons"
+        },
+        {
+          "id": "T15.3",
+          "task": "Create How It Works section",
+          "status": "TODO",
+          "time": "30 min",
+          "details": "3-step process"
+        },
+        {
+          "id": "T15.4",
+          "task": "Create Stats section",
+          "status": "TODO",
+          "time": "20 min",
+          "details": "Platform statistics"
+        },
+        {
+          "id": "T15.5",
+          "task": "Create Footer",
+          "status": "TODO",
+          "time": "20 min",
+          "details": "Links, copyright, social"
+        },
+        {
+          "id": "T15.6",
+          "task": "Add basic animations",
+          "status": "TODO",
+          "time": "30 min",
+          "details": "Fade in on scroll"
+        },
+        {
+          "id": "T15.7",
+          "task": "Polish styling",
+          "status": "TODO",
+          "time": "30 min",
+          "details": "Colors, spacing, typography"
+        }
+      ],
+      "total_time": "4 hours",
+      "deliverable": "Attractive landing page"
+    },
+    "iteration_16": {
+      "name": "Mobile Responsive",
+      "status": "TODO",
+      "goal": "Works on all devices",
+      "tasks": [
+        {
+          "id": "T16.1",
+          "task": "Create mobile navigation",
+          "status": "TODO",
+          "time": "45 min",
+          "details": "Hamburger menu for mobile"
+        },
+        {
+          "id": "T16.2",
+          "task": "Fix bond grid on mobile",
+          "status": "TODO",
+          "time": "30 min",
+          "details": "Single column on small screens"
+        },
+        {
+          "id": "T16.3",
+          "task": "Make tables scrollable",
+          "status": "TODO",
+          "time": "30 min",
+          "details": "Horizontal scroll on mobile"
+        },
+        {
+          "id": "T16.4",
+          "task": "Fix dashboard sidebar",
+          "status": "TODO",
+          "time": "30 min",
+          "details": "Collapsible on mobile"
+        },
+        {
+          "id": "T16.5",
+          "task": "Test all pages on mobile",
+          "status": "TODO",
+          "time": "30 min",
+          "details": "Fix any issues found"
+        }
+      ],
+      "total_time": "3 hours",
+      "deliverable": "Mobile-friendly app"
+    },
+    "iteration_17": {
+      "name": "Profile & Settings",
+      "status": "TODO",
+      "goal": "Manage user account",
+      "tasks": [
+        {
+          "id": "T17.1",
+          "task": "Create profile page",
+          "status": "TODO",
+          "time": "30 min",
+          "details": "/dashboard/profile"
+        },
+        {
+          "id": "T17.2",
+          "task": "Create PUT /api/users/me",
+          "status": "TODO",
+          "time": "30 min",
+          "details": "Update user info"
+        },
+        {
+          "id": "T17.3",
+          "task": "Create edit profile form",
+          "status": "TODO",
+          "time": "45 min",
+          "details": "Name, email fields"
+        },
+        {
+          "id": "T17.4",
+          "task": "Create change password",
+          "status": "TODO",
+          "time": "30 min",
+          "details": "Old password, new password form"
+        },
+        {
+          "id": "T17.5",
+          "task": "Add profile picture placeholder",
+          "status": "TODO",
+          "time": "15 min",
+          "details": "Avatar display"
+        }
+      ],
+      "total_time": "2.5 hours",
+      "deliverable": "Profile management"
+    },
+    "iteration_18": {
+      "name": "Pricing Page",
+      "status": "TODO",
+      "goal": "Show subscription plans",
+      "tasks": [
+        {
+          "id": "T18.1",
+          "task": "Create /pricing page",
+          "status": "TODO",
+          "time": "20 min",
+          "details": "Public pricing page"
+        },
+        {
+          "id": "T18.2",
+          "task": "Create PricingCard component",
+          "status": "TODO",
+          "time": "45 min",
+          "details": "Plan name, price, features, CTA"
+        },
+        {
+          "id": "T18.3",
+          "task": "Create 3 pricing tiers",
+          "status": "TODO",
+          "time": "30 min",
+          "details": "Free, Basic, Premium"
+        },
+        {
+          "id": "T18.4",
+          "task": "Add monthly/yearly toggle",
+          "status": "TODO",
+          "time": "20 min",
+          "details": "Switch prices on toggle"
+        },
+        {
+          "id": "T18.5",
+          "task": "Highlight popular plan",
+          "status": "TODO",
+          "time": "15 min",
+          "details": "Visual emphasis on best value"
+        }
+      ],
+      "total_time": "2 hours",
+      "deliverable": "Pricing page"
+    },
+    "iteration_19": {
+      "name": "WebSocket Real-time",
+      "status": "TODO",
+      "goal": "Live updates",
+      "tasks": [
+        {
+          "id": "T19.1",
+          "task": "Install Socket.io",
+          "status": "TODO",
+          "time": "15 min",
+          "details": "Backend and frontend packages"
+        },
+        {
+          "id": "T19.2",
+          "task": "Setup Socket.io server",
+          "status": "TODO",
+          "time": "30 min",
+          "details": "Initialize with Express"
+        },
+        {
+          "id": "T19.3",
+          "task": "Create socket context",
+          "status": "TODO",
+          "time": "30 min",
+          "details": "Frontend socket connection"
+        },
+        {
+          "id": "T19.4",
+          "task": "Emit price updates",
+          "status": "TODO",
+          "time": "30 min",
+          "details": "Simulate price changes"
+        },
+        {
+          "id": "T19.5",
+          "task": "Update bond prices live",
+          "status": "TODO",
+          "time": "30 min",
+          "details": "UI updates on new prices"
+        },
+        {
+          "id": "T19.6",
+          "task": "Add connection indicator",
+          "status": "TODO",
+          "time": "15 min",
+          "details": "Show connection status"
+        }
+      ],
+      "total_time": "2.5 hours",
+      "deliverable": "Real-time price updates"
+    },
+    "iteration_20": {
+      "name": "Leaderboard",
+      "status": "TODO",
+      "goal": "Top traders ranking",
+      "tasks": [
+        {
+          "id": "T20.1",
+          "task": "Create GET /api/leaderboard",
+          "status": "TODO",
+          "time": "45 min",
+          "details": "Calculate returns, rank users"
+        },
+        {
+          "id": "T20.2",
+          "task": "Create leaderboard page",
+          "status": "TODO",
+          "time": "20 min",
+          "details": "/leaderboard public page"
+        },
+        {
+          "id": "T20.3",
+          "task": "Create leaderboard table",
+          "status": "TODO",
+          "time": "30 min",
+          "details": "Rank, name, return %, total value"
+        },
+        {
+          "id": "T20.4",
+          "task": "Style top 3 specially",
+          "status": "TODO",
+          "time": "20 min",
+          "details": "Gold, silver, bronze styling"
+        },
+        {
+          "id": "T20.5",
+          "task": "Add link to navigation",
+          "status": "TODO",
+          "time": "10 min",
+          "details": "Link in navbar"
+        }
+      ],
+      "total_time": "2 hours",
+      "deliverable": "Working leaderboard"
     }
   },
-  "sprint_planning": {
-    "hackathon_sprint": {
-      "name": "Hackathon MVP Sprint",
-      "duration": "48 hours",
-      "goal": "Deliver working demo of core platform",
-      "day_1": {
-        "hours_1_4": {
-          "focus": "Project Setup",
-          "tasks": ["SETUP-001", "SETUP-002", "SETUP-003", "SETUP-004"]
-        },
-        "hours_5_8": {
-          "focus": "Authentication",
-          "tasks": ["BE-001", "BE-002", "BE-003", "FE-003"]
-        },
-        "hours_9_12": {
-          "focus": "Bond Management",
-          "tasks": ["BE-004", "BE-005", "DB-001", "FE-001"]
-        },
-        "hours_13_16": {
-          "focus": "Bond UI",
-          "tasks": ["FE-007", "FE-008", "FE-014"]
-        },
-        "hours_17_20": {
-          "focus": "Trading Core",
-          "tasks": ["BE-006", "BE-007", "FE-004", "FE-005"]
-        },
-        "hours_21_24": {
-          "focus": "Buffer / Rest",
-          "tasks": ["Bug fixes", "Integration testing"]
-        }
-      },
-      "day_2": {
-        "hours_25_28": {
-          "focus": "Trading UI",
-          "tasks": ["FE-009", "BE-008"]
-        },
-        "hours_29_32": {
-          "focus": "Paper Trading",
-          "tasks": ["BE-009", "FE-011"]
-        },
-        "hours_33_36": {
-          "focus": "AI Analytics",
-          "tasks": ["AI-001", "AI-002", "AI-003", "BE-015"]
-        },
-        "hours_37_40": {
-          "focus": "Landing Page & Polish",
-          "tasks": ["FE-002", "FE-006", "FE-010"]
-        },
-        "hours_41_44": {
-          "focus": "Demo Prep",
-          "tasks": ["DB-002", "DOC-001", "DOC-002"]
-        },
-        "hours_45_48": {
-          "focus": "Final Testing & Demo",
-          "tasks": ["Final bug fixes", "Demo run-through"]
-        }
-      }
+  "summary": {
+    "total_iterations": 21,
+    "total_tasks": 120,
+    "minimum_demo": "Iteration 10 (Core trading)",
+    "full_demo": "Iteration 20 (All features)",
+    "estimated_time": {
+      "to_iteration_10": "30 hours",
+      "to_iteration_15": "45 hours",
+      "to_iteration_20": "60 hours"
     }
   },
-  "dependency_graph": {
-    "critical_path": [
-      "SETUP-001 → SETUP-002/SETUP-003 → SETUP-004 → BE-001 → BE-002 → BE-003 → BE-004 → BE-005 → BE-007 → FE-009"
-    ],
-    "parallel_tracks": {
-      "frontend": "FE-001 → FE-002 (can run parallel to backend)",
-      "animations": "SETUP-006 → FE-014 → FE-002",
-      "ai": "BE-005 → AI-001 → AI-002 → AI-003"
-    }
-  },
-  "notes": {
-    "hackathon_priorities": [
-      "Focus on P0 tasks first",
-      "Skip blockchain integration for MVP (mock it)",
-      "Use mock data if API not ready",
-      "Polish landing page for first impression",
-      "Ensure demo flow works end-to-end"
-    ],
-    "technical_decisions": [
-      "Use MongoDB Atlas free tier for hackathon",
-      "Skip Redis initially, use in-memory cache",
-      "Mock payment gateway with success responses",
-      "Use static AI model, not real ML training"
-    ]
+  "quick_reference": {
+    "current_iteration": 0,
+    "completed_iterations": [],
+    "in_progress": null,
+    "next_up": "Iteration 0: Hello World"
   }
 }

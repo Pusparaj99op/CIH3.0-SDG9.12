@@ -1,766 +1,419 @@
 {
   "project": {
-    "name": "Mudra - Infrastructure Bond Platform Backend",
-    "platform_name": "Mudra",
-    "meaning": "Seal, Stamp, or Money (Sanskrit)",
-    "description": "RESTful API server for tokenizing infrastructure bonds",
-    "version": "1.0.0",
+    "name": "Mudra Backend",
+    "framework": "Express.js",
+    "approach": "Incremental Development",
     "port": 3210
   },
-  "technology_stack": {
-    "runtime": "Node.js 18+",
-    "framework": "Express.js 4.18+",
-    "language": "TypeScript 5.0+",
-    "api_architecture": "RESTful API + GraphQL (optional)",
-    "websocket": "Socket.io 4.6+",
-    "database": "MongoDB 6.0+ with Mongoose",
-    "caching": "Redis 7.0+",
-    "queue": "Bull Queue with Redis",
-    "validation": "Joi + Express Validator",
-    "authentication": "JWT + Passport.js + OAuth 2.0",
-    "testing": "Jest + Supertest + Mocha",
-    "documentation": "Swagger/OpenAPI 3.0",
-    "logging": "Winston + Morgan",
-    "monitoring": "Prometheus + Grafana"
+  "development_phases": {
+    "phase_1_minimal": {
+      "description": "Just get server running",
+      "iterations": "0-2",
+      "stack": "Express.js + CORS",
+      "database": "JSON file (no DB yet)"
+    },
+    "phase_2_database": {
+      "description": "Add MongoDB",
+      "iterations": "3-4",
+      "stack": "Express.js + Mongoose",
+      "database": "MongoDB"
+    },
+    "phase_3_auth": {
+      "description": "Add authentication",
+      "iterations": "5-6",
+      "additions": ["bcryptjs", "jsonwebtoken"],
+      "focus": "Security basics"
+    },
+    "phase_4_trading": {
+      "description": "Trading functionality",
+      "iterations": "7-10",
+      "focus": "Buy/Sell/Portfolio logic"
+    },
+    "phase_5_advanced": {
+      "description": "Polish and extras",
+      "iterations": "11-20",
+      "additions": ["Socket.io", "Redis (optional)"],
+      "focus": "Real-time, performance"
+    }
   },
-  "server_architecture": {
-    "pattern": "MVC with Service Layer",
-    "layers": {
-      "routes": "Define API endpoints and HTTP methods",
-      "controllers": "Handle HTTP requests/responses",
-      "services": "Business logic and data processing",
-      "models": "Data models and database schemas",
-      "middleware": "Request processing pipeline",
-      "utils": "Helper functions and utilities"
-    },
-    "principles": [
-      "Single Responsibility Principle",
-      "Dependency Injection",
-      "Error handling at every layer",
-      "Async/await for all async operations",
-      "Input validation before processing",
-      "Response standardization"
-    ]
-  },
-  "api_design": {
-    "versioning": {
-      "strategy": "URI path versioning",
-      "format": "/api/v1/...",
-      "current_version": "v1"
-    },
-    "base_url": {
-      "development": "http://localhost:3210/api/v1",
-      "staging": "https://api-staging.mudra.com/api/v1",
-      "production": "https://api.mudra.com/api/v1"
-    },
-    "response_format": {
-      "success": {
-        "status": "success",
-        "data": "<response data>",
-        "message": "<optional message>",
-        "timestamp": "ISO 8601 timestamp"
+  "incremental_structure": {
+    "iteration_0": {
+      "folder_structure": {
+        "backend/": {
+          "server.js": "Express app with CORS",
+          "package.json": "Basic dependencies"
+        }
       },
-      "error": {
-        "status": "error",
-        "error": {
-          "code": "ERROR_CODE",
-          "message": "Human readable message",
-          "details": "<additional context>"
+      "endpoints": [
+        {
+          "method": "GET",
+          "path": "/api/health",
+          "description": "Health check",
+          "returns": "{ status: 'ok', timestamp: Date }"
+        }
+      ],
+      "dependencies": ["express", "cors", "dotenv"],
+      "files_to_create": 2
+    },
+    "iteration_2": {
+      "additions": {
+        "data/": {
+          "bonds.json": "Sample bond data"
         },
-        "timestamp": "ISO 8601 timestamp",
-        "request_id": "Unique request identifier"
+        "routes/": {
+          "bonds.js": "Bond routes"
+        }
       },
-      "pagination": {
-        "data": "Array of items",
-        "pagination": {
-          "page": "Current page number",
-          "limit": "Items per page",
-          "total": "Total items",
-          "total_pages": "Total pages",
-          "has_next": "Boolean",
-          "has_prev": "Boolean"
+      "endpoints": [
+        {
+          "method": "GET",
+          "path": "/api/bonds",
+          "description": "Get all bonds",
+          "returns": "Array of bonds from JSON file"
+        }
+      ],
+      "files_to_create": 2
+    },
+    "iteration_3": {
+      "additions": {
+        "config/": {
+          "db.js": "MongoDB connection"
+        },
+        "models/": {
+          "Bond.js": "Bond schema"
+        },
+        "scripts/": {
+          "seed.js": "Database seeding"
+        }
+      },
+      "endpoints": [
+        {
+          "method": "GET",
+          "path": "/api/bonds",
+          "description": "Get all bonds from MongoDB",
+          "returns": "Array of Bond documents"
+        },
+        {
+          "method": "GET",
+          "path": "/api/bonds/:id",
+          "description": "Get single bond",
+          "returns": "Bond document or 404"
+        }
+      ],
+      "dependencies_add": ["mongoose"],
+      "files_to_create": 3
+    },
+    "iteration_5": {
+      "additions": {
+        "models/": {
+          "User.js": "User schema"
+        },
+        "routes/": {
+          "auth.js": "Authentication routes"
+        },
+        "middleware/": {
+          "auth.js": "JWT verification middleware"
+        }
+      },
+      "endpoints": [
+        {
+          "method": "POST",
+          "path": "/api/auth/register",
+          "description": "Register new user",
+          "body": "{ email, password, name }",
+          "returns": "{ token, user }"
+        },
+        {
+          "method": "POST",
+          "path": "/api/auth/login",
+          "description": "Login user",
+          "body": "{ email, password }",
+          "returns": "{ token, user }"
+        }
+      ],
+      "dependencies_add": ["bcryptjs", "jsonwebtoken"],
+      "files_to_create": 3
+    },
+    "iteration_6": {
+      "additions": {
+        "routes/": {
+          "users.js": "User routes"
+        }
+      },
+      "endpoints": [
+        {
+          "method": "GET",
+          "path": "/api/users/me",
+          "description": "Get current user",
+          "auth": "Required",
+          "returns": "User document"
+        }
+      ],
+      "files_to_create": 1
+    },
+    "iteration_8_9_10": {
+      "additions": {
+        "models/": {
+          "Transaction.js": "Transaction schema",
+          "Portfolio.js": "Portfolio schema"
+        },
+        "routes/": {
+          "trading.js": "Trading routes",
+          "portfolio.js": "Portfolio routes"
+        }
+      },
+      "endpoints": [
+        {
+          "method": "POST",
+          "path": "/api/paper-trading/buy",
+          "description": "Buy bonds",
+          "auth": "Required",
+          "body": "{ bondId, quantity }",
+          "returns": "{ transaction, newBalance }"
+        },
+        {
+          "method": "POST",
+          "path": "/api/paper-trading/sell",
+          "description": "Sell bonds",
+          "auth": "Required",
+          "body": "{ bondId, quantity }",
+          "returns": "{ transaction, newBalance }"
+        },
+        {
+          "method": "GET",
+          "path": "/api/portfolio",
+          "description": "Get user portfolio",
+          "auth": "Required",
+          "returns": "Portfolio with holdings"
+        }
+      ],
+      "files_to_create": 4
+    },
+    "iteration_11": {
+      "modifications": {
+        "routes/bonds.js": "Add search/filter query params"
+      },
+      "endpoints": [
+        {
+          "method": "GET",
+          "path": "/api/bonds?search=&risk=&minReturn=&sort=",
+          "description": "Search and filter bonds",
+          "returns": "Filtered array of bonds"
+        }
+      ]
+    },
+    "iteration_14": {
+      "additions": {
+        "routes/": {
+          "transactions.js": "Transaction history routes"
+        }
+      },
+      "endpoints": [
+        {
+          "method": "GET",
+          "path": "/api/transactions?type=&page=&limit=",
+          "description": "Get transaction history",
+          "auth": "Required",
+          "returns": "Paginated transactions"
+        }
+      ],
+      "files_to_create": 1
+    },
+    "iteration_17": {
+      "modifications": {
+        "routes/users.js": "Add profile update"
+      },
+      "endpoints": [
+        {
+          "method": "PUT",
+          "path": "/api/users/me",
+          "description": "Update user profile",
+          "auth": "Required",
+          "body": "{ name, email }",
+          "returns": "Updated user"
+        },
+        {
+          "method": "PUT",
+          "path": "/api/users/me/password",
+          "description": "Change password",
+          "auth": "Required",
+          "body": "{ oldPassword, newPassword }",
+          "returns": "Success message"
+        }
+      ]
+    },
+    "iteration_19": {
+      "additions": {
+        "socket/": {
+          "index.js": "Socket.io setup",
+          "priceUpdates.js": "Price simulation"
+        }
+      },
+      "dependencies_add": ["socket.io"],
+      "features": ["Real-time price updates", "Connection management"],
+      "files_to_create": 2
+    },
+    "iteration_20": {
+      "additions": {
+        "routes/": {
+          "leaderboard.js": "Leaderboard routes"
+        }
+      },
+      "endpoints": [
+        {
+          "method": "GET",
+          "path": "/api/leaderboard",
+          "description": "Get top traders",
+          "returns": "Ranked list of users by returns"
+        }
+      ],
+      "files_to_create": 1
+    }
+  },
+  "models_by_iteration": {
+    "iteration_3": {
+      "Bond": {
+        "fields": {
+          "name": "String, required",
+          "issuer": "String, required",
+          "returnRate": "Number, required",
+          "riskLevel": "String, enum: [Low, Medium, High]",
+          "price": "Number, required",
+          "description": "String"
         }
       }
     },
-    "http_methods": {
-      "GET": "Retrieve resources",
-      "POST": "Create new resources",
-      "PUT": "Update entire resource",
-      "PATCH": "Partial update",
-      "DELETE": "Remove resource"
-    },
-    "status_codes": {
-      "200": "OK - Successful GET, PUT, PATCH",
-      "201": "Created - Successful POST",
-      "204": "No Content - Successful DELETE",
-      "400": "Bad Request - Invalid input",
-      "401": "Unauthorized - Authentication required",
-      "403": "Forbidden - Insufficient permissions",
-      "404": "Not Found - Resource doesn't exist",
-      "409": "Conflict - Duplicate resource",
-      "422": "Unprocessable Entity - Validation error",
-      "429": "Too Many Requests - Rate limit exceeded",
-      "500": "Internal Server Error",
-      "503": "Service Unavailable"
-    }
-  },
-  "authentication_authorization": {
-    "jwt_configuration": {
-      "algorithm": "HS256",
-      "access_token_expiry": "1 hour",
-      "refresh_token_expiry": "7 days",
-      "issuer": "mudra-api",
-      "secret_rotation": "Every 90 days",
-      "token_structure": {
-        "user_id": "MongoDB ObjectId",
-        "email": "User email",
-        "role": "User role",
-        "subscription": "Subscription tier",
-        "iat": "Issued at timestamp",
-        "exp": "Expiration timestamp"
+    "iteration_5": {
+      "User": {
+        "fields": {
+          "email": "String, required, unique",
+          "password": "String, required (hashed)",
+          "name": "String, required",
+          "wallet": "Number, default: 1000000",
+          "createdAt": "Date, default: now"
+        }
       }
     },
-    "password_security": {
-      "hashing": "bcrypt with 10 rounds",
-      "min_length": 8,
-      "requirements": [
-        "At least 1 uppercase letter",
-        "At least 1 lowercase letter",
-        "At least 1 number",
-        "At least 1 special character"
-      ],
-      "reset_token_expiry": "1 hour",
-      "lockout_policy": "5 failed attempts = 15 min lockout"
-    },
-    "oauth_providers": {
-      "google": "Google OAuth 2.0",
-      "github": "GitHub OAuth",
-      "strategy": "Passport.js strategies"
-    },
-    "rbac": {
-      "roles": {
-        "user": ["view_bonds", "trade", "view_portfolio", "update_profile"],
-        "premium_user": ["all user permissions", "ai_recommendations", "paper_trading", "advanced_analytics"],
-        "broker": ["all user permissions", "api_access", "bulk_operations"],
-        "admin": ["all permissions", "user_management", "bond_creation", "system_config"]
+    "iteration_8": {
+      "Transaction": {
+        "fields": {
+          "user": "ObjectId, ref: User",
+          "bond": "ObjectId, ref: Bond",
+          "type": "String, enum: [buy, sell]",
+          "quantity": "Number, required",
+          "price": "Number, required",
+          "total": "Number, required",
+          "createdAt": "Date, default: now"
+        }
       },
-      "middleware": "requireRole(['admin', 'user'])"
-    }
-  },
-  "controllers": {
-    "authController": {
-      "endpoints": [
-        "POST /auth/register - User registration",
-        "POST /auth/login - User login",
-        "POST /auth/logout - Logout user",
-        "POST /auth/refresh - Refresh access token",
-        "POST /auth/forgot-password - Request password reset",
-        "POST /auth/reset-password - Reset password",
-        "GET /auth/verify-email - Email verification",
-        "POST /auth/resend-verification - Resend verification email"
-      ],
-      "validation": [
-        "Email format validation",
-        "Password strength validation",
-        "Token validation"
-      ]
-    },
-    "bondController": {
-      "endpoints": [
-        "GET /bonds - List all bonds with filters",
-        "GET /bonds/:id - Get bond details",
-        "POST /bonds - Create new bond (admin)",
-        "PUT /bonds/:id - Update bond (admin)",
-        "DELETE /bonds/:id - Delete bond (admin)",
-        "GET /bonds/:id/analytics - Get AI analytics",
-        "GET /bonds/:id/documents - Get bond documents",
-        "GET /bonds/search - Search bonds",
-        "GET /bonds/recommendations - AI recommendations",
-        "POST /bonds/compare - Compare multiple bonds"
-      ],
-      "filters": [
-        "risk_category (low/medium/high)",
-        "min_return / max_return",
-        "maturity_date range",
-        "issuer",
-        "project_type",
-        "credit_rating"
-      ]
-    },
-    "tradingController": {
-      "endpoints": [
-        "POST /trading/buy - Buy bonds",
-        "POST /trading/sell - Sell bonds",
-        "POST /trading/bid - Place bid",
-        "GET /trading/order-book - Get order book",
-        "GET /trading/trades - Get trade history",
-        "GET /trading/trades/:id - Get trade details",
-        "POST /trading/cancel-order - Cancel pending order",
-        "GET /trading/market-depth - Get market depth"
-      ],
-      "validation": [
-        "Sufficient balance check",
-        "Minimum quantity validation",
-        "Price range validation",
-        "Trading hours validation"
-      ],
-      "business_logic": [
-        "Order matching algorithm",
-        "Price calculation",
-        "Fee calculation (0.25%)",
-        "Settlement processing",
-        "Blockchain transaction initiation"
-      ]
-    },
-    "portfolioController": {
-      "endpoints": [
-        "GET /portfolio - Get portfolio summary",
-        "GET /portfolio/holdings - Get bond holdings",
-        "GET /portfolio/performance - Performance metrics",
-        "GET /portfolio/transactions - Transaction history",
-        "GET /portfolio/returns - Calculate returns",
-        "POST /portfolio/watchlist - Add to watchlist",
-        "DELETE /portfolio/watchlist/:bondId - Remove from watchlist"
-      ],
-      "calculations": [
-        "Total portfolio value",
-        "Profit/Loss (absolute and %)",
-        "Asset allocation",
-        "Return on investment (ROI)",
-        "Realized vs unrealized gains"
-      ]
-    },
-    "userController": {
-      "endpoints": [
-        "GET /users/profile - Get user profile",
-        "PUT /users/profile - Update profile",
-        "POST /users/avatar - Upload avatar",
-        "POST /users/kyc - Submit KYC documents",
-        "GET /users/kyc-status - Check KYC status",
-        "POST /users/link-wallet - Link blockchain wallet",
-        "GET /users/api-credentials - Get API key",
-        "POST /users/regenerate-api-key - Regenerate API key",
-        "PUT /users/preferences - Update preferences"
-      ]
-    },
-    "paymentController": {
-      "endpoints": [
-        "POST /payments/initiate - Initiate payment",
-        "POST /payments/verify - Verify payment",
-        "GET /payments/history - Payment history",
-        "POST /payments/erupee - Process e-Rupee payment",
-        "GET /payments/balance - Get wallet balance",
-        "POST /payments/withdraw - Withdraw funds"
-      ],
-      "integration": [
-        "e-Rupees CBDC API",
-        "Escrow smart contract",
-        "Payment gateway webhooks"
-      ]
-    },
-    "analyticsController": {
-      "endpoints": [
-        "GET /analytics/bond/:id/prediction - AI predictions",
-        "GET /analytics/bond/:id/risk - Risk assessment",
-        "GET /analytics/bond/:id/returns - Expected returns",
-        "GET /analytics/market/top-players - Top bonds",
-        "GET /analytics/market/trends - Market trends",
-        "GET /analytics/transparency - Transparency report",
-        "GET /analytics/user/insights - Personalized insights"
-      ],
-      "ai_models": [
-        "Risk scoring model (Random Forest)",
-        "Return prediction (LSTM)",
-        "Recommendation engine (Collaborative filtering)",
-        "Sentiment analysis (NLP)"
-      ]
-    },
-    "brokerController": {
-      "endpoints": [
-        "GET /brokers/supported - List supported brokers",
-        "POST /brokers/link - Link broker account",
-        "DELETE /brokers/unlink/:id - Unlink account",
-        "GET /brokers/accounts - Get linked accounts",
-        "POST /brokers/sync - Sync broker data",
-        "GET /brokers/:id/positions - Get positions"
-      ],
-      "supported_brokers": ["Dhan", "AngelOne", "Zerodha", "Upstox"]
-    },
-    "subscriptionController": {
-      "endpoints": [
-        "GET /subscriptions/plans - List plans",
-        "POST /subscriptions/subscribe - Subscribe",
-        "PUT /subscriptions/upgrade - Upgrade plan",
-        "DELETE /subscriptions/cancel - Cancel subscription",
-        "GET /subscriptions/current - Current subscription",
-        "GET /subscriptions/features - Available features",
-        "POST /subscriptions/payment - Process payment"
-      ]
-    },
-    "regulatoryController": {
-      "endpoints": [
-        "GET /regulatory/feed - Get regulatory updates",
-        "GET /regulatory/notifications - SEBI/RBI notifications",
-        "GET /regulatory/compliance-score - User compliance",
-        "GET /regulatory/documents - Regulatory documents",
-        "POST /regulatory/subscribe - Subscribe to updates"
-      ]
-    },
-    "adminController": {
-      "endpoints": [
-        "GET /admin/users - List all users",
-        "PUT /admin/users/:id - Update user",
-        "DELETE /admin/users/:id - Delete user",
-        "PUT /admin/users/:id/kyc - Approve/Reject KYC",
-        "GET /admin/analytics - Platform analytics",
-        "GET /admin/transactions - All transactions",
-        "POST /admin/bonds - Create bond",
-        "PUT /admin/bonds/:id - Update bond",
-        "GET /admin/reports - Generate reports"
-      ],
-      "protected": "Admin role required"
-    }
-  },
-  "services": {
-    "bondService": {
-      "responsibilities": [
-        "Bond CRUD operations",
-        "Bond search and filtering",
-        "Bond comparison logic",
-        "Issuer validation",
-        "Document management"
-      ],
-      "external_apis": ["MPIndia API for municipal bonds"]
-    },
-    "tradingService": {
-      "responsibilities": [
-        "Order matching engine",
-        "Price calculation",
-        "Order validation",
-        "Settlement processing",
-        "Fee calculation",
-        "Transaction recording"
-      ],
-      "algorithms": {
-        "matching": "FIFO (First In First Out)",
-        "pricing": "Best bid/ask matching"
+      "Portfolio": {
+        "fields": {
+          "user": "ObjectId, ref: User, unique",
+          "holdings": [{
+            "bond": "ObjectId, ref: Bond",
+            "quantity": "Number",
+            "avgPrice": "Number"
+          }]
+        }
       }
     },
-    "aiService": {
-      "responsibilities": [
-        "Bond recommendations",
-        "Risk scoring",
-        "Return predictions",
-        "Market sentiment analysis",
-        "Portfolio optimization"
-      ],
-      "models": {
-        "recommendation": "Collaborative Filtering + Content-Based",
-        "risk_assessment": "Random Forest Classifier",
-        "return_prediction": "LSTM Neural Network",
-        "sentiment": "BERT-based NLP model"
-      },
-      "model_serving": "TensorFlow Serving or FastAPI microservice"
-    },
-    "paymentService": {
-      "responsibilities": [
-        "Payment initiation",
-        "Payment verification",
-        "Refund processing",
-        "Wallet management",
-        "Transaction recording"
-      ],
-      "providers": {
-        "primary": "e-Rupees (CBDC)",
-        "fallback": "UPI/Bank transfer"
-      }
-    },
-    "blockchainService": {
-      "responsibilities": [
-        "Smart contract interaction",
-        "Token transfer",
-        "Transaction signing",
-        "Event listening",
-        "Gas estimation"
-      ],
-      "libraries": ["ethers.js", "web3.js"],
-      "network": "Polygon (Mumbai testnet for dev)"
-    },
-    "notificationService": {
-      "responsibilities": [
-        "Send email notifications",
-        "Send SMS notifications",
-        "Push notifications",
-        "In-app notifications",
-        "Notification templates"
-      ],
-      "providers": {
-        "email": "SendGrid",
-        "sms": "Twilio",
-        "push": "Firebase Cloud Messaging"
-      },
-      "events": [
-        "Trade execution",
-        "Payment confirmation",
-        "KYC status update",
-        "Regulatory updates",
-        "Price alerts"
-      ]
-    },
-    "marketDataService": {
-      "responsibilities": [
-        "Aggregate market data",
-        "Update bond prices",
-        "Calculate market indices",
-        "Sync with external APIs"
-      ],
-      "sources": ["Binance", "Dhan", "AngelOne", "MPIndia"],
-      "update_frequency": "Real-time via WebSocket"
-    },
-    "kycService": {
-      "responsibilities": [
-        "Document validation",
-        "Aadhaar verification",
-        "DigiLocker integration",
-        "KYC status management",
-        "Compliance checking"
-      ],
-      "verification_process": [
-        "Document upload",
-        "OCR extraction",
-        "Aadhaar eKYC API call",
-        "Manual review (if needed)",
-        "Approval/Rejection"
-      ]
-    },
-    "cacheService": {
-      "responsibilities": [
-        "Cache frequently accessed data",
-        "Invalidate stale cache",
-        "Cache warming",
-        "Session management"
-      ],
-      "cached_data": [
-        "Bond listings (5 min TTL)",
-        "Market data (1 min TTL)",
-        "User sessions",
-        "API responses"
-      ]
-    }
-  },
-  "middleware": {
-    "authMiddleware": {
-      "function": "Verify JWT token",
-      "checks": ["Token presence", "Token validity", "Token expiry", "User existence"],
-      "attach": "req.user object"
-    },
-    "validationMiddleware": {
-      "function": "Validate request data",
-      "libraries": ["Joi", "Express Validator"],
-      "validates": ["Body", "Query params", "Route params", "Headers"]
-    },
-    "rateLimitMiddleware": {
-      "function": "Limit API requests",
-      "strategy": "Token bucket with Redis",
-      "limits": {
-        "free": "60 req/min",
-        "basic": "120 req/min",
-        "premium": "300 req/min",
-        "enterprise": "1000 req/min"
-      }
-    },
-    "errorMiddleware": {
-      "function": "Global error handling",
-      "features": [
-        "Error logging",
-        "Error formatting",
-        "Stack trace (dev only)",
-        "Sentry integration"
-      ]
-    },
-    "loggerMiddleware": {
-      "function": "Log HTTP requests",
-      "library": "Morgan + Winston",
-      "logs": ["Method", "URL", "Status", "Response time", "User ID"]
-    },
-    "corsMiddleware": {
-      "function": "Handle CORS",
-      "allowed_origins": ["https://mudra.com", "http://localhost:3000"],
-      "methods": ["GET", "POST", "PUT", "PATCH", "DELETE"],
-      "credentials": true
-    },
-    "uploadMiddleware": {
-      "function": "Handle file uploads",
-      "library": "Multer",
-      "storage": "AWS S3",
-      "limits": {
-        "file_size": "10MB",
-        "files": 5
-      },
-      "allowed_types": ["image/jpeg", "image/png", "application/pdf"]
-    }
-  },
-  "websocket_implementation": {
-    "server": "Socket.io",
-    "namespaces": {
-      "/market": "Market data updates",
-      "/user": "User-specific notifications",
-      "/trading": "Trading updates"
-    },
-    "events": {
-      "server_to_client": [
-        "bond:price:update",
-        "bond:orderbook:update",
-        "market:sentiment",
-        "portfolio:update",
-        "order:status",
-        "payment:status",
-        "notification",
-        "kyc:status",
-        "regulation:update"
-      ],
-      "client_to_server": [
-        "subscribe",
-        "unsubscribe",
-        "ping"
-      ]
-    },
-    "authentication": "JWT token in handshake",
-    "heartbeat": "30 second ping/pong",
-    "reconnection": "Exponential backoff"
-  },
-  "background_jobs": {
-    "scheduler": "node-cron",
-    "queue": "Bull Queue with Redis",
-    "jobs": {
-      "portfolioUpdate": {
-        "schedule": "Every 5 minutes",
-        "task": "Update portfolio values based on current prices"
-      },
-      "marketDataSync": {
-        "schedule": "Every 1 minute",
-        "task": "Sync market data from external APIs"
-      },
-      "analyticsGeneration": {
-        "schedule": "Daily at 2 AM",
-        "task": "Generate AI analytics and predictions"
-      },
-      "reportGeneration": {
-        "schedule": "Weekly on Sunday",
-        "task": "Generate weekly reports for users"
-      },
-      "kycReminder": {
-        "schedule": "Daily at 10 AM",
-        "task": "Send KYC completion reminders"
-      },
-      "databaseBackup": {
-        "schedule": "Daily at 3 AM",
-        "task": "Backup database to S3"
-      },
-      "cacheWarming": {
-        "schedule": "Every 30 minutes",
-        "task": "Pre-populate cache with popular data"
+    "iteration_13": {
+      "Bond_update": {
+        "add_field": {
+          "riskScore": "Number, min: 0, max: 100"
+        }
       }
     }
   },
-  "database_operations": {
-    "connection": {
-      "library": "Mongoose",
-      "pool_size": 10,
-      "auto_index": false,
-      "retry_writes": true,
-      "connection_string": "mongodb://localhost:27017/mudra"
-    },
-    "indexes": {
-      "user": ["email", "wallet_address"],
-      "bond": ["bond_id", "issuer", "status", "risk_category"],
-      "transaction": ["user_id", "bond_id", "timestamp"],
-      "portfolio": ["user_id"]
-    },
-    "aggregations": [
-      "Portfolio value calculation",
-      "Market statistics",
-      "User analytics",
-      "Top performing bonds"
-    ],
-    "transactions": "MongoDB sessions for atomic operations"
+  "middleware_progression": {
+    "iteration_0": "None",
+    "iteration_5": "auth.js - JWT verification",
+    "iteration_8": "Same",
+    "iteration_15": "Add rate limiting (optional)"
   },
-  "error_handling": {
-    "strategy": "Centralized error handling",
-    "error_classes": {
-      "ValidationError": "400 - Invalid input",
-      "AuthenticationError": "401 - Auth required",
-      "AuthorizationError": "403 - Insufficient permissions",
-      "NotFoundError": "404 - Resource not found",
-      "ConflictError": "409 - Duplicate resource",
-      "RateLimitError": "429 - Too many requests",
-      "ServerError": "500 - Internal error",
-      "ServiceUnavailableError": "503 - Service down"
-    },
-    "logging": {
-      "error_logs": "Winston to file + Sentry",
-      "audit_logs": "Separate collection in MongoDB",
-      "retention": "90 days for regular, 7 years for audit"
+  "api_endpoints_summary": {
+    "total_by_iteration": {
+      "iteration_0": 1,
+      "iteration_3": 3,
+      "iteration_5": 5,
+      "iteration_6": 6,
+      "iteration_10": 9,
+      "iteration_14": 10,
+      "iteration_17": 12,
+      "iteration_20": 13
     }
   },
-  "security": {
-    "helmet": "Security headers middleware",
-    "hpp": "Prevent HTTP parameter pollution",
-    "xss_clean": "Sanitize user input",
-    "mongo_sanitize": "Prevent NoSQL injection",
-    "rate_limiting": "Prevent brute force",
-    "input_validation": "Validate all inputs",
-    "output_encoding": "Encode outputs to prevent XSS",
-    "csrf_protection": "CSRF tokens for state-changing operations",
-    "sql_injection": "N/A (using MongoDB)",
-    "secrets_management": "Environment variables, never hardcoded"
-  },
-  "testing": {
-    "unit_tests": {
-      "framework": "Jest",
-      "coverage_target": "80%+",
-      "scope": "Services, utilities, helpers"
-    },
-    "integration_tests": {
-      "framework": "Jest + Supertest",
-      "scope": "API endpoints, database operations"
-    },
-    "load_tests": {
-      "tool": "Artillery / K6",
-      "scenarios": [
-        "1000 concurrent users",
-        "Peak trading hours simulation"
-      ]
-    },
-    "test_database": "Separate MongoDB instance",
-    "mocking": "Jest mocks for external APIs"
-  },
-  "performance_optimization": {
-    "caching": {
-      "strategy": "Cache-Aside pattern",
-      "redis": "Session store, API cache",
-      "ttl": "Varies by data type (1-60 min)"
-    },
-    "database": {
-      "indexing": "Strategic indexes on query fields",
-      "query_optimization": "Projection to select only needed fields",
-      "aggregation": "Use aggregation pipeline for complex queries",
-      "connection_pooling": "10 connections in pool"
-    },
-    "async_operations": {
-      "queue": "Bull Queue for background jobs",
-      "workers": "Separate worker processes"
-    },
-    "compression": {
-      "middleware": "compression",
-      "gzip": "Compress responses > 1KB"
+  "folder_structure_final": {
+    "backend/": {
+      "server.js": "Main entry point",
+      "config/": {
+        "db.js": "Database connection"
+      },
+      "models/": {
+        "Bond.js": "",
+        "User.js": "",
+        "Transaction.js": "",
+        "Portfolio.js": ""
+      },
+      "routes/": {
+        "auth.js": "",
+        "bonds.js": "",
+        "users.js": "",
+        "trading.js": "",
+        "portfolio.js": "",
+        "transactions.js": "",
+        "leaderboard.js": ""
+      },
+      "middleware/": {
+        "auth.js": ""
+      },
+      "socket/": {
+        "index.js": "",
+        "priceUpdates.js": ""
+      },
+      "data/": {
+        "bonds.json": "Sample data"
+      },
+      "scripts/": {
+        "seed.js": "Database seeding"
+      }
     }
   },
-  "monitoring_logging": {
-    "application_logs": {
-      "library": "Winston",
-      "levels": ["error", "warn", "info", "debug"],
-      "transports": ["Console", "File", "MongoDB"],
-      "format": "JSON with timestamp, level, message, metadata"
+  "dependencies_progression": {
+    "iteration_0": {
+      "dependencies": ["express", "cors", "dotenv"],
+      "devDependencies": ["nodemon"]
     },
-    "access_logs": {
-      "library": "Morgan",
-      "format": "combined",
-      "output": "access.log file"
+    "iteration_3": {
+      "add": ["mongoose"]
     },
-    "error_tracking": {
-      "service": "Sentry",
-      "features": ["Error aggregation", "Stack traces", "User context", "Alerts"]
+    "iteration_5": {
+      "add": ["bcryptjs", "jsonwebtoken"]
     },
-    "metrics": {
-      "service": "Prometheus",
-      "metrics": [
-        "Request count",
-        "Response time",
-        "Error rate",
-        "Active connections",
-        "Database query time"
-      ],
-      "visualization": "Grafana dashboards"
-    },
-    "health_checks": {
-      "endpoint": "GET /health",
-      "checks": ["Database connection", "Redis connection", "External API status"]
+    "iteration_19": {
+      "add": ["socket.io"]
     }
   },
-  "deployment": {
-    "containerization": {
-      "docker": "Multi-stage Dockerfile",
-      "base_image": "node:18-alpine",
-      "exposed_port": 3210
-    },
-    "orchestration": {
-      "development": "Docker Compose",
-      "production": "Kubernetes (optional)"
-    },
-    "environment_variables": {
-      "required": [
-        "NODE_ENV",
-        "PORT",
-        "MONGODB_URI",
-        "REDIS_URL",
-        "JWT_SECRET",
-        "API keys for external services"
-      ]
-    },
-    "process_manager": {
-      "development": "nodemon",
-      "production": "PM2",
-      "instances": "cluster mode (4 instances)"
-    },
-    "ci_cd": {
-      "platform": "GitHub Actions",
-      "pipeline": [
-        "Lint code",
-        "Run tests",
-        "Build Docker image",
-        "Security scan",
-        "Deploy to staging",
-        "Run E2E tests",
-        "Deploy to production (manual)"
-      ]
+  "environment_variables": {
+    "PORT": "3210",
+    "MONGODB_URI": "mongodb://localhost:27017/mudra",
+    "JWT_SECRET": "your-secret-key",
+    "NODE_ENV": "development"
+  },
+  "quick_start_commands": {
+    "create_folder": "mkdir backend && cd backend",
+    "init": "npm init -y",
+    "install_basic": "npm install express cors dotenv",
+    "install_dev": "npm install -D nodemon",
+    "run_dev": "npm run dev",
+    "scripts": {
+      "start": "node server.js",
+      "dev": "nodemon server.js"
     }
   },
-  "api_documentation": {
-    "tool": "Swagger / OpenAPI 3.0",
-    "endpoint": "GET /api-docs",
-    "features": [
-      "Interactive API explorer",
-      "Request/Response examples",
-      "Authentication documentation",
-      "Error code reference"
-    ],
-    "generation": "swagger-jsdoc from JSDoc comments"
-  },
-  "development_workflow": {
-    "local_setup": [
-      "npm install",
-      "cp .env.example .env",
-      "docker-compose up -d (MongoDB + Redis)",
-      "npm run dev"
-    ],
-    "hot_reload": "nodemon watches TypeScript files",
-    "debugging": "VS Code debugger configuration included",
-    "linting": "ESLint + Prettier",
-    "pre_commit": "Husky hooks for linting and tests"
-  },
-  "scalability_considerations": {
-    "horizontal_scaling": "Stateless servers, scale with load balancer",
-    "database_scaling": "MongoDB sharding for large datasets",
-    "caching": "Redis cluster for distributed caching",
-    "message_queue": "Bull Queue for async processing",
-    "microservices_ready": "Modular architecture allows easy extraction"
-  },
-  "future_enhancements": {
-    "graphql": "GraphQL API alongside REST",
-    "grpc": "gRPC for internal microservice communication",
-    "serverless": "AWS Lambda functions for specific tasks",
-    "ml_pipeline": "Dedicated ML service for AI models",
-    "blockchain_node": "Run own blockchain node for reliability"
+  "error_handling_approach": {
+    "iteration_0_4": "Basic try-catch, send 500",
+    "iteration_5_10": "Custom error messages",
+    "iteration_11_20": "Error middleware, proper status codes"
   }
 }

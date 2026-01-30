@@ -1,883 +1,385 @@
 {
   "project": {
-    "name": "Mudra - Database Architecture",
-    "platform_name": "Mudra",
-    "database_type": "NoSQL - Document Store",
-    "database": "MongoDB 6.0+",
-    "description": "Database design for infrastructure bond tokenization platform"
+    "name": "Mudra Database",
+    "database": "MongoDB",
+    "approach": "Incremental Schema Development"
   },
-  "database_configuration": {
-    "mongodb": {
-      "version": "6.0+",
-      "deployment": {
-        "development": "Local MongoDB instance",
-        "staging": "MongoDB Atlas M10 cluster",
-        "production": "MongoDB Atlas M30 cluster with replica set"
-      },
-      "connection": {
-        "pool_size": 10,
-        "max_idle_time": "10 minutes",
-        "retry_writes": true,
-        "write_concern": "majority",
-        "read_preference": "primaryPreferred"
-      },
-      "replica_set": {
-        "members": 3,
-        "configuration": "1 Primary + 2 Secondary",
-        "automatic_failover": true
+  "development_approach": {
+    "principle": "Start with one model, add more as needed",
+    "methodology": "Each iteration adds only what's necessary",
+    "no_premature_optimization": "Simple schemas first, add indexes later"
+  },
+  "incremental_schema": {
+    "iteration_0_2": {
+      "database": "None (JSON file)",
+      "reason": "Get frontend working first",
+      "data_file": "data/bonds.json"
+    },
+    "iteration_3": {
+      "database": "MongoDB",
+      "collections": ["bonds"],
+      "models": {
+        "Bond": {
+          "purpose": "Store bond information",
+          "schema": {
+            "name": {
+              "type": "String",
+              "required": true,
+              "example": "National Highway Authority Bond"
+            },
+            "issuer": {
+              "type": "String",
+              "required": true,
+              "example": "NHAI"
+            },
+            "returnRate": {
+              "type": "Number",
+              "required": true,
+              "example": 7.5,
+              "description": "Annual return percentage"
+            },
+            "riskLevel": {
+              "type": "String",
+              "enum": ["Low", "Medium", "High"],
+              "default": "Medium"
+            },
+            "price": {
+              "type": "Number",
+              "required": true,
+              "example": 1000,
+              "description": "Price per unit in INR"
+            },
+            "description": {
+              "type": "String",
+              "example": "Government-backed infrastructure bond"
+            },
+            "createdAt": {
+              "type": "Date",
+              "default": "Date.now"
+            }
+          }
+        }
       }
     },
-    "redis": {
-      "version": "7.0+",
-      "purpose": "Caching and session management",
-      "deployment": {
-        "development": "Local Redis",
-        "production": "Redis Cloud with high availability"
-      },
-      "eviction_policy": "allkeys-lru",
-      "max_memory": "2GB (production)"
-    }
-  },
-  "collections_schema": {
-    "users": {
-      "description": "User accounts and authentication",
-      "collection_name": "users",
-      "schema": {
-        "_id": {
-          "type": "ObjectId",
-          "description": "Primary key"
-        },
-        "email": {
-          "type": "String",
-          "required": true,
-          "unique": true,
-          "lowercase": true,
-          "trim": true,
-          "index": true
-        },
-        "password": {
-          "type": "String",
-          "required": true,
-          "select": false,
-          "description": "Bcrypt hashed password"
-        },
-        "name": {
-          "first_name": "String",
-          "last_name": "String",
-          "required": true
-        },
-        "phone": {
-          "type": "String",
-          "unique": true,
-          "sparse": true
-        },
-        "avatar": {
-          "type": "String",
-          "description": "URL to avatar image"
-        },
-        "role": {
-          "type": "String",
-          "enum": ["user", "premium_user", "broker", "admin"],
-          "default": "user"
-        },
-        "kyc": {
-          "status": {
-            "type": "String",
-            "enum": ["pending", "submitted", "verified", "rejected"],
-            "default": "pending"
-          },
-          "aadhaar_number": "String (encrypted)",
-          "pan_number": "String (encrypted)",
-          "documents": [
-            {
+    "iteration_5": {
+      "collections": ["bonds", "users"],
+      "new_model": {
+        "User": {
+          "purpose": "Store user accounts",
+          "schema": {
+            "email": {
               "type": "String",
-              "url": "String",
-              "uploaded_at": "Date"
+              "required": true,
+              "unique": true,
+              "lowercase": true
+            },
+            "password": {
+              "type": "String",
+              "required": true,
+              "note": "Stored as bcrypt hash"
+            },
+            "name": {
+              "type": "String",
+              "required": true
+            },
+            "wallet": {
+              "type": "Number",
+              "default": 1000000,
+              "description": "Paper trading balance in INR"
+            },
+            "createdAt": {
+              "type": "Date",
+              "default": "Date.now"
             }
-          ],
-          "verified_at": "Date",
-          "verified_by": "ObjectId (ref: User)",
-          "rejection_reason": "String"
-        },
-        "wallet_address": {
-          "type": "String",
-          "unique": true,
-          "sparse": true,
-          "index": true,
-          "description": "Blockchain wallet address"
-        },
-        "subscription": {
-          "tier": {
-            "type": "String",
-            "enum": ["free", "basic", "premium", "enterprise"],
-            "default": "free",
-            "index": true
-          },
-          "billing_cycle": {
-            "type": "String",
-            "enum": ["monthly", "yearly"]
-          },
-          "start_date": "Date",
-          "expiry_date": "Date",
-          "auto_renew": {
-            "type": "Boolean",
-            "default": false
-          },
-          "payment_method": "String"
-        },
-        "broker_accounts": [
-          {
-            "broker_id": "ObjectId (ref: BrokerAccount)",
-            "linked_at": "Date"
           }
-        ],
-        "api_credentials": {
-          "api_key": "String (hashed)",
-          "api_secret": "String (encrypted)",
-          "created_at": "Date",
-          "last_used": "Date"
-        },
-        "preferences": {
-          "language": {
-            "type": "String",
-            "default": "en"
-          },
-          "theme": {
-            "type": "String",
-            "enum": ["light", "dark", "system"],
-            "default": "system"
-          },
-          "notifications": {
-            "email": "Boolean",
-            "sms": "Boolean",
-            "push": "Boolean"
-          },
-          "risk_tolerance": {
-            "type": "String",
-            "enum": ["low", "medium", "high"]
-          }
-        },
-        "security": {
-          "two_factor_enabled": "Boolean",
-          "two_factor_secret": "String (encrypted)",
-          "login_attempts": "Number",
-          "locked_until": "Date",
-          "password_reset_token": "String",
-          "password_reset_expires": "Date",
-          "email_verification_token": "String",
-          "email_verified": "Boolean"
-        },
-        "is_active": {
-          "type": "Boolean",
-          "default": true
-        },
-        "created_at": {
-          "type": "Date",
-          "default": "Date.now"
-        },
-        "updated_at": {
-          "type": "Date",
-          "default": "Date.now"
-        },
-        "last_login": "Date"
-      },
-      "indexes": [
-        { "email": 1 },
-        { "wallet_address": 1 },
-        { "subscription.tier": 1 },
-        { "kyc.status": 1 },
-        { "created_at": -1 }
-      ]
-    },
-    "bonds": {
-      "description": "Infrastructure bond listings",
-      "collection_name": "bonds",
-      "schema": {
-        "_id": "ObjectId",
-        "bond_id": {
-          "type": "String",
-          "required": true,
-          "unique": true,
-          "index": true,
-          "description": "Human-readable bond identifier"
-        },
-        "issuer": {
-          "name": "String",
-          "type": {
-            "type": "String",
-            "enum": ["government", "municipal", "corporate", "ppp"]
-          },
-          "registration_number": "String",
-          "contact": {
-            "email": "String",
-            "phone": "String",
-            "address": "String"
-          },
-          "index": true
-        },
-        "project": {
-          "name": "String (required)",
-          "description": "String",
-          "type": {
-            "type": "String",
-            "enum": ["road", "bridge", "airport", "port", "energy", "water", "railway", "smart_city"],
-            "index": true
-          },
-          "location": {
-            "state": "String",
-            "city": "String",
-            "coordinates": {
-              "type": "Point",
-              "coordinates": ["Number"]
-            }
-          },
-          "timeline": {
-            "start_date": "Date",
-            "expected_completion": "Date"
-          },
-          "estimated_cost": "Number"
-        },
-        "token": {
-          "symbol": "String",
-          "contract_address": "String",
-          "blockchain": {
-            "type": "String",
-            "default": "polygon"
-          },
-          "decimals": {
-            "type": "Number",
-            "default": 18
-          }
-        },
-        "financial": {
-          "face_value": {
-            "type": "Number",
-            "required": true,
-            "min": 1000
-          },
-          "coupon_rate": {
-            "type": "Number",
-            "required": true,
-            "description": "Annual interest rate percentage"
-          },
-          "coupon_frequency": {
-            "type": "String",
-            "enum": ["monthly", "quarterly", "semi-annual", "annual"],
-            "default": "quarterly"
-          },
-          "issue_date": "Date",
-          "maturity_date": "Date (required)",
-          "yield_to_maturity": "Number",
-          "current_price": "Number",
-          "accrued_interest": "Number"
-        },
-        "supply": {
-          "total_supply": "Number (required)",
-          "available_supply": "Number",
-          "minimum_investment": {
-            "type": "Number",
-            "default": 1000
-          },
-          "maximum_investment": "Number"
-        },
-        "risk": {
-          "category": {
-            "type": "String",
-            "enum": ["low", "medium", "high"],
-            "required": true,
-            "index": true
-          },
-          "credit_rating": {
-            "rating": "String (e.g., AAA, AA, A, BBB)",
-            "agency": "String (e.g., CRISIL, ICRA)",
-            "date": "Date"
-          },
-          "ai_risk_score": {
-            "type": "Number",
-            "min": 0,
-            "max": 100,
-            "description": "AI-calculated risk score"
-          }
-        },
-        "status": {
-          "type": "String",
-          "enum": ["upcoming", "active", "closed", "matured", "defaulted"],
-          "default": "upcoming",
-          "index": true
-        },
-        "documents": [
-          {
-            "name": "String",
-            "type": "String (e.g., prospectus, financial_statement)",
-            "url": "String",
-            "uploaded_at": "Date"
-          }
-        ],
-        "analytics": {
-          "views": "Number",
-          "watchlist_count": "Number",
-          "trade_volume_24h": "Number",
-          "unique_investors": "Number"
-        },
-        "metadata": {
-          "created_by": "ObjectId (ref: User)",
-          "approved_by": "ObjectId (ref: User)",
-          "tags": ["String"],
-          "featured": "Boolean"
-        },
-        "created_at": "Date",
-        "updated_at": "Date"
-      },
-      "indexes": [
-        { "bond_id": 1 },
-        { "issuer.name": 1 },
-        { "status": 1 },
-        { "risk.category": 1 },
-        { "project.type": 1 },
-        { "financial.maturity_date": 1 },
-        { "created_at": -1 },
-        { "analytics.trade_volume_24h": -1 }
-      ]
-    },
-    "transactions": {
-      "description": "All buy/sell transactions",
-      "collection_name": "transactions",
-      "schema": {
-        "_id": "ObjectId",
-        "transaction_id": {
-          "type": "String",
-          "required": true,
-          "unique": true,
-          "index": true
-        },
-        "user_id": {
-          "type": "ObjectId",
-          "ref": "User",
-          "required": true,
-          "index": true
-        },
-        "bond_id": {
-          "type": "ObjectId",
-          "ref": "Bond",
-          "required": true,
-          "index": true
-        },
-        "type": {
-          "type": "String",
-          "enum": ["buy", "sell", "transfer", "maturity_redemption"],
-          "required": true
-        },
-        "quantity": {
-          "type": "Number",
-          "required": true,
-          "min": 1
-        },
-        "price_per_unit": "Number (required)",
-        "total_amount": "Number (required)",
-        "fees": {
-          "platform_fee": "Number",
-          "transaction_fee": "Number",
-          "gas_fee": "Number",
-          "total_fees": "Number"
-        },
-        "payment": {
-          "method": {
-            "type": "String",
-            "enum": ["erupee", "upi", "wallet", "bank_transfer"]
-          },
-          "payment_id": "String",
-          "status": {
-            "type": "String",
-            "enum": ["pending", "processing", "completed", "failed", "refunded"],
-            "index": true
-          }
-        },
-        "blockchain": {
-          "transaction_hash": "String",
-          "block_number": "Number",
-          "confirmations": "Number",
-          "gas_used": "Number"
-        },
-        "broker": {
-          "broker_id": "ObjectId (ref: BrokerAccount)",
-          "reference_id": "String"
-        },
-        "settlement": {
-          "date": "Date",
-          "status": {
-            "type": "String",
-            "enum": ["pending", "settled", "failed"]
-          }
-        },
-        "timestamp": {
-          "type": "Date",
-          "default": "Date.now",
-          "index": true
-        },
-        "metadata": {
-          "ip_address": "String",
-          "user_agent": "String",
-          "notes": "String"
         }
-      },
-      "indexes": [
-        { "transaction_id": 1 },
-        { "user_id": 1, "timestamp": -1 },
-        { "bond_id": 1, "timestamp": -1 },
-        { "payment.status": 1 },
-        { "timestamp": -1 }
-      ]
+      }
     },
-    "portfolios": {
-      "description": "User portfolio holdings and performance",
-      "collection_name": "portfolios",
-      "schema": {
-        "_id": "ObjectId",
-        "user_id": {
-          "type": "ObjectId",
-          "ref": "User",
-          "required": true,
-          "unique": true,
-          "index": true
-        },
-        "holdings": [
-          {
-            "bond_id": "ObjectId (ref: Bond)",
-            "quantity": "Number",
-            "average_buy_price": "Number",
-            "current_price": "Number",
-            "invested_amount": "Number",
-            "current_value": "Number",
-            "unrealized_gain_loss": "Number",
-            "unrealized_gain_loss_percent": "Number",
-            "first_purchase_date": "Date",
-            "last_updated": "Date"
-          }
-        ],
-        "summary": {
-          "total_investment": "Number",
-          "current_value": "Number",
-          "total_returns": "Number",
-          "return_percentage": "Number",
-          "realized_gains": "Number",
-          "unrealized_gains": "Number"
-        },
-        "allocation": {
-          "by_risk": {
-            "low": "Number (percentage)",
-            "medium": "Number",
-            "high": "Number"
-          },
-          "by_project_type": {
-            "road": "Number",
-            "bridge": "Number",
-            "energy": "Number"
+    "iteration_8": {
+      "collections": ["bonds", "users", "transactions", "portfolios"],
+      "new_models": {
+        "Transaction": {
+          "purpose": "Record all buy/sell operations",
+          "schema": {
+            "user": {
+              "type": "ObjectId",
+              "ref": "User",
+              "required": true,
+              "index": true
+            },
+            "bond": {
+              "type": "ObjectId",
+              "ref": "Bond",
+              "required": true
+            },
+            "type": {
+              "type": "String",
+              "enum": ["buy", "sell"],
+              "required": true
+            },
+            "quantity": {
+              "type": "Number",
+              "required": true,
+              "min": 1
+            },
+            "pricePerUnit": {
+              "type": "Number",
+              "required": true
+            },
+            "totalAmount": {
+              "type": "Number",
+              "required": true
+            },
+            "createdAt": {
+              "type": "Date",
+              "default": "Date.now",
+              "index": true
+            }
           }
         },
-        "watchlist": [
-          {
-            "bond_id": "ObjectId (ref: Bond)",
-            "added_at": "Date",
-            "target_price": "Number",
-            "notes": "String"
+        "Portfolio": {
+          "purpose": "Track user bond holdings",
+          "schema": {
+            "user": {
+              "type": "ObjectId",
+              "ref": "User",
+              "required": true,
+              "unique": true,
+              "index": true
+            },
+            "holdings": {
+              "type": "Array",
+              "items": {
+                "bond": {
+                  "type": "ObjectId",
+                  "ref": "Bond"
+                },
+                "quantity": {
+                  "type": "Number",
+                  "min": 0
+                },
+                "averagePrice": {
+                  "type": "Number"
+                },
+                "totalInvested": {
+                  "type": "Number"
+                }
+              }
+            },
+            "totalValue": {
+              "type": "Number",
+              "default": 0
+            },
+            "updatedAt": {
+              "type": "Date",
+              "default": "Date.now"
+            }
           }
-        ],
-        "last_calculated": "Date",
-        "updated_at": "Date"
-      },
-      "indexes": [
-        { "user_id": 1 },
-        { "summary.total_returns": -1 }
-      ]
+        }
+      }
     },
-    "subscriptions": {
-      "description": "User subscription details",
-      "collection_name": "subscriptions",
-      "schema": {
-        "_id": "ObjectId",
-        "user_id": {
-          "type": "ObjectId",
-          "ref": "User",
-          "required": true,
-          "index": true
-        },
-        "plan": {
-          "tier": {
-            "type": "String",
-            "enum": ["basic", "premium", "enterprise"],
-            "required": true
-          },
-          "name": "String",
-          "features": ["String"]
-        },
-        "billing": {
-          "cycle": {
-            "type": "String",
-            "enum": ["monthly", "yearly"]
-          },
-          "amount": "Number",
-          "currency": {
-            "type": "String",
-            "default": "INR"
-          },
-          "next_billing_date": "Date"
-        },
-        "period": {
-          "start_date": "Date",
-          "end_date": "Date"
-        },
-        "auto_renew": {
-          "type": "Boolean",
-          "default": true
-        },
-        "status": {
-          "type": "String",
-          "enum": ["active", "cancelled", "expired", "suspended"],
-          "index": true
-        },
-        "payment_history": [
-          {
-            "payment_id": "String",
-            "amount": "Number",
-            "date": "Date",
-            "status": "String"
+    "iteration_13": {
+      "schema_updates": {
+        "Bond": {
+          "add_fields": {
+            "riskScore": {
+              "type": "Number",
+              "min": 0,
+              "max": 100,
+              "description": "AI-calculated risk score"
+            },
+            "sector": {
+              "type": "String",
+              "enum": ["Infrastructure", "Energy", "Transport", "Urban", "Other"]
+            },
+            "maturityDate": {
+              "type": "Date"
+            },
+            "minInvestment": {
+              "type": "Number",
+              "default": 1000
+            }
           }
-        ],
-        "cancellation": {
-          "cancelled_at": "Date",
-          "cancelled_by": "ObjectId (ref: User)",
-          "reason": "String"
-        },
-        "created_at": "Date",
-        "updated_at": "Date"
-      },
-      "indexes": [
-        { "user_id": 1 },
-        { "status": 1 },
-        { "period.end_date": 1 }
-      ]
+        }
+      }
     },
-    "broker_accounts": {
-      "description": "Linked broker account information",
-      "collection_name": "broker_accounts",
-      "schema": {
-        "_id": "ObjectId",
-        "user_id": {
-          "type": "ObjectId",
-          "ref": "User",
-          "required": true,
-          "index": true
-        },
-        "broker": {
-          "name": {
-            "type": "String",
-            "enum": ["dhan", "angelone", "zerodha", "upstox"],
-            "required": true
-          },
-          "account_id": "String"
-        },
-        "credentials": {
-          "api_key": "String (encrypted)",
-          "api_secret": "String (encrypted)",
-          "access_token": "String (encrypted)",
-          "refresh_token": "String (encrypted)"
-        },
-        "is_active": {
-          "type": "Boolean",
-          "default": true
-        },
-        "sync": {
-          "last_sync": "Date",
-          "sync_frequency": {
-            "type": "String",
-            "default": "daily"
-          },
-          "auto_sync": {
-            "type": "Boolean",
-            "default": true
+    "iteration_19": {
+      "schema_updates": {
+        "Bond": {
+          "add_fields": {
+            "currentPrice": {
+              "type": "Number",
+              "description": "Real-time price for WebSocket updates"
+            },
+            "priceHistory": {
+              "type": "Array",
+              "items": {
+                "price": "Number",
+                "timestamp": "Date"
+              },
+              "description": "Price changes for charts"
+            }
           }
-        },
-        "created_at": "Date",
-        "updated_at": "Date"
-      },
-      "indexes": [
-        { "user_id": 1 },
-        { "broker.name": 1 }
-      ]
-    },
-    "analytics": {
-      "description": "AI-generated predictions and analytics",
-      "collection_name": "analytics",
-      "schema": {
-        "_id": "ObjectId",
-        "bond_id": {
-          "type": "ObjectId",
-          "ref": "Bond",
-          "required": true,
-          "index": true
-        },
-        "prediction": {
-          "date": "Date",
-          "expected_return": {
-            "value": "Number",
-            "confidence": "Number (0-1)"
-          },
-          "risk_score": {
-            "value": "Number (0-100)",
-            "factors": ["String"]
-          },
-          "recommended_action": {
-            "type": "String",
-            "enum": ["buy", "hold", "sell"]
-          },
-          "market_sentiment": {
-            "type": "String",
-            "enum": ["positive", "neutral", "negative"]
-          }
-        },
-        "model": {
-          "version": "String",
-          "algorithm": "String",
-          "training_date": "Date",
-          "accuracy": "Number"
-        },
-        "valid_until": "Date",
-        "created_at": "Date"
-      },
-      "indexes": [
-        { "bond_id": 1, "prediction.date": -1 },
-        { "created_at": -1 }
-      ]
-    },
-    "paper_trades": {
-      "description": "Practice trading transactions",
-      "collection_name": "paper_trades",
-      "schema": {
-        "_id": "ObjectId",
-        "user_id": {
-          "type": "ObjectId",
-          "ref": "User",
-          "required": true,
-          "index": true
-        },
-        "bond_id": {
-          "type": "ObjectId",
-          "ref": "Bond",
-          "required": true
-        },
-        "type": {
-          "type": "String",
-          "enum": ["buy", "sell"]
-        },
-        "quantity": "Number",
-        "price": "Number",
-        "total_value": "Number",
-        "virtual_balance_before": "Number",
-        "virtual_balance_after": "Number",
-        "pnl": "Number",
-        "timestamp": "Date"
-      },
-      "indexes": [
-        { "user_id": 1, "timestamp": -1 }
-      ]
-    },
-    "notifications": {
-      "description": "User notifications",
-      "collection_name": "notifications",
-      "schema": {
-        "_id": "ObjectId",
-        "user_id": {
-          "type": "ObjectId",
-          "ref": "User",
-          "index": true
-        },
-        "type": {
-          "type": "String",
-          "enum": ["trade", "payment", "kyc", "regulatory", "price_alert", "system"]
-        },
-        "title": "String",
-        "message": "String",
-        "data": "Mixed (additional context)",
-        "priority": {
-          "type": "String",
-          "enum": ["low", "medium", "high"],
-          "default": "medium"
-        },
-        "read": {
-          "type": "Boolean",
-          "default": false,
-          "index": true
-        },
-        "action_url": "String",
-        "created_at": "Date"
-      },
-      "indexes": [
-        { "user_id": 1, "read": 1, "created_at": -1 }
-      ]
-    },
-    "api_usage": {
-      "description": "Custom API usage tracking",
-      "collection_name": "api_usage",
-      "schema": {
-        "_id": "ObjectId",
-        "user_id": {
-          "type": "ObjectId",
-          "ref": "User",
-          "index": true
-        },
-        "api_key": "String (hashed)",
-        "endpoint": "String",
-        "method": "String",
-        "status_code": "Number",
-        "response_time": "Number (milliseconds)",
-        "timestamp": {
-          "type": "Date",
-          "index": true
-        },
-        "ip_address": "String",
-        "user_agent": "String"
-      },
-      "indexes": [
-        { "user_id": 1, "timestamp": -1 },
-        { "api_key": 1, "timestamp": -1 }
-      ],
-      "ttl": "30 days"
-    },
-    "audit_logs": {
-      "description": "Audit trail for compliance",
-      "collection_name": "audit_logs",
-      "schema": {
-        "_id": "ObjectId",
-        "event_type": {
-          "type": "String",
-          "enum": ["user_login", "user_logout", "transaction", "kyc_submission", "admin_action", "config_change"],
-          "index": true
-        },
-        "user_id": "ObjectId (ref: User)",
-        "action": "String",
-        "resource_type": "String",
-        "resource_id": "ObjectId",
-        "changes": {
-          "before": "Mixed",
-          "after": "Mixed"
-        },
-        "metadata": {
-          "ip_address": "String",
-          "user_agent": "String",
-          "session_id": "String"
-        },
-        "timestamp": "Date"
-      },
-      "indexes": [
-        { "user_id": 1, "timestamp": -1 },
-        { "event_type": 1, "timestamp": -1 },
-        { "timestamp": -1 }
-      ],
-      "retention": "7 years (regulatory requirement)"
+        }
+      }
     }
   },
-  "indexes_strategy": {
-    "principles": [
-      "Index fields used in queries",
-      "Compound indexes for multi-field queries",
-      "Descending index for timestamp queries",
-      "Unique indexes for identifier fields",
-      "Sparse indexes for optional unique fields"
-    ],
-    "monitoring": "Use explain() to analyze query performance",
-    "maintenance": "Regular index analysis and optimization"
-  },
-  "data_relationships": {
-    "users_to_portfolios": "One-to-One",
-    "users_to_transactions": "One-to-Many",
-    "bonds_to_transactions": "One-to-Many",
-    "users_to_subscriptions": "One-to-Many",
-    "users_to_broker_accounts": "One-to-Many",
-    "bonds_to_analytics": "One-to-Many",
-    "referential_integrity": "Enforced at application level"
-  },
-  "data_migration": {
-    "tool": "migrate-mongo",
-    "strategy": "Version-controlled migration scripts",
-    "rollback": "Supported with down() functions",
-    "testing": "Test migrations on staging before production"
-  },
-  "backup_strategy": {
-    "frequency": {
-      "full_backup": "Daily at 3 AM IST",
-      "incremental_backup": "Every 6 hours"
-    },
-    "retention": {
-      "daily_backups": "30 days",
-      "weekly_backups": "3 months",
-      "monthly_backups": "1 year"
-    },
-    "storage": "AWS S3 with cross-region replication",
-    "encryption": "AES-256 encrypted backups",
-    "restore_testing": "Weekly restore tests to verify backup integrity"
-  },
-  "performance_optimization": {
-    "indexes": "Strategic indexes on frequently queried fields",
-    "projection": "Select only required fields in queries",
-    "aggregation_pipeline": "Use for complex queries instead of multiple queries",
-    "connection_pooling": "10 connections in pool",
-    "query_optimization": "Use explain() to analyze and optimize queries",
-    "caching": "Redis for frequently accessed data"
-  },
-  "security": {
-    "encryption_at_rest": "MongoDB encryption enabled",
-    "encryption_in_transit": "TLS/SSL for all connections",
-    "field_level_encryption": "Sensitive fields (Aadhaar, PAN, API keys) encrypted",
-    "access_control": "Role-based access control (RBAC)",
-    "network_security": "VPC with IP whitelisting",
-    "audit_logging": "All database operations logged"
-  },
-  "monitoring": {
-    "tools": ["MongoDB Atlas Monitoring", "Prometheus", "Grafana"],
-    "metrics": [
-      "Query performance",
-      "Index usage",
-      "Connection pool utilization",
-      "Disk usage",
-      "Replication lag",
-      "Slow queries (> 100ms)"
-    ],
-    "alerts": [
-      "High disk usage (> 80%)",
-      "Slow queries",
-      "Replication lag",
-      "Connection pool exhaustion"
+  "sample_data": {
+    "bonds": [
+      {
+        "name": "NHAI Infrastructure Bond 2025",
+        "issuer": "National Highways Authority of India",
+        "returnRate": 7.5,
+        "riskLevel": "Low",
+        "price": 1000,
+        "riskScore": 25,
+        "description": "Government-backed highway development bond"
+      },
+      {
+        "name": "Mumbai Metro Phase 4 Bond",
+        "issuer": "Mumbai Metro Rail Corporation",
+        "returnRate": 8.2,
+        "riskLevel": "Low",
+        "price": 1500,
+        "riskScore": 30,
+        "description": "Urban transit infrastructure bond"
+      },
+      {
+        "name": "Solar Power Infrastructure Bond",
+        "issuer": "NTPC Renewable Energy Ltd",
+        "returnRate": 9.0,
+        "riskLevel": "Medium",
+        "price": 2000,
+        "riskScore": 45,
+        "description": "Green energy infrastructure bond"
+      },
+      {
+        "name": "Smart City Development Bond",
+        "issuer": "Smart Cities Mission SPV",
+        "returnRate": 8.5,
+        "riskLevel": "Medium",
+        "price": 2500,
+        "riskScore": 50,
+        "description": "Urban development and smart infrastructure"
+      },
+      {
+        "name": "Port Expansion Bond",
+        "issuer": "Adani Ports and SEZ Ltd",
+        "returnRate": 10.5,
+        "riskLevel": "High",
+        "price": 5000,
+        "riskScore": 70,
+        "description": "Maritime infrastructure expansion bond"
+      },
+      {
+        "name": "Railway Electrification Bond",
+        "issuer": "Indian Railways Finance Corporation",
+        "returnRate": 7.8,
+        "riskLevel": "Low",
+        "price": 1200,
+        "riskScore": 20,
+        "description": "Railway modernization and electrification"
+      },
+      {
+        "name": "Water Infrastructure Bond",
+        "issuer": "Jal Jeevan Mission",
+        "returnRate": 7.2,
+        "riskLevel": "Low",
+        "price": 800,
+        "riskScore": 22,
+        "description": "Rural water supply infrastructure"
+      },
+      {
+        "name": "Data Center Infrastructure Bond",
+        "issuer": "NxtGen Datacenter & Cloud Tech",
+        "returnRate": 11.0,
+        "riskLevel": "High",
+        "price": 3000,
+        "riskScore": 65,
+        "description": "Digital infrastructure expansion"
+      },
+      {
+        "name": "Airport Development Bond",
+        "issuer": "GMR Airports Infrastructure Ltd",
+        "returnRate": 9.5,
+        "riskLevel": "Medium",
+        "price": 4000,
+        "riskScore": 55,
+        "description": "Aviation infrastructure development"
+      },
+      {
+        "name": "Expressway Development Bond",
+        "issuer": "Uttar Pradesh Expressways Authority",
+        "returnRate": 8.8,
+        "riskLevel": "Medium",
+        "price": 1800,
+        "riskScore": 40,
+        "description": "State highway and expressway projects"
+      }
     ]
   },
-  "data_validation": {
-    "mongoose_schemas": "Schema validation at application level",
-    "mongodb_validators": "JSON schema validation at database level",
-    "custom_validators": "Business logic validation in pre-save hooks"
-  },
-  "scalability": {
-    "vertical_scaling": "Increase instance size (RAM, CPU)",
-    "horizontal_scaling": {
-      "sharding": "Shard by user_id for even distribution",
-      "shard_key": "user_id (hashed sharding)",
-      "when": "When data exceeds 2TB"
+  "indexes_by_iteration": {
+    "iteration_3": {
+      "bonds": ["name (text)", "riskLevel"]
     },
-    "read_scaling": "Read replicas for read-heavy operations",
-    "write_scaling": "Shard cluster for write-heavy operations"
-  },
-  "data_lifecycle": {
-    "hot_data": "Recent 90 days in main cluster (fast access)",
-    "warm_data": "90 days - 2 years in archived collection (moderate access)",
-    "cold_data": "2+ years in S3 Glacier (rare access, compliance)",
-    "ttl_indexes": {
-      "api_usage": "30 days",
-      "notifications": "90 days (read notifications)",
-      "sessions": "7 days"
+    "iteration_5": {
+      "users": ["email (unique)"]
+    },
+    "iteration_8": {
+      "transactions": ["user", "createdAt"],
+      "portfolios": ["user (unique)"]
+    },
+    "iteration_11": {
+      "bonds": ["returnRate", "riskScore", "price"]
     }
   },
-  "compliance": {
-    "gdpr_ready": "User data deletion on request",
-    "data_localization": "All data stored in India (Mumbai region)",
-    "audit_trail": "Complete audit logs for 7 years",
-    "pii_handling": "Encryption for all PII data"
+  "connection_config": {
+    "development": {
+      "uri": "mongodb://localhost:27017/mudra_dev",
+      "options": {
+        "useNewUrlParser": true,
+        "useUnifiedTopology": true
+      }
+    },
+    "production": {
+      "uri": "process.env.MONGODB_URI",
+      "options": {
+        "useNewUrlParser": true,
+        "useUnifiedTopology": true,
+        "maxPoolSize": 10
+      }
+    }
+  },
+  "seed_script_iterations": {
+    "iteration_3": {
+      "collections": ["bonds"],
+      "data": "10 sample bonds"
+    },
+    "iteration_5": {
+      "collections": ["bonds", "users"],
+      "data": "10 bonds + 5 test users"
+    },
+    "iteration_8": {
+      "collections": ["bonds", "users", "portfolios"],
+      "data": "10 bonds + 5 users + sample portfolios"
+    }
+  },
+  "backup_strategy": {
+    "hackathon": "Manual export before major changes",
+    "post_hackathon": "MongoDB Atlas with automated backups"
+  },
+  "redis_optional": {
+    "when_to_add": "Post-hackathon or if performance issues",
+    "use_cases": [
+      "Session caching",
+      "Rate limiting",
+      "Real-time price caching"
+    ]
+  },
+  "quick_start": {
+    "install_mongodb": "Using local MongoDB or MongoDB Atlas",
+    "connection_test": "mongosh mongodb://localhost:27017",
+    "create_db": "use mudra_dev",
+    "run_seed": "node scripts/seed.js"
   }
 }

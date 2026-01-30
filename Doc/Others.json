@@ -1,559 +1,277 @@
 {
   "project": {
-    "name": "Mudra - Additional Documentation",
-    "platform_name": "Mudra",
-    "meaning": "Seal, Stamp, or Money (Sanskrit)",
-    "tagline": "Democratizing Infrastructure Investment Through Blockchain",
-    "description": "Comprehensive documentation for testing, deployment, security, and operational procedures"
+    "name": "Mudra - Other Configurations",
+    "approach": "Incremental Development"
   },
-  "brand_identity": {
-    "platform_name": "Mudra",
-    "etymology": {
-      "origin": "Sanskrit",
-      "meanings": [
-        "Seal or Stamp - Symbolizing authenticity and verification",
-        "Money or Currency - Representing financial transactions",
-        "Gesture or Sign - Indicating digital transformation"
-      ],
-      "relevance": "Perfect for a platform that tokenizes (seals) infrastructure bonds into digital currency"
+  "testing_by_iteration": {
+    "philosophy": "Test what matters, when it matters",
+    "iteration_0_5": {
+      "testing": "Manual testing only",
+      "reason": "Moving fast, features changing rapidly",
+      "method": "Browser DevTools + Postman/Thunder Client"
     },
-    "brand_values": [
-      "Trust & Transparency",
-      "Innovation & Technology",
-      "Accessibility & Inclusion",
-      "Security & Compliance",
-      "Sustainable Infrastructure"
+    "iteration_6_10": {
+      "testing": "Basic API testing",
+      "tools": ["Postman Collection", "Manual UI testing"],
+      "focus": "Auth flow, trading logic"
+    },
+    "iteration_11_15": {
+      "testing": "Consider automated tests",
+      "tools": ["Jest (optional)", "Postman automated"],
+      "focus": "Critical paths only"
+    },
+    "iteration_16_20": {
+      "testing": "Add if time permits",
+      "tools": ["Jest", "React Testing Library"],
+      "focus": "Regression prevention"
+    }
+  },
+  "deployment_strategy": {
+    "iteration_0_10": {
+      "deployment": "Local development only",
+      "frontend": "localhost:3000",
+      "backend": "localhost:3210",
+      "database": "localhost:27017"
+    },
+    "iteration_11_15": {
+      "deployment": "Prepare for demo",
+      "options": [
+        {
+          "name": "Vercel + Railway",
+          "frontend": "Vercel (free)",
+          "backend": "Railway (free tier)",
+          "database": "MongoDB Atlas (free)"
+        },
+        {
+          "name": "Local network",
+          "method": "Run on laptop, share via ngrok",
+          "cost": "Free"
+        }
+      ]
+    },
+    "iteration_16_20": {
+      "deployment": "Production-ready",
+      "recommended": {
+        "frontend": "Vercel",
+        "backend": "Railway or Render",
+        "database": "MongoDB Atlas M0",
+        "domain": "Optional custom domain"
+      }
+    }
+  },
+  "version_control": {
+    "branching_simple": {
+      "main": "Always working code",
+      "development": "Current work",
+      "workflow": "develop → test → merge to main"
+    },
+    "commit_frequency": "After each working feature",
+    "commit_messages": {
+      "format": "iteration-X: description",
+      "examples": [
+        "iteration-0: basic server setup",
+        "iteration-3: mongodb connection",
+        "iteration-5: user authentication"
+      ]
+    }
+  },
+  "documentation_approach": {
+    "iteration_0_10": {
+      "focus": "Code comments only",
+      "readme": "Basic setup instructions"
+    },
+    "iteration_11_15": {
+      "focus": "API documentation",
+      "method": "Postman collection export or simple README"
+    },
+    "iteration_16_20": {
+      "focus": "Demo documentation",
+      "includes": ["Setup guide", "Features list", "Screenshots"]
+    }
+  },
+  "team_workflow": {
+    "team_members": {
+      "pranay": {
+        "role": "Team Lead / Full Stack",
+        "focus": ["Architecture", "Integration", "Debugging"]
+      },
+      "abhijit": {
+        "role": "Backend Developer",
+        "focus": ["API development", "Database", "Business logic"]
+      },
+      "samiksh": {
+        "role": "Frontend Developer",
+        "focus": ["UI components", "Pages", "Styling"]
+      },
+      "vineet": {
+        "role": "Documentation & Support",
+        "focus": ["Docs", "Testing", "Presentation"]
+      }
+    },
+    "parallel_work": {
+      "iteration_0": "All together - basic setup",
+      "iteration_1_2": {
+        "frontend": "Samiksh - UI components",
+        "backend": "Abhijit - API endpoints",
+        "integration": "Pranay - Connect both"
+      },
+      "iteration_3_4": {
+        "frontend": "Samiksh - Bond details page",
+        "backend": "Abhijit - MongoDB + Bond API",
+        "docs": "Vineet - Test and document"
+      },
+      "iteration_5_6": {
+        "frontend": "Samiksh - Auth pages",
+        "backend": "Abhijit - Auth APIs",
+        "integration": "Pranay - Auth flow"
+      },
+      "iteration_7_10": {
+        "frontend": "Samiksh - Dashboard + Trading UI",
+        "backend": "Abhijit - Trading APIs",
+        "testing": "Vineet - Test trading flow"
+      }
+    },
+    "daily_sync": "15 min standup - What done, what next, blockers"
+  },
+  "hackathon_priorities": {
+    "must_have": {
+      "iterations": "0-10",
+      "features": [
+        "Display bonds",
+        "User registration/login",
+        "Paper trading (buy/sell)",
+        "Portfolio view"
+      ],
+      "demo_value": "Working MVP"
+    },
+    "should_have": {
+      "iterations": "11-15",
+      "features": [
+        "Search and filter",
+        "Charts",
+        "Landing page",
+        "Mobile responsive"
+      ],
+      "demo_value": "Polished product"
+    },
+    "nice_to_have": {
+      "iterations": "16-20",
+      "features": [
+        "Real-time updates",
+        "Leaderboard",
+        "Advanced animations"
+      ],
+      "demo_value": "Impressive extras"
+    }
+  },
+  "risk_mitigation": {
+    "time_crunch": {
+      "problem": "Running out of time",
+      "solution": "Stop at iteration 10, polish what exists"
+    },
+    "api_not_working": {
+      "problem": "Backend issues",
+      "solution": "Use mock data in frontend, fix backend separately"
+    },
+    "database_issues": {
+      "problem": "MongoDB problems",
+      "solution": "Fallback to JSON file as in iteration 0-2"
+    },
+    "feature_creep": {
+      "problem": "Adding too many features",
+      "solution": "Stick to iteration plan, no new features"
+    }
+  },
+  "tools_and_setup": {
+    "required": {
+      "editor": "VS Code",
+      "node": "v18 or higher",
+      "mongodb": "v6 or MongoDB Atlas",
+      "git": "For version control"
+    },
+    "recommended_extensions": [
+      "ES7+ React/Redux/React-Native snippets",
+      "Tailwind CSS IntelliSense",
+      "Prettier",
+      "Thunder Client (API testing)"
     ],
-    "color_palette": {
-      "primary": "#1E40AF - Deep Blue (Trust, Stability)",
-      "secondary": "#10B981 - Emerald Green (Growth, Prosperity)",
-      "accent": "#F59E0B - Amber (Energy, Innovation)",
-      "neutral": {
-        "light": "#F9FAFB - Off White",
-        "dark": "#111827 - Almost Black"
-      },
-      "semantic": {
-        "success": "#10B981 - Green",
-        "warning": "#F59E0B - Amber",
-        "error": "#EF4444 - Red",
-        "info": "#3B82F6 - Blue"
-      }
-    },
-    "typography": {
-      "headings": "Inter - Modern, professional, excellent readability",
-      "body": "Inter - Same family for consistency",
-      "monospace": "JetBrains Mono - For code and numbers"
-    },
-    "logo": {
-      "concept": "Stylized 'M' merging traditional seal/stamp imagery with blockchain nodes",
-      "variations": ["Full logo with text", "Icon only", "Text only"],
-      "formats": ["SVG (primary)", "PNG (fallback)", "ICO (favicon)"]
+    "optional": {
+      "postman": "For API documentation",
+      "figma": "For design mockups",
+      "notion": "For team notes"
     }
   },
-  "testing_strategy": {
-    "unit_testing": {
-      "frontend": {
-        "framework": "Jest + React Testing Library",
-        "coverage_target": "80%+",
-        "scope": [
-          "Component rendering",
-          "User interactions",
-          "State management",
-          "Utility functions"
-        ],
-        "example_tests": [
-          "Button component renders correctly",
-          "Form validation works",
-          "API calls are made with correct params",
-          "State updates properly"
-        ]
-      },
-      "backend": {
-        "framework": "Jest + Mocha",
-        "coverage_target": "85%+",
-        "scope": [
-          "Service layer logic",
-          "Utility functions",
-          "Data transformations",
-          "Validators"
-        ],
-        "mocking": "Jest mocks for database and external APIs"
-      },
-      "blockchain": {
-        "framework": "Hardhat + Waffle",
-        "coverage_target": "100% (critical)",
-        "scope": [
-          "Smart contract functions",
-          "Access control",
-          "Edge cases",
-          "Gas optimization"
-        ]
+  "environment_setup": {
+    "frontend_env": {
+      "file": ".env.local",
+      "variables": {
+        "NEXT_PUBLIC_API_URL": "http://localhost:3210/api"
       }
     },
-    "integration_testing": {
-      "api_testing": {
-        "framework": "Jest + Supertest",
-        "scope": [
-          "API endpoints",
-          "Authentication flow",
-          "Database operations",
-          "External API integration"
-        ],
-        "test_database": "Separate MongoDB instance"
-      },
-      "websocket_testing": {
-        "framework": "Socket.io-client",
-        "scope": [
-          "Connection establishment",
-          "Event emission",
-          "Real-time updates",
-          "Reconnection logic"
-        ]
+    "backend_env": {
+      "file": ".env",
+      "variables": {
+        "PORT": "3210",
+        "MONGODB_URI": "mongodb://localhost:27017/mudra",
+        "JWT_SECRET": "your-super-secret-key-change-in-production",
+        "NODE_ENV": "development"
       }
-    },
-    "e2e_testing": {
-      "framework": "Cypress",
-      "scope": [
-        "User registration and login",
-        "KYC submission",
-        "Bond browsing and filtering",
-        "Trading (buy/sell bonds)",
-        "Portfolio view",
-        "Payment flow",
-        "Subscription upgrade"
-      ],
-      "test_data": "Seed data for consistent E2E tests",
-      "visual_regression": "Percy for screenshot comparison"
-    },
-    "load_testing": {
-      "tools": ["Apache JMeter", "K6", "Artillery"],
-      "scenarios": {
-        "normal_load": "500 concurrent users",
-        "peak_load": "1000 concurrent users",
-        "stress_test": "2000+ concurrent users",
-        "spike_test": "Sudden jump to 1500 users"
-      },
-      "metrics": [
-        "Response time (p50, p95, p99)",
-        "Requests per second",
-        "Error rate",
-        "Resource utilization (CPU, RAM)"
-      ],
-      "targets": {
-        "response_time_p95": "< 500ms",
-        "error_rate": "< 1%",
-        "throughput": "> 1000 req/s"
-      }
-    },
-    "security_testing": {
-      "sast": {
-        "tool": "SonarQube",
-        "checks": ["Code vulnerabilities", "Code smells", "Security hotspots"]
-      },
-      "dast": {
-        "tool": "OWASP ZAP",
-        "checks": ["SQL Injection", "XSS", "CSRF", "Broken Auth"]
-      },
-      "dependency_scanning": {
-        "tool": "Snyk",
-        "frequency": "On every PR + daily"
-      },
-      "smart_contract_audit": {
-        "tools": ["Slither", "Mythril"],
-        "professional_audit": "CertiK or OpenZeppelin"
-      }
-    },
-    "accessibility_testing": {
-      "automated": ["axe-core", "Lighthouse", "WAVE"],
-      "manual": ["Screen reader testing (NVDA, JAWS)", "Keyboard navigation"],
-      "target": "WCAG 2.1 Level AA compliance"
     }
   },
-  "deployment_procedures": {
-    "environments": {
-      "development": {
-        "purpose": "Local development",
-        "infrastructure": "Docker Compose",
-        "database": "Local MongoDB",
-        "domain": "localhost:3000"
-      },
-      "staging": {
-        "purpose": "Pre-production testing",
-        "infrastructure": "AWS/GCP/Azure",
-        "database": "MongoDB Atlas M10",
-        "domain": "staging.mudra.com",
-        "auto_deploy": "On merge to develop branch"
-      },
-      "production": {
-        "purpose": "Live platform",
-        "infrastructure": "AWS/GCP/Azure with auto-scaling",
-        "database": "MongoDB Atlas M30 (Replica Set)",
-        "domain": "mudra.com",
-        "deploy": "Manual approval after staging validation"
-      }
+  "presentation_tips": {
+    "demo_flow": [
+      "1. Show landing page (if iteration 15+)",
+      "2. Browse available bonds",
+      "3. Register a new account",
+      "4. Login and show dashboard",
+      "5. Buy a bond",
+      "6. Show portfolio",
+      "7. Sell a bond",
+      "8. Show transaction history (if iteration 14+)",
+      "9. Show leaderboard (if iteration 20)"
+    ],
+    "talking_points": [
+      "SDG 9 - Industry, Innovation, Infrastructure",
+      "Democratizing infrastructure investment",
+      "Paper trading for education",
+      "AI risk assessment (mention even if basic)"
+    ],
+    "backup_plan": "Have screenshots ready if live demo fails"
+  },
+  "post_hackathon_roadmap": {
+    "phase_1": {
+      "name": "Production Ready",
+      "tasks": [
+        "Add TypeScript throughout",
+        "Comprehensive testing",
+        "Security audit",
+        "Performance optimization"
+      ]
     },
-    "ci_cd_pipeline": {
-      "platform": "GitHub Actions",
-      "stages": {
-        "1_code_quality": {
-          "steps": ["ESLint", "Prettier check", "TypeScript compilation"]
-        },
-        "2_testing": {
-          "steps": ["Unit tests", "Integration tests", "Coverage report"]
-        },
-        "3_build": {
-          "steps": ["Build frontend", "Build backend", "Build Docker images"]
-        },
-        "4_security": {
-          "steps": ["Dependency scan (Snyk)", "SAST (SonarQube)", "Container scan"]
-        },
-        "5_deploy_staging": {
-          "steps": ["Deploy to staging", "Run smoke tests", "Notify team"]
-        },
-        "6_e2e_tests": {
-          "steps": ["Run Cypress E2E tests on staging"]
-        },
-        "7_manual_approval": {
-          "steps": ["Human verification", "QA sign-off"]
-        },
-        "8_deploy_production": {
-          "steps": ["Blue-green deployment", "Health checks", "Rollback if needed"]
-        }
-      },
-      "notifications": "Slack alerts for failures"
+    "phase_2": {
+      "name": "Real Features",
+      "tasks": [
+        "Actual blockchain integration",
+        "Real payment gateway",
+        "KYC integration",
+        "Real bond data APIs"
+      ]
     },
-    "docker_deployment": {
-      "images": {
-        "frontend": "mudra/frontend:latest",
-        "backend": "mudra/backend:latest",
-        "nginx": "nginx:alpine"
-      },
-      "registry": "Docker Hub / AWS ECR",
-      "orchestration": "Docker Compose (dev/staging), Kubernetes (production)"
-    },
-    "rollback_strategy": {
-      "automatic": "Rollback if health checks fail",
-      "manual": "One-click rollback to previous version",
-      "database": "Migrations are reversible with down() functions"
-    },
-    "zero_downtime_deployment": {
-      "strategy": "Blue-Green deployment",
-      "process": [
-        "Deploy new version to Green environment",
-        "Run health checks on Green",
-        "Switch load balancer to Green",
-        "Keep Blue as backup for quick rollback",
-        "After validation, decommission Blue"
+    "phase_3": {
+      "name": "Scale",
+      "tasks": [
+        "Mobile app",
+        "Advanced analytics",
+        "AI recommendations",
+        "Institutional features"
       ]
     }
   },
-  "security_best_practices": {
-    "authentication": {
-      "password_policy": {
-        "min_length": 8,
-        "requirements": ["Uppercase", "Lowercase", "Number", "Special char"],
-        "hashing": "bcrypt with 10 rounds",
-        "lockout": "5 failed attempts = 15 min lockout"
-      },
-      "jwt": {
-        "algorithm": "HS256",
-        "expiry": "1 hour (access), 7 days (refresh)",
-        "rotation": "Secret rotated every 90 days"
-      },
-      "2fa": "Optional TOTP-based 2FA"
-    },
-    "data_protection": {
-      "encryption_at_rest": "AES-256 for sensitive data",
-      "encryption_in_transit": "TLS 1.3",
-      "pii_encryption": "Field-level encryption for Aadhaar, PAN",
-      "key_management": "AWS KMS / Google Cloud KMS"
-    },
-    "api_security": {
-      "rate_limiting": "Token bucket algorithm",
-      "cors": "Whitelist allowed origins",
-      "csrf_protection": "CSRF tokens for state-changing operations",
-      "input_validation": "Joi/Express Validator",
-      "output_encoding": "Prevent XSS attacks"
-    },
-    "infrastructure_security": {
-      "firewall": "Cloud firewall with IP whitelisting",
-      "vpc": "Private VPC for database",
-      "ddos_protection": "Cloudflare",
-      "ssl_certificates": "Let's Encrypt with auto-renewal"
-    },
-    "compliance": {
-      "gdpr": "User data export and deletion",
-      "sebi": "Transaction audit logs (7 years)",
-      "rbi": "KYC/AML compliance",
-      "pci_dss": "If processing card payments"
-    }
-  },
-  "monitoring_alerting": {
-    "application_monitoring": {
-      "apm": "New Relic / DataDog",
-      "metrics": [
-        "Request rate",
-        "Error rate",
-        "Response time (p50, p95, p99)",
-        "Apdex score"
-      ]
-    },
-    "infrastructure_monitoring": {
-      "tool": "Prometheus + Grafana",
-      "metrics": [
-        "CPU usage",
-        "Memory usage",
-        "Disk I/O",
-        "Network throughput"
-      ]
-    },
-    "error_tracking": {
-      "tool": "Sentry",
-      "features": ["Error aggregation", "Stack traces", "User context", "Release tracking"]
-    },
-    "uptime_monitoring": {
-      "tool": "UptimeRobot / Pingdom",
-      "checks": ["HTTP endpoint", "WebSocket", "Database connectivity"],
-      "frequency": "Every 60 seconds"
-    },
-    "logging": {
-      "aggregation": "ELK Stack (Elasticsearch, Logstash, Kibana)",
-      "retention": {
-        "error_logs": "1 year",
-        "audit_logs": "7 years",
-        "access_logs": "90 days"
-      }
-    },
-    "alerting": {
-      "channels": ["Slack", "Email", "PagerDuty (critical)"],
-      "critical_alerts": {
-        "downtime": "Immediate PagerDuty + SMS",
-        "error_spike": "Error rate > 5% for 5 min",
-        "slow_responses": "p95 > 1s for 10 min",
-        "database_issues": "Connection failures or high latency"
-      },
-      "warning_alerts": {
-        "high_cpu": "CPU > 80% for 15 min",
-        "disk_space": "Disk usage > 85%",
-        "memory": "Memory > 85% for 10 min"
-      }
-    }
-  },
-  "disaster_recovery_plan": {
-    "backup_schedule": {
-      "database": "Every 6 hours (full), hourly (incremental)",
-      "application_config": "On every change (Git)",
-      "user_uploads": "Continuous (S3 versioning)"
-    },
-    "recovery_objectives": {
-      "rto": "1 hour (Recovery Time Objective)",
-      "rpo": "15 minutes (Recovery Point Objective)"
-    },
-    "disaster_scenarios": {
-      "database_corruption": {
-        "detection": "Automated integrity checks",
-        "recovery": "Restore from last good backup (< 1 hour old)"
-      },
-      "region_failure": {
-        "detection": "Health checks fail",
-        "recovery": "Failover to secondary region (DNS update)"
-      },
-      "ransomware_attack": {
-        "prevention": "Immutable backups, offline copies",
-        "recovery": "Restore from clean backup, security audit"
-      },
-      "data_breach": {
-        "response": ["Isolate affected systems", "Forensic analysis", "User notification", "SEBI/RBI reporting"]
-      }
-    },
-    "testing": "Quarterly disaster recovery drills"
-  },
-  "operational_procedures": {
-    "incident_management": {
-      "severity_levels": {
-        "sev1_critical": "Complete outage, data breach",
-        "sev2_high": "Major feature broken, performance degradation",
-        "sev3_medium": "Minor feature broken, workaround available",
-        "sev4_low": "Cosmetic issue, no user impact"
-      },
-      "response_times": {
-        "sev1": "Immediate (< 15 min)",
-        "sev2": "< 1 hour",
-        "sev3": "< 4 hours",
-        "sev4": "< 24 hours"
-      },
-      "escalation": "Dev → Lead → CTO → CEO",
-      "post_mortem": "Required for Sev1 and Sev2 within 48 hours"
-    },
-    "change_management": {
-      "process": [
-        "Propose change (Jira/GitHub issue)",
-        "Peer review",
-        "Testing in staging",
-        "Change approval (for production)",
-        "Deployment",
-        "Monitoring",
-        "Documentation update"
-      ],
-      "emergency_changes": "Security patches can skip approval"
-    },
-    "on_call_rotation": {
-      "schedule": "Weekly rotation",
-      "coverage": "24/7",
-      "escalation": "Primary → Secondary → Manager",
-      "tools": "PagerDuty"
-    }
-  },
-  "documentation_standards": {
-    "code_documentation": {
-      "style": "JSDoc for JavaScript/TypeScript",
-      "required_for": ["Public functions", "Complex logic", "API endpoints"],
-      "example": "/** * Calculates bond returns * @param {number} principal * @param {number} rate * @returns {number} */"
-    },
-    "api_documentation": {
-      "format": "OpenAPI 3.0 (Swagger)",
-      "location": "/api-docs",
-      "includes": ["All endpoints", "Request/response examples", "Error codes"]
-    },
-    "architecture_docs": {
-      "diagrams": "Draw.io / Lucidchart",
-      "includes": ["System overview", "Data flow", "Deployment architecture"],
-      "location": "/docs/architecture/"
-    },
-    "user_documentation": {
-      "platform": "Notion / Markdown in /docs/",
-      "includes": ["User guides", "FAQs", "Tutorials", "Video walkthroughs"]
-    }
-  },
-  "team_roles": {
-    "for_hackathon": {
-      "team_size": 6,
-      "roles": {
-        "architect": {
-          "name": "System Architect",
-          "responsibilities": ["Overall architecture", "Technology decisions", "Code review", "Final integration"]
-        },
-        "backend_lead": {
-          "name": "Backend Lead",
-          "responsibilities": ["API development", "Database design", "Authentication", "WebSocket"]
-        },
-        "frontend_lead": {
-          "name": "Frontend Lead",
-          "responsibilities": ["UI/UX design", "Component library", "Animations", "State management"]
-        },
-        "blockchain_dev": {
-          "name": "Blockchain Developer",
-          "responsibilities": ["Smart contracts", "Web3 integration", "Wallet connectivity", "Gas optimization"]
-        },
-        "fullstack_1": {
-          "name": "Full Stack Developer 1",
-          "responsibilities": ["Feature integration", "Payment flow", "Admin panel", "Docker setup"]
-        },
-        "fullstack_2": {
-          "name": "Full Stack Developer 2",
-          "responsibilities": ["AI integration", "Testing", "Documentation", "Deployment"]
-        }
-      }
-    },
-    "post_hackathon": {
-      "additional_roles": [
-        "DevOps Engineer",
-        "QA Engineer",
-        "Product Manager",
-        "UI/UX Designer",
-        "Security Engineer"
-      ]
-    }
-  },
-  "regulatory_integration": {
-    "sebi_integration": {
-      "reporting": {
-        "frequency": "Quarterly + Annual",
-        "format": "SEBI prescribed format",
-        "data": ["Transaction volumes", "User statistics", "Grievances"]
-      },
-      "scores_integration": {
-        "purpose": "Grievance redressal",
-        "api": "SEBI SCORES API",
-        "sla": "48 hours response time"
-      }
-    },
-    "rbi_integration": {
-      "cbdc_pilot": {
-        "participation": "RBI Digital Rupee pilot program",
-        "api": "e-Rupees merchant API",
-        "compliance": "AML/KYC norms"
-      }
-    },
-    "uidai_integration": {
-      "ekyc": {
-        "api": "Aadhaar eKYC API",
-        "process": "OTP-based verification",
-        "data_retention": "As per UIDAI guidelines"
-      }
-    }
-  },
-  "third_party_integrations": {
-    "payment_gateways": {
-      "primary": "e-Rupees (RBI CBDC)",
-      "backup": ["Razorpay", "PhonePe", "Paytm"]
-    },
-    "kyc_providers": {
-      "aadhaar": "UIDAI eKYC",
-      "digilocker": "Document verification",
-      "video_kyc": "Future integration"
-    },
-    "market_data": {
-      "binance": "Cryptocurrency prices",
-      "dhan": "Indian stock market data",
-      "angelone": "Trading data",
-      "mpindia": "Municipal bond data"
-    },
-    "communication": {
-      "email": "SendGrid / AWS SES",
-      "sms": "Twilio / MSG91",
-      "push": "Firebase Cloud Messaging"
-    },
-    "storage": {
-      "documents": "AWS S3",
-      "images": "Cloudinary (with CDN)"
-    }
-  },
-  "legal_compliance": {
-    "terms_of_service": {
-      "last_updated": "2026-01-30",
-      "key_sections": ["User obligations", "Platform usage", "Fees", "Liability", "Termination"]
-    },
-    "privacy_policy": {
-      "compliance": "DPDP Act 2023",
-      "key_sections": ["Data collection", "Data usage", "Data sharing", "User rights", "Cookies"]
-    },
-    "aml_policy": {
-      "screening": "User screening against sanctions lists",
-      "reporting": "Suspicious transactions to FIU-IND",
-      "record_keeping": "5 years"
-    },
-    "risk_disclosures": {
-      "display": "Prominent display on platform",
-      "content": ["Investment risks", "Market risks", "Platform risks", "Regulatory risks"]
-    }
-  },
-  "future_roadmap": {
-    "phase_1_mvp": {
-      "timeline": "Hackathon (48 hours)",
-      "features": ["Core platform", "Trading", "Paper trading", "AI recommendations"]
-    },
-    "phase_2_beta": {
-      "timeline": "1 month post-hackathon",
-      "features": ["Real KYC", "e-Rupees integration", "Multi-broker", "Security audit"]
-    },
-    "phase_3_launch": {
-      "timeline": "3 months",
-      "features": ["SEBI registration", "Production deployment", "Marketing", "User onboarding"]
-    },
-    "phase_4_scale": {
-      "timeline": "6 months",
-      "features": ["Mobile apps", "Advanced analytics", "Institutional features", "International expansion"]
-    }
+  "quick_commands": {
+    "start_frontend": "cd frontend && npm run dev",
+    "start_backend": "cd backend && npm run dev",
+    "start_both": "Use two terminals or add concurrently",
+    "seed_database": "cd backend && node scripts/seed.js",
+    "check_mongodb": "mongosh"
   }
 }

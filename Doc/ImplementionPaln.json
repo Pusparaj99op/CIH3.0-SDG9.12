@@ -4,583 +4,504 @@
     "id": "9.12",
     "hackathon": "CIH 3.0 - Central India Hackathon",
     "sdg": "SDG 9 - Industry, Innovation and Infrastructure",
-    "description": "A fintech platform for tokenizing infrastructure bonds to enable public-private funding, democratizing access to high-value assets through blockchain technology",
+    "description": "A fintech platform for tokenizing infrastructure bonds to enable public-private funding",
     "team": "Co Devians",
     "version": "1.0.0"
   },
-  "executive_summary": {
-    "problem": "Infrastructure financing has a critical gap - retail investors cannot access high-value infrastructure assets like roads, bridges, and energy projects",
-    "solution": "A blockchain-based platform that tokenizes infrastructure bonds, allowing fractional ownership starting from ₹500 with AI-powered insights and e-Rupee integration",
-    "key_differentiators": [
-      "Fractional ownership of infrastructure bonds",
-      "AI-powered risk assessment and return predictions",
-      "e-Rupees (CBDC) payment integration",
-      "Paper trading for practice",
-      "Real-time blockchain settlement on Polygon"
+  "development_philosophy": {
+    "approach": "Incremental Development",
+    "principle": "Start simple, add features progressively",
+    "methodology": "Build a working product first, then enhance iteratively",
+    "rules": [
+      "Each iteration MUST result in a working application",
+      "No feature is added until the current version is stable",
+      "Test thoroughly before moving to next iteration",
+      "Keep code modular for easy feature additions",
+      "Document changes at each iteration"
     ]
   },
-  "implementation_phases": {
-    "phase_1_foundation": {
-      "name": "Foundation & MVP",
-      "duration": "48 hours (Hackathon)",
-      "priority": "CRITICAL",
-      "objectives": [
-        "Core platform setup",
-        "Basic authentication",
-        "Bond listing functionality",
-        "Paper trading feature",
-        "Basic AI recommendations"
+  "iteration_roadmap": {
+    "iteration_0": {
+      "name": "Hello World - Basic Setup",
+      "goal": "Get frontend and backend running and talking to each other",
+      "duration": "2-3 hours",
+      "output": "Two servers running, frontend can call backend API",
+      "features": [
+        "Next.js frontend running on port 3000",
+        "Express backend running on port 3210",
+        "Single API endpoint: GET /api/health",
+        "Frontend displays 'Connected to Backend' message",
+        "Basic folder structure created"
       ],
-      "milestones": {
-        "milestone_1": {
-          "name": "Project Setup",
-          "duration": "2-3 hours",
-          "deliverables": [
-            "Initialize monorepo structure",
-            "Setup Next.js 14 frontend",
-            "Setup Express.js backend",
-            "Configure MongoDB connection",
-            "Setup Docker development environment",
-            "Initialize Git repository with proper .gitignore"
-          ]
-        },
-        "milestone_2": {
-          "name": "Authentication System",
-          "duration": "4-5 hours",
-          "deliverables": [
-            "User registration with email verification",
-            "JWT-based authentication",
-            "Login/logout functionality",
-            "Password reset flow",
-            "Protected routes middleware",
-            "Basic user profile"
-          ]
-        },
-        "milestone_3": {
-          "name": "Bond Management",
-          "duration": "6-8 hours",
-          "deliverables": [
-            "Bond data model and schema",
-            "Bond listing API endpoints",
-            "Bond details page",
-            "Search and filter functionality",
-            "Bond comparison feature",
-            "Risk category display"
-          ]
-        },
-        "milestone_4": {
-          "name": "Trading System",
-          "duration": "8-10 hours",
-          "deliverables": [
-            "Trading engine core",
-            "Buy/sell order processing",
-            "Order book display",
-            "Transaction history",
-            "Portfolio tracking",
-            "Real-time price updates via WebSocket"
-          ]
-        },
-        "milestone_5": {
-          "name": "Paper Trading",
-          "duration": "4-5 hours",
-          "deliverables": [
-            "Virtual wallet with ₹10 Lakh balance",
-            "Paper trade execution",
-            "P&L tracking",
-            "Practice mode toggle",
-            "Leaderboard"
-          ]
-        },
-        "milestone_6": {
-          "name": "AI Analytics Integration",
-          "duration": "5-6 hours",
-          "deliverables": [
-            "Risk scoring algorithm (0-100)",
-            "Expected return calculations",
-            "Basic recommendation engine",
-            "Analytics dashboard",
-            "AI insights display"
-          ]
-        },
-        "milestone_7": {
-          "name": "Frontend Polish",
-          "duration": "6-8 hours",
-          "deliverables": [
-            "Landing page with animations",
-            "Dashboard UI",
-            "Responsive design",
-            "GSAP scroll animations",
-            "Framer Motion transitions",
-            "Mobile navigation"
-          ]
-        },
-        "milestone_8": {
-          "name": "Demo & Documentation",
-          "duration": "4 hours",
-          "deliverables": [
-            "Demo data seeding",
-            "API documentation",
-            "Presentation slides",
-            "Video demo",
-            "README updates"
-          ]
-        }
-      }
-    },
-    "phase_2_beta": {
-      "name": "Beta Development",
-      "duration": "4 weeks post-hackathon",
-      "priority": "HIGH",
-      "objectives": [
-        "Real KYC integration",
-        "e-Rupees payment gateway",
-        "Smart contract deployment",
-        "Multi-broker integration",
-        "Security hardening"
-      ],
-      "milestones": {
-        "milestone_1": {
-          "name": "KYC Integration",
-          "duration": "1 week",
-          "deliverables": [
-            "Aadhaar eKYC API integration",
-            "DigiLocker document verification",
-            "KYC document upload",
-            "Admin KYC approval workflow",
-            "KYC status tracking"
-          ]
-        },
-        "milestone_2": {
-          "name": "Blockchain Integration",
-          "duration": "1 week",
-          "deliverables": [
-            "Smart contract development (Solidity)",
-            "Deploy to Polygon Mumbai testnet",
-            "Wallet connection (MetaMask)",
-            "Token minting for bonds",
-            "Transaction signing"
-          ]
-        },
-        "milestone_3": {
-          "name": "Payment Integration",
-          "duration": "1 week",
-          "deliverables": [
-            "e-Rupees CBDC API integration",
-            "Payment flow implementation",
-            "Escrow smart contract",
-            "Settlement engine",
-            "Refund processing"
-          ]
-        },
-        "milestone_4": {
-          "name": "Security & Testing",
-          "duration": "1 week",
-          "deliverables": [
-            "Security audit",
-            "Penetration testing",
-            "Unit test coverage >80%",
-            "Integration tests",
-            "E2E tests with Cypress",
-            "Smart contract audit"
-          ]
-        }
-      }
-    },
-    "phase_3_launch": {
-      "name": "Production Launch",
-      "duration": "2 months",
-      "priority": "HIGH",
-      "objectives": [
-        "SEBI registration process",
-        "Production infrastructure",
-        "Compliance implementation",
-        "User onboarding",
-        "Marketing launch"
-      ],
-      "milestones": {
-        "milestone_1": {
-          "name": "Regulatory Compliance",
-          "duration": "3 weeks",
-          "deliverables": [
-            "SEBI sandbox application",
-            "Legal documentation",
-            "Terms of service",
-            "Privacy policy (DPDP Act)",
-            "Risk disclosures",
-            "AML/KYC compliance"
-          ]
-        },
-        "milestone_2": {
-          "name": "Production Deployment",
-          "duration": "2 weeks",
-          "deliverables": [
-            "AWS/GCP infrastructure setup",
-            "Kubernetes cluster configuration",
-            "MongoDB Atlas production cluster",
-            "CDN configuration (Cloudflare)",
-            "SSL certificates",
-            "Monitoring setup (Prometheus, Grafana)"
-          ]
-        },
-        "milestone_3": {
-          "name": "Go-Live",
-          "duration": "3 weeks",
-          "deliverables": [
-            "Soft launch (beta users)",
-            "Bug fixes and optimization",
-            "Public launch",
-            "Marketing campaign",
-            "User support system"
-          ]
-        }
-      }
-    },
-    "phase_4_scale": {
-      "name": "Scale & Growth",
-      "duration": "6 months",
-      "priority": "MEDIUM",
-      "objectives": [
-        "Mobile applications",
-        "Advanced AI features",
-        "Institutional dashboard",
-        "International expansion"
-      ],
-      "milestones": {
-        "milestone_1": {
-          "name": "Mobile Apps",
-          "duration": "2 months",
-          "deliverables": [
-            "React Native app development",
-            "iOS App Store deployment",
-            "Android Play Store deployment",
-            "Push notifications",
-            "Biometric authentication"
-          ]
-        },
-        "milestone_2": {
-          "name": "Advanced Features",
-          "duration": "2 months",
-          "deliverables": [
-            "Advanced AI predictions (LSTM)",
-            "Sentiment analysis",
-            "Automated trading rules",
-            "Portfolio optimization",
-            "Secondary market features"
-          ]
-        },
-        "milestone_3": {
-          "name": "Enterprise Features",
-          "duration": "2 months",
-          "deliverables": [
-            "Institutional dashboard",
-            "Bulk trading API",
-            "White-label solution",
-            "Cross-chain bridge",
-            "International compliance"
-          ]
-        }
-      }
-    }
-  },
-  "technical_implementation": {
-    "frontend": {
-      "framework": "Next.js 14 with App Router",
-      "language": "TypeScript",
-      "styling": "Tailwind CSS + shadcn/ui",
-      "animations": {
-        "gsap": "Complex scroll animations, parallax, text effects",
-        "framer_motion": "Page transitions, component animations",
-        "three_js": "3D visualizations, particle backgrounds",
-        "lenis": "Smooth scrolling"
+      "files_to_create": {
+        "frontend": ["package.json", "app/page.tsx", "app/layout.tsx"],
+        "backend": ["package.json", "src/server.js", "src/routes/health.js"]
       },
-      "state_management": "Zustand + TanStack Query",
-      "web3": "wagmi + ethers.js",
-      "key_pages": [
-        "/ (Landing)",
-        "/pricing",
-        "/about",
-        "/docs",
-        "/login, /signup",
-        "/dashboard",
-        "/bonds, /bonds/[id]",
-        "/trading",
-        "/portfolio",
-        "/paper-trading",
-        "/profile, /settings"
+      "success_criteria": [
+        "npm run dev starts both servers",
+        "Frontend shows backend connection status",
+        "No errors in console"
       ]
     },
-    "backend": {
-      "runtime": "Node.js 18+",
-      "framework": "Express.js with TypeScript",
-      "database": "MongoDB 6.0+ with Mongoose",
-      "caching": "Redis 7.0+",
-      "authentication": "JWT + Passport.js",
-      "websocket": "Socket.io for real-time updates",
-      "api_design": "RESTful with /api/v1 versioning",
-      "key_services": [
-        "Auth Service",
-        "Bond Service",
-        "Trading Service",
-        "AI/Analytics Service",
-        "Payment Service",
-        "Blockchain Service",
-        "Notification Service",
-        "KYC Service"
-      ]
-    },
-    "blockchain": {
-      "platform": "Polygon (Ethereum L2)",
-      "smart_contracts": "Solidity",
-      "development": "Hardhat",
-      "contracts": [
-        "BondToken.sol (ERC-20)",
-        "BondMarketplace.sol",
-        "Escrow.sol",
-        "Governance.sol"
+    "iteration_1": {
+      "name": "Static Bond Display",
+      "goal": "Display hardcoded bond data on frontend",
+      "duration": "2-3 hours",
+      "output": "Homepage showing list of bonds (static data)",
+      "features": [
+        "Hardcoded array of 5 sample bonds in frontend",
+        "BondCard component to display bond info",
+        "Simple grid layout for bond listing",
+        "Basic styling with Tailwind CSS",
+        "Navbar with logo and placeholder links"
       ],
-      "wallet_integration": "MetaMask, WalletConnect"
-    },
-    "database_schema": {
-      "collections": [
-        "users",
-        "bonds",
-        "transactions",
-        "portfolios",
-        "subscriptions",
-        "broker_accounts",
-        "analytics",
-        "paper_trades",
-        "notifications",
-        "kyc_documents",
-        "audit_logs"
+      "no_backend_needed": true,
+      "success_criteria": [
+        "5 bond cards visible on homepage",
+        "Each card shows: name, issuer, return rate, risk level",
+        "Responsive grid (1 col mobile, 2 tablet, 3 desktop)"
       ]
     },
-    "devops": {
-      "containerization": "Docker + Docker Compose",
-      "ci_cd": "GitHub Actions",
-      "monitoring": "Prometheus + Grafana",
-      "logging": "Winston + ELK Stack",
-      "testing": "Jest, Cypress, Hardhat"
+    "iteration_2": {
+      "name": "Backend API for Bonds",
+      "goal": "Move bond data to backend, fetch via API",
+      "duration": "2-3 hours",
+      "output": "Bonds fetched from backend API",
+      "features": [
+        "GET /api/bonds endpoint returning JSON",
+        "Bond data stored in a JSON file (no DB yet)",
+        "Frontend fetches bonds on page load",
+        "Loading state while fetching",
+        "Error handling if API fails"
+      ],
+      "success_criteria": [
+        "API returns list of bonds",
+        "Frontend displays bonds from API",
+        "Loading spinner shows during fetch"
+      ]
+    },
+    "iteration_3": {
+      "name": "MongoDB Integration",
+      "goal": "Store bonds in MongoDB database",
+      "duration": "3-4 hours",
+      "output": "Bonds stored in and retrieved from MongoDB",
+      "features": [
+        "MongoDB connection setup",
+        "Bond schema with Mongoose",
+        "Seed script to populate sample bonds",
+        "GET /api/bonds reads from database",
+        "GET /api/bonds/:id for single bond"
+      ],
+      "success_criteria": [
+        "MongoDB connected on server start",
+        "Seed script creates 10 sample bonds",
+        "API returns bonds from database"
+      ]
+    },
+    "iteration_4": {
+      "name": "Bond Details Page",
+      "goal": "Click on bond to see full details",
+      "duration": "2-3 hours",
+      "output": "Detailed bond view page",
+      "features": [
+        "Dynamic route /bonds/[id]",
+        "Fetch single bond by ID",
+        "Display all bond information",
+        "Back button to return to list",
+        "404 page if bond not found"
+      ],
+      "success_criteria": [
+        "Clicking bond card navigates to details",
+        "All bond fields displayed",
+        "Back navigation works"
+      ]
+    },
+    "iteration_5": {
+      "name": "User Authentication - Basic",
+      "goal": "User can register and login",
+      "duration": "4-5 hours",
+      "output": "Working login/register system",
+      "features": [
+        "User model in MongoDB",
+        "POST /api/auth/register endpoint",
+        "POST /api/auth/login endpoint",
+        "Password hashing with bcrypt",
+        "JWT token generation",
+        "Login and Register pages in frontend",
+        "Store token in localStorage"
+      ],
+      "success_criteria": [
+        "New user can register",
+        "Registered user can login",
+        "JWT token returned on login",
+        "Token stored in browser"
+      ]
+    },
+    "iteration_6": {
+      "name": "Protected Routes & User State",
+      "goal": "Some pages require login",
+      "duration": "3-4 hours",
+      "output": "Authentication-aware application",
+      "features": [
+        "Auth middleware on backend",
+        "Protected API routes",
+        "Auth context/store in frontend",
+        "Redirect to login if not authenticated",
+        "Show user name in navbar when logged in",
+        "Logout functionality"
+      ],
+      "success_criteria": [
+        "Cannot access protected routes without token",
+        "Navbar shows login/logout based on state",
+        "Logout clears token and redirects"
+      ]
+    },
+    "iteration_7": {
+      "name": "User Dashboard",
+      "goal": "Logged-in users see their dashboard",
+      "duration": "3-4 hours",
+      "output": "Basic user dashboard",
+      "features": [
+        "Dashboard page (protected)",
+        "Display user profile info",
+        "Placeholder sections for portfolio",
+        "Welcome message with user name",
+        "Navigation sidebar"
+      ],
+      "success_criteria": [
+        "Dashboard only accessible when logged in",
+        "User info displayed correctly",
+        "Clean dashboard layout"
+      ]
+    },
+    "iteration_8": {
+      "name": "Paper Trading - Buy Bonds",
+      "goal": "User can 'buy' bonds with virtual money",
+      "duration": "4-5 hours",
+      "output": "Working paper trading buy feature",
+      "features": [
+        "Virtual wallet with ₹10,00,000 balance",
+        "Buy button on bond details page",
+        "Quantity input modal",
+        "Transaction recorded in database",
+        "Wallet balance updates",
+        "Success/error notifications"
+      ],
+      "success_criteria": [
+        "User can buy bonds",
+        "Wallet balance decreases",
+        "Transaction saved in database"
+      ]
+    },
+    "iteration_9": {
+      "name": "Portfolio View",
+      "goal": "User can see their holdings",
+      "duration": "3-4 hours",
+      "output": "Portfolio page showing owned bonds",
+      "features": [
+        "Portfolio model in database",
+        "GET /api/portfolio endpoint",
+        "Portfolio page in frontend",
+        "List of owned bonds with quantities",
+        "Total investment value",
+        "Basic P&L calculation"
+      ],
+      "success_criteria": [
+        "Portfolio shows all purchases",
+        "Quantities are correct",
+        "Total value calculated"
+      ]
+    },
+    "iteration_10": {
+      "name": "Paper Trading - Sell Bonds",
+      "goal": "User can sell their holdings",
+      "duration": "3-4 hours",
+      "output": "Complete buy/sell paper trading",
+      "features": [
+        "Sell button in portfolio",
+        "Quantity selection (max = owned)",
+        "POST /api/paper-trading/sell",
+        "Update portfolio on sell",
+        "Credit wallet on sale",
+        "Transaction history"
+      ],
+      "success_criteria": [
+        "Can sell owned bonds",
+        "Cannot sell more than owned",
+        "Wallet increases on sell"
+      ]
+    },
+    "iteration_11": {
+      "name": "Search & Filter Bonds",
+      "goal": "User can search and filter bond listings",
+      "duration": "3-4 hours",
+      "output": "Searchable and filterable bond list",
+      "features": [
+        "Search bar component",
+        "Filter by risk (low/medium/high)",
+        "Filter by return range",
+        "Sort by various fields",
+        "Query parameters in URL",
+        "Backend filtering support"
+      ],
+      "success_criteria": [
+        "Search by name/issuer works",
+        "Filters narrow down results",
+        "Sort changes order"
+      ]
+    },
+    "iteration_12": {
+      "name": "Basic Charts",
+      "goal": "Add visual charts to dashboard and bonds",
+      "duration": "3-4 hours",
+      "output": "Data visualization",
+      "features": [
+        "Install Recharts library",
+        "Portfolio allocation pie chart",
+        "Bond price history line chart (mock data)",
+        "Dashboard summary cards",
+        "Responsive chart sizing"
+      ],
+      "success_criteria": [
+        "Charts render correctly",
+        "Data displayed accurately",
+        "Charts responsive on mobile"
+      ]
+    },
+    "iteration_13": {
+      "name": "Risk Score Display",
+      "goal": "Show AI-calculated risk score",
+      "duration": "2-3 hours",
+      "output": "Risk scoring feature",
+      "features": [
+        "Risk score field in bond model (0-100)",
+        "Risk gauge component",
+        "Color coding (green/yellow/red)",
+        "Risk explanation tooltip",
+        "Filter by risk score"
+      ],
+      "success_criteria": [
+        "Risk score visible on bond cards",
+        "Gauge shows correct value",
+        "Colors match risk level"
+      ]
+    },
+    "iteration_14": {
+      "name": "Transaction History",
+      "goal": "User can view all their transactions",
+      "duration": "2-3 hours",
+      "output": "Transaction history page",
+      "features": [
+        "Transaction model in database",
+        "GET /api/transactions endpoint",
+        "Transactions page in frontend",
+        "Filter by type (buy/sell)",
+        "Date range filter",
+        "Pagination"
+      ],
+      "success_criteria": [
+        "All transactions listed",
+        "Filters work correctly",
+        "Pagination works"
+      ]
+    },
+    "iteration_15": {
+      "name": "Landing Page Polish",
+      "goal": "Professional landing page for demo",
+      "duration": "4-5 hours",
+      "output": "Attractive landing page",
+      "features": [
+        "Hero section with tagline",
+        "Features section",
+        "How it works section",
+        "Statistics section",
+        "Call-to-action buttons",
+        "Footer with links",
+        "Basic animations (Framer Motion)"
+      ],
+      "success_criteria": [
+        "Landing page looks professional",
+        "Clear value proposition",
+        "CTAs lead to signup"
+      ]
+    },
+    "iteration_16": {
+      "name": "Mobile Responsiveness",
+      "goal": "App works well on mobile devices",
+      "duration": "3-4 hours",
+      "output": "Mobile-friendly application",
+      "features": [
+        "Mobile navigation (hamburger menu)",
+        "Touch-friendly buttons",
+        "Responsive tables",
+        "Optimized images",
+        "Test on various screen sizes"
+      ],
+      "success_criteria": [
+        "No horizontal overflow",
+        "Navigation works on mobile",
+        "All features accessible"
+      ]
+    },
+    "iteration_17": {
+      "name": "User Profile & Settings",
+      "goal": "User can update their profile",
+      "duration": "3-4 hours",
+      "output": "Profile management",
+      "features": [
+        "Profile page",
+        "Edit profile form",
+        "Change password",
+        "Profile picture placeholder",
+        "Notification preferences"
+      ],
+      "success_criteria": [
+        "Can update name/email",
+        "Password change works",
+        "Settings saved"
+      ]
+    },
+    "iteration_18": {
+      "name": "Subscription Plans UI",
+      "goal": "Display pricing/subscription options",
+      "duration": "2-3 hours",
+      "output": "Pricing page",
+      "features": [
+        "Pricing page with 3 tiers",
+        "Feature comparison table",
+        "Monthly/yearly toggle",
+        "Highlight popular plan",
+        "CTA buttons (mock payment)"
+      ],
+      "success_criteria": [
+        "3 plans displayed clearly",
+        "Features listed per plan",
+        "Toggle changes prices"
+      ]
+    },
+    "iteration_19": {
+      "name": "Real-time Updates (WebSocket)",
+      "goal": "Live updates for prices/notifications",
+      "duration": "4-5 hours",
+      "output": "Real-time features",
+      "features": [
+        "Socket.io on backend",
+        "Socket.io-client on frontend",
+        "Price update simulation",
+        "Live notification system",
+        "Connection status indicator"
+      ],
+      "success_criteria": [
+        "WebSocket connects",
+        "Price updates received",
+        "Notifications appear live"
+      ]
+    },
+    "iteration_20": {
+      "name": "Leaderboard",
+      "goal": "Show top performers in paper trading",
+      "duration": "2-3 hours",
+      "output": "Paper trading leaderboard",
+      "features": [
+        "Calculate portfolio returns",
+        "GET /api/leaderboard endpoint",
+        "Leaderboard page",
+        "Rank by % return",
+        "Top 10 display"
+      ],
+      "success_criteria": [
+        "Leaderboard shows rankings",
+        "Calculations accurate",
+        "Updates on new trades"
+      ]
     }
   },
-  "api_endpoints_summary": {
-    "authentication": [
-      "POST /api/v1/auth/register",
-      "POST /api/v1/auth/login",
-      "POST /api/v1/auth/logout",
-      "POST /api/v1/auth/refresh",
-      "POST /api/v1/auth/forgot-password",
-      "POST /api/v1/auth/reset-password"
+  "future_iterations": {
+    "phase_2_enhancements": [
+      "Iteration 21: Real KYC Integration (Aadhaar)",
+      "Iteration 22: Payment Gateway (e-Rupees)",
+      "Iteration 23: Smart Contract Deployment",
+      "Iteration 24: Wallet Integration (MetaMask)",
+      "Iteration 25: Advanced AI Recommendations",
+      "Iteration 26: Multi-broker Integration",
+      "Iteration 27: Admin Dashboard",
+      "Iteration 28: Email Notifications",
+      "Iteration 29: Advanced Analytics",
+      "Iteration 30: Security Hardening"
     ],
-    "bonds": [
-      "GET /api/v1/bonds",
-      "GET /api/v1/bonds/:id",
-      "GET /api/v1/bonds/:id/analytics",
-      "GET /api/v1/bonds/search",
-      "GET /api/v1/bonds/recommendations",
-      "POST /api/v1/bonds/compare"
-    ],
-    "trading": [
-      "POST /api/v1/trading/buy",
-      "POST /api/v1/trading/sell",
-      "GET /api/v1/trading/order-book",
-      "GET /api/v1/trading/trades",
-      "POST /api/v1/trading/cancel-order"
-    ],
-    "portfolio": [
-      "GET /api/v1/portfolio",
-      "GET /api/v1/portfolio/holdings",
-      "GET /api/v1/portfolio/performance",
-      "GET /api/v1/portfolio/transactions"
-    ],
-    "paper_trading": [
-      "POST /api/v1/paper-trading/buy",
-      "POST /api/v1/paper-trading/sell",
-      "GET /api/v1/paper-trading/portfolio",
-      "GET /api/v1/paper-trading/leaderboard"
-    ],
-    "users": [
-      "GET /api/v1/users/profile",
-      "PUT /api/v1/users/profile",
-      "POST /api/v1/users/kyc",
-      "GET /api/v1/users/kyc-status"
-    ],
-    "subscriptions": [
-      "GET /api/v1/subscriptions/plans",
-      "POST /api/v1/subscriptions/subscribe",
-      "GET /api/v1/subscriptions/current"
+    "phase_3_production": [
+      "SEBI Compliance Features",
+      "Production Deployment",
+      "Performance Optimization",
+      "Load Testing",
+      "Mobile App (React Native)"
     ]
   },
-  "subscription_tiers": {
-    "free": {
-      "price": "₹0",
-      "features": [
-        "Basic bond listings",
-        "Limited trades per month",
-        "Paper trading (₹10 Lakh)",
-        "Basic analytics"
-      ]
-    },
-    "basic": {
-      "price": "₹499/month or ₹4,999/year",
-      "features": [
-        "All free features",
-        "AI risk assessment",
-        "Unlimited trades",
-        "Email notifications",
-        "Basic API access"
-      ]
-    },
-    "premium": {
-      "price": "₹999/month or ₹9,999/year",
-      "features": [
-        "All basic features",
-        "Advanced AI predictions",
-        "Return forecasts",
-        "Priority support",
-        "Bond vs Share comparison",
-        "Multi-broker integration",
-        "Full API access"
-      ]
-    },
-    "enterprise": {
-      "price": "Custom pricing",
-      "features": [
-        "All premium features",
-        "Dedicated account manager",
-        "Custom API limits",
-        "Institutional features",
-        "White-label options",
-        "SLA guarantee"
-      ]
-    }
-  },
-  "risk_management": {
-    "technical_risks": [
-      {
-        "risk": "Blockchain transaction failures",
-        "mitigation": "Implement retry mechanism, fallback to off-chain settlement"
-      },
-      {
-        "risk": "Database performance issues",
-        "mitigation": "Proper indexing, Redis caching, read replicas"
-      },
-      {
-        "risk": "Real-time data delays",
-        "mitigation": "Multiple data source fallbacks, WebSocket reconnection"
-      }
-    ],
-    "security_risks": [
-      {
-        "risk": "Smart contract vulnerabilities",
-        "mitigation": "Professional audit (CertiK/OpenZeppelin), bug bounty"
-      },
-      {
-        "risk": "API security breaches",
-        "mitigation": "Rate limiting, input validation, CORS, JWT rotation"
-      },
-      {
-        "risk": "Data breaches",
-        "mitigation": "Encryption at rest/transit, field-level encryption for PII"
-      }
-    ],
-    "regulatory_risks": [
-      {
-        "risk": "SEBI compliance issues",
-        "mitigation": "Legal consultation, sandbox participation, compliance officer"
-      },
-      {
-        "risk": "KYC/AML violations",
-        "mitigation": "Automated screening, transaction monitoring, FIU reporting"
-      }
+  "hackathon_target": {
+    "minimum_viable_demo": "Iterations 0-10 (Core trading works)",
+    "good_demo": "Iterations 0-15 (Polished with charts)",
+    "impressive_demo": "Iterations 0-20 (Full featured)",
+    "demo_flow": [
+      "1. Show landing page",
+      "2. Register new user",
+      "3. Browse bonds list",
+      "4. View bond details with risk score",
+      "5. Buy bond (paper trading)",
+      "6. View portfolio",
+      "7. Sell bond",
+      "8. Show transaction history",
+      "9. Show leaderboard"
     ]
   },
-  "success_metrics": {
-    "hackathon_mvp": {
-      "completion_criteria": [
-        "Working authentication system",
-        "Bond listing with search/filter",
-        "Paper trading functional",
-        "Basic AI recommendations shown",
-        "Responsive UI with animations",
-        "Demo presentation ready"
-      ]
+  "team_assignment": {
+    "parallel_work": {
+      "frontend_dev": "Work on UI components while backend is being built",
+      "backend_dev": "Build APIs, can use Postman to test",
+      "integration": "Connect frontend to backend APIs"
     },
-    "post_launch": {
-      "kpis": [
-        "User registrations: 1,000 in first month",
-        "Daily active users: 100+",
-        "Trade volume: ₹10 Lakh daily",
-        "Platform uptime: 99.9%",
-        "API response time: <200ms (p95)"
-      ]
+    "suggested_split": {
+      "pranay": "Architecture, Integration, Demo",
+      "abhijit": "Backend APIs, Database",
+      "samiksh": "Frontend UI, Components",
+      "vineet": "Documentation, Testing, Demo Prep"
     }
   },
-  "team_responsibilities": {
-    "pranay_gajbhiye": {
-      "role": "Team Leader / System Architect",
-      "responsibilities": [
-        "Overall project architecture",
-        "Code review and quality",
-        "Final integration",
-        "Presentation and demo"
-      ]
+  "technical_stack_by_iteration": {
+    "iterations_0_4": {
+      "frontend": "Next.js + Tailwind CSS only",
+      "backend": "Express.js (JavaScript)",
+      "database": "None → MongoDB",
+      "note": "Keep it simple, no extra libraries"
     },
-    "abhijit_dohe": {
-      "role": "Backend Developer",
-      "responsibilities": [
-        "API development",
-        "Database design",
-        "Authentication system",
-        "WebSocket implementation"
-      ]
+    "iterations_5_10": {
+      "add": ["bcryptjs", "jsonwebtoken", "mongoose"],
+      "frontend_add": "React Context for auth state"
     },
-    "vineet_mandalkar": {
-      "role": "Project Manager",
-      "responsibilities": [
-        "Task coordination",
-        "Documentation",
-        "Testing coordination",
-        "Presentation support"
-      ]
+    "iterations_11_15": {
+      "add": ["Recharts", "Framer Motion"],
+      "note": "Add libraries as needed"
     },
-    "samiksh_gupta": {
-      "role": "Frontend Developer",
-      "responsibilities": [
-        "UI/UX implementation",
-        "Animations (GSAP, Framer)",
-        "Responsive design",
-        "Component library"
-      ]
+    "iterations_16_20": {
+      "add": ["Socket.io", "Socket.io-client"],
+      "note": "Advanced features"
+    },
+    "post_hackathon": {
+      "add": ["Redis", "Docker", "TypeScript migration", "Testing frameworks"]
     }
   },
-  "dependencies_and_prerequisites": {
-    "development_tools": [
-      "Node.js 18+",
-      "npm or pnpm",
-      "Docker & Docker Compose",
-      "Git",
-      "VS Code with extensions"
-    ],
-    "accounts_needed": [
-      "MongoDB Atlas account",
-      "GitHub account",
-      "MetaMask wallet",
-      "Alchemy/Infura for Polygon RPC"
-    ],
-    "api_keys_required": [
-      "JWT_SECRET",
-      "MONGODB_URI",
-      "POLYGON_RPC_URL",
-      "ALCHEMY_API_KEY",
-      "SENDGRID_API_KEY (optional)"
+  "checkpoint_testing": {
+    "after_each_iteration": [
+      "All previous features still work",
+      "No console errors",
+      "No broken links/routes",
+      "API responses correct",
+      "Database data consistent"
     ]
   },
-  "timeline_summary": {
-    "phase_1_hackathon": "48 hours",
-    "phase_2_beta": "4 weeks",
-    "phase_3_launch": "2 months",
-    "phase_4_scale": "6 months",
-    "total_to_full_production": "~9 months"
+  "time_estimates": {
+    "total_hours_to_iteration_10": "30-35 hours",
+    "total_hours_to_iteration_15": "45-50 hours",
+    "total_hours_to_iteration_20": "60-65 hours",
+    "hackathon_48_hours": "Aim for Iteration 15-18"
   }
 }
