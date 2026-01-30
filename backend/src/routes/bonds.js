@@ -20,22 +20,22 @@ const isDbConnected = () => mongoose.connection.readyState === 1;
 router.get('/', async (req, res) => {
   try {
     let bonds;
-    
+
     if (isDbConnected() && Bond) {
       // Use MongoDB
       const query = {};
       const { risk, sector, search, minReturn, maxReturn } = req.query;
-      
+
       // Filter by risk level
       if (risk) {
         query.riskLevel = { $regex: new RegExp(`^${risk}$`, 'i') };
       }
-      
+
       // Filter by sector
       if (sector) {
         query.sector = { $regex: new RegExp(sector, 'i') };
       }
-      
+
       // Search by name or issuer
       if (search) {
         query.$or = [
@@ -43,20 +43,20 @@ router.get('/', async (req, res) => {
           { issuer: { $regex: new RegExp(search, 'i') } }
         ];
       }
-      
+
       // Filter by return rate range
       if (minReturn || maxReturn) {
         query.returnRate = {};
         if (minReturn) query.returnRate.$gte = parseFloat(minReturn);
         if (maxReturn) query.returnRate.$lte = parseFloat(maxReturn);
       }
-      
+
       bonds = await Bond.find(query).sort({ returnRate: -1 });
     } else {
       // Fallback to JSON
       bonds = [...bondsJSON];
       const { risk, sector, search, minReturn, maxReturn } = req.query;
-      
+
       if (risk) {
         bonds = bonds.filter(b => b.riskLevel.toLowerCase() === risk.toLowerCase());
       }
@@ -65,7 +65,7 @@ router.get('/', async (req, res) => {
       }
       if (search) {
         const s = search.toLowerCase();
-        bonds = bonds.filter(b => 
+        bonds = bonds.filter(b =>
           b.name.toLowerCase().includes(s) || b.issuer.toLowerCase().includes(s)
         );
       }
@@ -76,7 +76,7 @@ router.get('/', async (req, res) => {
         bonds = bonds.filter(b => b.returnRate <= parseFloat(maxReturn));
       }
     }
-    
+
     res.json({
       success: true,
       count: bonds.length,
@@ -96,7 +96,7 @@ router.get('/', async (req, res) => {
 router.get('/:id', async (req, res) => {
   try {
     let bond;
-    
+
     if (isDbConnected() && Bond) {
       // Check if ID is valid MongoDB ObjectId
       if (mongoose.Types.ObjectId.isValid(req.params.id)) {
@@ -110,14 +110,14 @@ router.get('/:id', async (req, res) => {
       // Fallback to JSON
       bond = bondsJSON.find(b => b.id === req.params.id);
     }
-    
+
     if (!bond) {
       return res.status(404).json({
         success: false,
         message: 'Bond not found'
       });
     }
-    
+
     res.json({
       success: true,
       source: isDbConnected() ? 'mongodb' : 'json',
