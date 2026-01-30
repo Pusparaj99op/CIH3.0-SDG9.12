@@ -1,7 +1,7 @@
 
 <div align="center">
 
-  # 🚀 Infrastructure Bond Tokenization Platform
+  # Infrastructure Bond Tokenization Platform
   ### CIH3.0: Central India Hackathon | SDG 9.12
 
   **Transforming Public Infrastructure Funding through Blockchain & AI**
@@ -22,31 +22,31 @@
 
 ---
 
-## 🏆 Problem Statement: SDG 9.12
+## ![Problem Statement](https://img.shields.io/badge/Problem_Statement-SDG_9.12-E5243B?style=for-the-badge)
 **"Create a platform for tokenizing infrastructure bonds to enable public-private funding."**
 
 We address the critical gap in infrastructure financing by democratizing access to high-value assets. Our platform allows retail investors to legally own fractional shares of roads, bridges, and energy projects, fostering economic growth and innovation strictly aligned with **UN Sustainable Development Goal 9**.
 
 ---
 
-## ✨ Key Features
+## ![Key Features](https://img.shields.io/badge/Key_Features-Core_Capabilities-blue?style=for-the-badge)
 
-### 🚀 For Investors
-- **💎 Fractional Ownership**: Buy & sell tokenized bonds starting from ₹500.
-- **🤖 AI-Powered Insights**:
+### For Investors
+- **Fractional Ownership**: Buy & sell tokenized bonds starting from ₹500.
+- **AI-Powered Insights**:
   - **Risk Assessment**: Real-time 0-100 risk score.
   - **Return Prediction**: LSTM-based forecasts for informed decisions.
-- **💸 e-Rupee Integation**: Seamless payments via CBDC (Digital Rupee).
-- **📉 Paper Trading**: Practice with ₹10 Lakh virtual portfolio before investing.
+- **e-Rupee Integration**: Seamless payments via CBDC (Digital Rupee).
+- **Paper Trading**: Practice with ₹10 Lakh virtual portfolio before investing.
 
-### 🏢 For Issuers & Platform
-- **📜 Smart Contract Settlement**: Instant, trustless settlements on the Polygon network.
-- **🔐 Regulatory Compliance**: Automated KYC (Aadhaar/DigiLocker) & SEBI reporting.
-- **📊 Real-time Transparency**: Immutable ledger records for every transaction.
+### For Issuers & Platform
+- **Smart Contract Settlement**: Instant, trustless settlements on the Polygon network.
+- **Regulatory Compliance**: Automated KYC (Aadhaar/DigiLocker) & SEBI reporting.
+- **Real-time Transparency**: Immutable ledger records for every transaction.
 
 ---
 
-## 🛠️ Technology Stack
+## ![Technology Stack](https://img.shields.io/badge/Tech_Stack-Full_Stack-black?style=for-the-badge)
 
 | Domain | Technologies |
 | :--- | :--- |
@@ -59,7 +59,7 @@ We address the critical gap in infrastructure financing by democratizing access 
 
 ---
 
-## 🏗️ Architecture
+## ![Architecture](https://img.shields.io/badge/System-Architecture-orange?style=for-the-badge)
 
 Our solution utilizes an **Event-Driven Microservices Architecture** to ensure detailed scalability and reliability.
 
@@ -85,7 +85,7 @@ graph TD
 
 ---
 
-## 🚀 Getting Started
+## ![Getting Started](https://img.shields.io/badge/Guide-Getting_Started-success?style=for-the-badge)
 
 ### Prerequisites
 - Node.js v18+
@@ -123,7 +123,7 @@ graph TD
 
 ---
 
-## 📡 API Documentation
+## ![API Documentation](https://img.shields.io/badge/Docs-API_Reference-lightgrey?style=for-the-badge)
 
 | Method | Endpoint | Description |
 | :--- | :--- | :--- |
@@ -136,7 +136,7 @@ graph TD
 
 ---
 
-## 🗺️ Roadmap
+## ![Roadmap](https://img.shields.io/badge/Project-Roadmap-yellow?style=for-the-badge)
 
 - [x] **Phase 1**: Core Platform & Tokenization (MVP for CIH3.0)
 - [ ] **Phase 2**: Mobile App (React Native) & Secondary Market
@@ -144,14 +144,14 @@ graph TD
 
 ---
 
-## 👥 Team: Co Devians
+## ![Team](https://img.shields.io/badge/Team-Co_Devians-blueviolet?style=for-the-badge)
 
 | Role | Name | Link |
 | :--- | :--- | :--- |
-| **👑 Team Leader** | **Pranay Gajbhiye** | [![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/pranaygajbhiye/) |
-| **⚙️ Backend** | **Abhijit Dohe** | 👨‍💻 |
-| **📈 Management** | **Vineet Mandalkar** | 👔 |
-| **🎨 Frontend** | **Samiksh Gupta** | 🖌️ |
+| ![Team Leader](https://img.shields.io/badge/Team_Leader-FFD700?style=for-the-badge&logo=probot&logoColor=black) | **Pranay Gajbhiye** | [![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/pranaygajbhiye/) |
+| ![Backend](https://img.shields.io/badge/Backend-000000?style=for-the-badge&logo=nodedotjs&logoColor=white) | **Abhijit Dohe** | |
+| ![Management](https://img.shields.io/badge/Management-4caf50?style=for-the-badge&logo=google-sheets&logoColor=white) | **Vineet Mandalkar** | |
+| ![Frontend](https://img.shields.io/badge/Frontend-61DAFB?style=for-the-badge&logo=react&logoColor=black) | **Samiksh Gupta** | |
 
 ---
 
