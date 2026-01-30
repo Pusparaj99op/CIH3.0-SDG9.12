@@ -1,11 +1,14 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
+import gsap from 'gsap';
+import { useGSAP } from '@gsap/react';
 import { useAuth } from '../context/AuthContext';
 import Navbar from '../components/Navbar';
 import ProtectedRoute from '../components/ProtectedRoute';
 import SellModal from '../components/SellModal';
+import { animateCounter, magneticButton, prefersReducedMotion, isMobile } from '@/lib/animations';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3210/api';
 
@@ -67,6 +70,8 @@ function PortfolioContent() {
   const [error, setError] = useState<string | null>(null);
   const [selectedHolding, setSelectedHolding] = useState<Holding | null>(null);
   const [showSellModal, setShowSellModal] = useState(false);
+  const statsRef = useRef<HTMLDivElement>(null);
+  const tableRef = useRef<HTMLTableElement>(null);
 
   useEffect(() => {
     fetchPortfolio();
@@ -154,6 +159,36 @@ function PortfolioContent() {
     }
   };
 
+  // Animate stats counters
+  useGSAP(() => {
+    if (statsRef.current && portfolio && !prefersReducedMotion()) {
+      const statNumbers = statsRef.current.querySelectorAll('.stat-number');
+      statNumbers.forEach((el) => {
+        const target = parseFloat(el.getAttribute('data-value') || '0');
+        animateCounter(el as HTMLElement, 0, target, 1.5);
+      });
+    }
+  }, [portfolio]);
+
+  // Animate table rows
+  useGSAP(() => {
+    if (tableRef.current && portfolio && !prefersReducedMotion()) {
+      const rows = tableRef.current.querySelectorAll('tbody tr');
+      gsap.fromTo(rows,
+        { y: 20, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.5, stagger: 0.1, ease: 'power2.out' }
+      );
+
+      // Add magnetic effect to sell buttons on desktop
+      if (!isMobile()) {
+        const sellButtons = tableRef.current.querySelectorAll('.sell-btn');
+        sellButtons.forEach((btn) => {
+          magneticButton(btn as HTMLElement, 0.3);
+        });
+      }
+    }
+  }, [portfolio]);
+
   if (loading) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
@@ -186,44 +221,44 @@ function PortfolioContent() {
         )}
 
         {/* Portfolio Summary */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        <div ref={statsRef} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
           {/* Wallet Balance */}
-          <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/20">
+          <div className="glass rounded-2xl p-6 border border-white/20">
             <div className="flex items-center gap-3 mb-3">
               <div className="w-10 h-10 bg-green-500/20 rounded-xl flex items-center justify-center">
                 <span className="text-xl">💰</span>
               </div>
               <span className="text-gray-400 text-sm">Wallet Balance</span>
             </div>
-            <p className="text-2xl font-bold text-green-400">
-              {formatCurrency(user?.wallet?.balance || 0)}
+            <p className="stat-number text-2xl font-bold text-green-400" data-value={user?.wallet?.balance || 0}>
+              {formatCurrency(0)}
             </p>
           </div>
 
           {/* Invested Amount */}
-          <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/20">
+          <div className="glass rounded-2xl p-6 border border-white/20">
             <div className="flex items-center gap-3 mb-3">
               <div className="w-10 h-10 bg-blue-500/20 rounded-xl flex items-center justify-center">
                 <span className="text-xl">📊</span>
               </div>
               <span className="text-gray-400 text-sm">Total Invested</span>
             </div>
-            <p className="text-2xl font-bold text-blue-400">
-              {formatCurrency(portfolio?.totalInvested || 0)}
+            <p className="stat-number text-2xl font-bold text-blue-400" data-value={portfolio?.totalInvested || 0}>
+              {formatCurrency(0)}
             </p>
             <p className="text-xs text-gray-500 mt-1">{portfolio?.totalBondsOwned || 0} bonds</p>
           </div>
 
           {/* Current Value */}
-          <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/20">
+          <div className="glass rounded-2xl p-6 border border-white/20">
             <div className="flex items-center gap-3 mb-3">
               <div className="w-10 h-10 bg-purple-500/20 rounded-xl flex items-center justify-center">
                 <span className="text-xl">💎</span>
               </div>
               <span className="text-gray-400 text-sm">Current Value</span>
             </div>
-            <p className="text-2xl font-bold text-purple-400">
-              {formatCurrency(portfolio?.currentValue || 0)}
+            <p className="stat-number text-2xl font-bold text-purple-400" data-value={portfolio?.currentValue || 0}>
+              {formatCurrency(0)}
             </p>
             {portfolio && portfolio.totalReturns !== 0 && (
               <p className={`text-xs mt-1 ${portfolio.totalReturns >= 0 ? 'text-green-400' : 'text-red-400'}`}>
@@ -233,22 +268,22 @@ function PortfolioContent() {
           </div>
 
           {/* Expected Returns */}
-          <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/20">
+          <div className="glass rounded-2xl p-6 border border-white/20">
             <div className="flex items-center gap-3 mb-3">
               <div className="w-10 h-10 bg-yellow-500/20 rounded-xl flex items-center justify-center">
                 <span className="text-xl">📈</span>
               </div>
               <span className="text-gray-400 text-sm">Expected Annual</span>
             </div>
-            <p className="text-2xl font-bold text-yellow-400">
-              {formatCurrency(portfolio?.expectedAnnualReturns || 0)}
+            <p className="stat-number text-2xl font-bold text-yellow-400" data-value={portfolio?.expectedAnnualReturns || 0}>
+              {formatCurrency(0)}
             </p>
             <p className="text-xs text-gray-500 mt-1">per year</p>
           </div>
         </div>
 
         {/* Holdings Table */}
-        <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/20 mb-8">
+        <div className="glass rounded-2xl p-6 border border-white/20 mb-8">
           <div className="flex justify-between items-center mb-6">
             <h2 className="text-xl font-bold text-white">My Holdings</h2>
             <Link
@@ -262,7 +297,7 @@ function PortfolioContent() {
           {portfolio && portfolio.holdings.length > 0 ? (
             <div className="overflow-x-auto -mx-4 sm:mx-0">
               <div className="inline-block min-w-full align-middle">
-                <table className="min-w-full">
+                <table ref={tableRef} className="min-w-full">
                   <thead>
                     <tr className="text-left text-gray-400 text-sm border-b border-white/10">
                       <th className="pb-4 pr-4 pl-4 sm:pl-0 whitespace-nowrap min-w-[200px]">Bond</th>
@@ -310,7 +345,7 @@ function PortfolioContent() {
                             </Link>
                             <button
                             onClick={() => handleSellClick(holding)}
-                            className="text-sm text-red-400 hover:text-red-300 font-medium"
+                            className="sell-btn text-sm text-red-400 hover:text-red-300 font-medium transition-colors"
                           >
                             Sell
                           </button>
