@@ -1,8 +1,10 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { useToast } from '../context/ToastContext';
+import gsap from 'gsap';
+import { prefersReducedMotion, getAnimDuration } from '@/lib/animations';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3210/api';
 
@@ -37,6 +39,23 @@ export default function SellModal({ holding, isOpen, onClose, onSuccess }: SellM
   const { showToast } = useToast();
   const [quantity, setQuantity] = useState(1);
   const [loading, setLoading] = useState(false);
+  const modalRef = useRef<HTMLDivElement>(null);
+  const backdropRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (isOpen && !prefersReducedMotion()) {
+      gsap.fromTo(
+        backdropRef.current,
+        { opacity: 0 },
+        { opacity: 1, duration: getAnimDuration(0.3), ease: 'power2.out' }
+      );
+      gsap.fromTo(
+        modalRef.current,
+        { scale: 0.8, opacity: 0, y: 50 },
+        { scale: 1, opacity: 1, y: 0, duration: getAnimDuration(0.4), ease: 'back.out(1.4)', delay: 0.1 }
+      );
+    }
+  }, [isOpen]);
 
   if (!isOpen || !holding.bond) return null;
 
@@ -83,6 +102,15 @@ export default function SellModal({ holding, isOpen, onClose, onSuccess }: SellM
       const data = await response.json();
 
       if (data.success) {
+        if (modalRef.current && !prefersReducedMotion()) {
+          gsap.to(modalRef.current, {
+            scale: 1.05,
+            duration: 0.2,
+            ease: 'power2.out',
+            yoyo: true,
+            repeat: 1
+          });
+        }
         showToast(`Successfully sold ${quantity} unit(s) of ${bond.name}`, 'success');
         await refreshUser();
         onSuccess();
@@ -110,10 +138,10 @@ export default function SellModal({ holding, isOpen, onClose, onSuccess }: SellM
       onClick={handleOverlayClick}
     >
       {/* Backdrop */}
-      <div className="absolute inset-0 bg-black/70 backdrop-blur-sm"></div>
+      <div ref={backdropRef} className="absolute inset-0 bg-black/70 backdrop-blur-sm"></div>
 
       {/* Modal */}
-      <div className="relative bg-gradient-to-br from-slate-800 to-slate-900 rounded-2xl p-6 w-full max-w-md border border-white/20 shadow-2xl">
+      <div ref={modalRef} className="relative glass-strong rounded-2xl p-6 w-full max-w-md border border-white/20 shadow-2xl">
         {/* Close Button */}
         <button
           onClick={onClose}
