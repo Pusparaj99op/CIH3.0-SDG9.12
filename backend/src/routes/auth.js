@@ -82,7 +82,7 @@ router.post('/login', async (req, res) => {
 
     // Find user and include password for comparison
     const user = await User.findOne({ email: email.toLowerCase() }).select('+password');
-    
+
     if (!user) {
       return res.status(401).json({
         success: false,
@@ -92,7 +92,7 @@ router.post('/login', async (req, res) => {
 
     // Check password
     const isMatch = await user.comparePassword(password);
-    
+
     if (!isMatch) {
       return res.status(401).json({
         success: false,
@@ -130,7 +130,7 @@ router.post('/login', async (req, res) => {
 router.get('/me', protect, async (req, res) => {
   try {
     const user = await User.findById(req.userId);
-    
+
     if (!user) {
       return res.status(404).json({
         success: false,
