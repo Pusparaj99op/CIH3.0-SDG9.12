@@ -214,61 +214,62 @@ export default function TransactionsPage() {
               </Link>
             </div>
           ) : (
-            <div className="overflow-x-auto">
-              <table className="w-full">
-                <thead>
-                  <tr className="border-b border-white/10">
-                    <th className="text-left p-4 text-white/70 font-medium">Date & Time</th>
-                    <th className="text-left p-4 text-white/70 font-medium">Bond</th>
-                    <th className="text-center p-4 text-white/70 font-medium">Type</th>
-                    <th className="text-right p-4 text-white/70 font-medium">Quantity</th>
-                    <th className="text-right p-4 text-white/70 font-medium">Price/Unit</th>
-                    <th className="text-right p-4 text-white/70 font-medium">Total Amount</th>
-                    <th className="text-center p-4 text-white/70 font-medium">Status</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {transactions.map((tx) => (
-                    <tr
-                      key={tx.id}
-                      className="border-b border-white/5 hover:bg-white/5 transition-colors"
-                    >
-                      <td className="p-4">
-                        <span className="text-white text-sm">{formatDate(tx.createdAt)}</span>
-                      </td>
-                      <td className="p-4">
-                        {tx.bond ? (
-                          <div>
-                            <p className="text-white font-medium">{tx.bond.name}</p>
-                            <p className="text-white/50 text-sm">{tx.bond.issuer}</p>
-                          </div>
-                        ) : (
-                          <span className="text-white/50">Bond not available</span>
-                        )}
-                      </td>
-                      <td className="p-4 text-center">
-                        <span className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-medium ${
-                          tx.type === 'BUY'
-                            ? 'bg-green-500/20 text-green-400'
-                            : 'bg-red-500/20 text-red-400'
-                        }`}>
-                          {tx.type === 'BUY' ? '↓ BUY' : '↑ SELL'}
-                        </span>
-                      </td>
-                      <td className="p-4 text-right">
-                        <span className="text-white">{tx.quantity}</span>
-                      </td>
-                      <td className="p-4 text-right">
-                        <span className="text-white/80">{formatCurrency(tx.pricePerUnit)}</span>
-                      </td>
-                      <td className="p-4 text-right">
-                        <span className={`font-semibold ${
+            <div className="overflow-x-auto -mx-4 sm:mx-0">
+              <div className="inline-block min-w-full align-middle">
+                <table className="min-w-full">
+                  <thead>
+                    <tr className="border-b border-white/10">
+                      <th className="text-left p-4 text-white/70 font-medium whitespace-nowrap">Date & Time</th>
+                      <th className="text-left p-4 text-white/70 font-medium whitespace-nowrap min-w-[200px]">Bond</th>
+                      <th className="text-center p-4 text-white/70 font-medium whitespace-nowrap">Type</th>
+                      <th className="text-right p-4 text-white/70 font-medium whitespace-nowrap">Quantity</th>
+                      <th className="text-right p-4 text-white/70 font-medium whitespace-nowrap">Price/Unit</th>
+                      <th className="text-right p-4 text-white/70 font-medium whitespace-nowrap">Total Amount</th>
+                      <th className="text-center p-4 text-white/70 font-medium whitespace-nowrap">Status</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {transactions.map((tx) => (
+                      <tr
+                        key={tx.id}
+                        className="border-b border-white/5 hover:bg-white/5 transition-colors"
+                      >
+                        <td className="p-4 whitespace-nowrap">
+                          <span className="text-white text-sm">{formatDate(tx.createdAt)}</span>
+                        </td>
+                        <td className="p-4">
+                          {tx.bond ? (
+                            <div>
+                              <p className="text-white font-medium whitespace-nowrap">{tx.bond.name}</p>
+                              <p className="text-white/50 text-sm whitespace-nowrap">{tx.bond.issuer}</p>
+                            </div>
+                          ) : (
+                            <span className="text-white/50">Bond not available</span>
+                          )}
+                        </td>
+                        <td className="p-4 text-center">
+                          <span className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-medium whitespace-nowrap ${
+                            tx.type === 'BUY'
+                              ? 'bg-green-500/20 text-green-400'
+                              : 'bg-red-500/20 text-red-400'
+                          }`}>
+                            {tx.type === 'BUY' ? '↓ BUY' : '↑ SELL'}
+                          </span>
+                        </td>
+                        <td className="p-4 text-right whitespace-nowrap">
+                          <span className="text-white">{tx.quantity}</span>
+                        </td>
+                        <td className="p-4 text-right whitespace-nowrap">
+                          <span className="text-white/80">{formatCurrency(tx.pricePerUnit)}</span>
+                        </td>
+                        <td className="p-4 text-right whitespace-nowrap">
+                          <span className={`font-semibold ${
                           tx.type === 'BUY' ? 'text-green-400' : 'text-red-400'
                         }`}>
                           {tx.type === 'BUY' ? '-' : '+'}{formatCurrency(tx.totalAmount)}
                         </span>
                       </td>
-                      <td className="p-4 text-center">
+                      <td className="p-4 text-center whitespace-nowrap">
                         <span className={`inline-flex items-center px-2 py-1 rounded text-xs ${
                           tx.status === 'COMPLETED'
                             ? 'bg-green-500/20 text-green-400'
@@ -284,6 +285,7 @@ export default function TransactionsPage() {
                 </tbody>
               </table>
             </div>
+          </div>
           )}
 
           {/* Pagination */}
