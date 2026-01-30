@@ -22,48 +22,48 @@
   "iterations": {
     "iteration_0": {
       "name": "Hello World - Basic Setup",
-      "status": "TODO",
+      "status": "DONE",
       "goal": "Frontend and backend running and connected",
       "tasks": [
         {
           "id": "T0.1",
           "task": "Create project root folder structure",
-          "status": "TODO",
+          "status": "DONE",
           "time": "15 min",
           "details": "Create /frontend and /backend folders"
         },
         {
           "id": "T0.2",
           "task": "Initialize Next.js frontend",
-          "status": "TODO",
+          "status": "DONE",
           "time": "20 min",
           "details": "npx create-next-app@latest frontend --typescript --tailwind --app"
         },
         {
           "id": "T0.3",
           "task": "Initialize Express backend",
-          "status": "TODO",
+          "status": "DONE",
           "time": "20 min",
           "details": "npm init, install express cors, create server.js"
         },
         {
           "id": "T0.4",
           "task": "Create health check API",
-          "status": "TODO",
+          "status": "DONE",
           "time": "15 min",
           "details": "GET /api/health returns { status: 'ok' }"
         },
         {
           "id": "T0.5",
           "task": "Frontend calls backend API",
-          "status": "TODO",
+          "status": "DONE",
           "time": "30 min",
           "details": "Fetch health endpoint, display connection status"
         },
         {
           "id": "T0.6",
           "task": "Test both servers running",
-          "status": "TODO",
+          "status": "DONE",
           "time": "15 min",
           "details": "Verify no errors, API responds correctly"
         }
@@ -73,41 +73,41 @@
     },
     "iteration_1": {
       "name": "Static Bond Display",
-      "status": "TODO",
+      "status": "DONE",
       "goal": "Display bond cards on homepage",
       "tasks": [
         {
           "id": "T1.1",
           "task": "Create sample bond data array",
-          "status": "TODO",
+          "status": "DONE",
           "time": "15 min",
           "details": "5 bonds with name, issuer, returnRate, riskLevel, price"
         },
         {
           "id": "T1.2",
           "task": "Create BondCard component",
-          "status": "TODO",
+          "status": "DONE",
           "time": "45 min",
           "details": "Card showing bond info with Tailwind styling"
         },
         {
           "id": "T1.3",
           "task": "Create bonds grid layout",
-          "status": "TODO",
+          "status": "DONE",
           "time": "30 min",
           "details": "Responsive grid: 1/2/3 columns"
         },
         {
           "id": "T1.4",
           "task": "Create simple Navbar",
-          "status": "TODO",
+          "status": "DONE",
           "time": "30 min",
           "details": "Logo, Home, Bonds, Login links"
         },
         {
           "id": "T1.5",
           "task": "Style and test",
-          "status": "TODO",
+          "status": "DONE",
           "time": "30 min",
           "details": "Polish UI, test responsiveness"
         }
@@ -117,41 +117,41 @@
     },
     "iteration_2": {
       "name": "Backend API for Bonds",
-      "status": "TODO",
+      "status": "DONE",
       "goal": "Fetch bonds from backend",
       "tasks": [
         {
           "id": "T2.1",
           "task": "Create bonds.json data file",
-          "status": "TODO",
+          "status": "DONE",
           "time": "20 min",
           "details": "10 sample bonds in JSON file"
         },
         {
           "id": "T2.2",
           "task": "Create GET /api/bonds endpoint",
-          "status": "TODO",
+          "status": "DONE",
           "time": "30 min",
           "details": "Return all bonds from JSON file"
         },
         {
           "id": "T2.3",
           "task": "Frontend: fetch bonds from API",
-          "status": "TODO",
+          "status": "DONE",
           "time": "30 min",
           "details": "useEffect to fetch on page load"
         },
         {
           "id": "T2.4",
           "task": "Add loading state",
-          "status": "TODO",
+          "status": "DONE",
           "time": "20 min",
           "details": "Show spinner while fetching"
         },
         {
           "id": "T2.5",
           "task": "Add error handling",
-          "status": "TODO",
+          "status": "DONE",
           "time": "20 min",
           "details": "Show error message if API fails"
         }
@@ -161,55 +161,55 @@
     },
     "iteration_3": {
       "name": "MongoDB Integration",
-      "status": "TODO",
+      "status": "DONE",
       "goal": "Store and retrieve bonds from database",
       "tasks": [
         {
           "id": "T3.1",
           "task": "Install mongoose",
-          "status": "TODO",
+          "status": "DONE",
           "time": "10 min",
           "details": "npm install mongoose"
         },
         {
           "id": "T3.2",
           "task": "Create MongoDB connection",
-          "status": "TODO",
+          "status": "DONE",
           "time": "30 min",
           "details": "db.js with connection logic"
         },
         {
           "id": "T3.3",
           "task": "Create Bond schema/model",
-          "status": "TODO",
+          "status": "DONE",
           "time": "30 min",
           "details": "Define Bond model with all fields"
         },
         {
           "id": "T3.4",
           "task": "Create seed script",
-          "status": "TODO",
+          "status": "DONE",
           "time": "30 min",
           "details": "Script to populate 10 sample bonds"
         },
         {
           "id": "T3.5",
           "task": "Update API to use MongoDB",
-          "status": "TODO",
+          "status": "DONE",
           "time": "30 min",
           "details": "GET /api/bonds reads from database"
         },
         {
           "id": "T3.6",
           "task": "Create GET /api/bonds/:id",
-          "status": "TODO",
+          "status": "DONE",
           "time": "20 min",
           "details": "Return single bond by ID"
         },
         {
           "id": "T3.7",
           "task": "Test database operations",
-          "status": "TODO",
+          "status": "DONE",
           "time": "20 min",
           "details": "Verify CRUD works correctly"
         }
@@ -1076,9 +1076,9 @@
     }
   },
   "quick_reference": {
-    "current_iteration": 0,
-    "completed_iterations": [],
+    "current_iteration": 4,
+    "completed_iterations": ["iteration_0", "iteration_1", "iteration_2", "iteration_3"],
     "in_progress": null,
-    "next_up": "Iteration 0: Hello World"
+    "next_up": "Iteration 4: Bond Details Page"
   }
 }
