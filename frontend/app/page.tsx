@@ -16,7 +16,7 @@ export default function Home() {
   const [health, setHealth] = useState<HealthStatus | null>(null);
   const [healthLoading, setHealthLoading] = useState(true);
   const [healthError, setHealthError] = useState<string | null>(null);
-  
+
   const [bonds, setBonds] = useState<Bond[]>([]);
   const [bondsLoading, setBondsLoading] = useState(true);
   const [bondsError, setBondsError] = useState<string | null>(null);
@@ -65,7 +65,7 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-900 via-purple-900 to-indigo-900">
       <Navbar />
-      
+
       {/* Hero Section */}
       <section className="pt-24 pb-12 px-4">
         <div className="max-w-7xl mx-auto text-center">
@@ -75,7 +75,7 @@ export default function Home() {
           <p className="text-xl text-blue-200 mb-8 max-w-2xl mx-auto">
             Tokenized infrastructure bonds for everyone. Secure, transparent, and accessible.
           </p>
-          
+
           {/* Connection Status Badge */}
           <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/10 rounded-full backdrop-blur-sm border border-white/20 mb-8">
             {healthLoading ? (
@@ -122,7 +122,7 @@ export default function Home() {
           {!bondsLoading && bondsError && (
             <div className="bg-red-500/20 border border-red-500/30 rounded-xl p-8 text-center">
               <p className="text-red-400 text-lg mb-4">{bondsError}</p>
-              <button 
+              <button
                 onClick={() => window.location.reload()}
                 className="px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded-lg transition-colors"
               >
