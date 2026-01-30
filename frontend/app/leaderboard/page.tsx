@@ -1,7 +1,10 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import Link from 'next/link';
+import gsap from 'gsap';
+import { useGSAP } from '@gsap/react';
+import { animateCounter, prefersReducedMotion } from '@/lib/animations';
 
 interface LeaderboardEntry {
   userId: string;
@@ -27,6 +30,8 @@ export default function LeaderboardPage() {
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
+  const statsRef = useRef<HTMLDivElement>(null);
+  const tableRef = useRef<HTMLTableElement>(null);
 
   useEffect(() => {
     fetchLeaderboard();
@@ -37,7 +42,7 @@ export default function LeaderboardPage() {
       setLoading(true);
       const response = await fetch(`http://localhost:3210/api/leaderboard?page=${currentPage}&limit=20`);
       const data = await response.json();
-      
+
       if (data.success) {
         setLeaderboard(data.data.leaderboard);
         setStats(data.data.stats);
@@ -66,11 +71,46 @@ export default function LeaderboardPage() {
   };
 
   const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString('en-IN', { 
-      year: 'numeric', 
-      month: 'short' 
+    return new Date(dateString).toLocaleDateString('en-IN', {
+      year: 'numeric',
+      month: 'short'
     });
   };
+
+  // Animate stats counters
+  useGSAP(() => {
+    if (statsRef.current && stats && !prefersReducedMotion()) {
+      const statNumbers = statsRef.current.querySelectorAll('.stat-number');
+      statNumbers.forEach((el) => {
+        const target = parseFloat(el.getAttribute('data-value') || '0');
+        animateCounter(el as HTMLElement, 0, target, 1.5);
+      });
+    }
+  }, [stats]);
+
+  // Animate leaderboard rows and medals
+  useGSAP(() => {
+    if (tableRef.current && leaderboard.length && !prefersReducedMotion()) {
+      const rows = tableRef.current.querySelectorAll('tbody tr');
+      gsap.fromTo(rows,
+        { x: -30, opacity: 0 },
+        { x: 0, opacity: 1, duration: 0.5, stagger: 0.08, ease: 'power2.out' }
+      );
+
+      // Add glow and scale to top 3 medals
+      const medals = tableRef.current.querySelectorAll('.medal');
+      medals.forEach((medal, idx) => {
+        if (idx < 3) {
+          gsap.to(medal, {
+            scale: 1.1,
+            duration: 0.6,
+            ease: 'elastic.out(1, 0.5)',
+            delay: 0.3 + idx * 0.1
+          });
+        }
+      });
+    }
+  }, [leaderboard, currentPage]);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900">
@@ -82,7 +122,7 @@ export default function LeaderboardPage() {
               <h1 className="text-3xl font-bold text-white">Leaderboard</h1>
               <p className="text-blue-200 mt-1">Top traders ranked by returns</p>
             </div>
-            <Link 
+            <Link
               href="/"
               className="px-4 py-2 bg-white/10 hover:bg-white/20 border border-white/20 rounded-lg text-white transition-all"
             >
@@ -95,21 +135,21 @@ export default function LeaderboardPage() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Stats Summary */}
         {stats && (
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-            <div className="bg-white/10 backdrop-blur-lg border border-white/20 rounded-xl p-6">
+          <div ref={statsRef} className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            <div className="glass border border-white/20 rounded-xl p-6">
               <div className="text-blue-200 text-sm mb-2">Total Traders</div>
-              <div className="text-3xl font-bold text-white">{stats.totalTraders}</div>
+              <div className="stat-number text-3xl font-bold text-white" data-value={stats.totalTraders}>0</div>
             </div>
-            <div className="bg-white/10 backdrop-blur-lg border border-white/20 rounded-xl p-6">
+            <div className="glass border border-white/20 rounded-xl p-6">
               <div className="text-blue-200 text-sm mb-2">Average Return</div>
-              <div className={`text-3xl font-bold ${stats.avgReturn >= 0 ? 'text-green-400' : 'text-red-400'}`}>
-                {stats.avgReturn >= 0 ? '+' : ''}{stats.avgReturn.toFixed(2)}%
+              <div className={`stat-number text-3xl font-bold ${stats.avgReturn >= 0 ? 'text-green-400' : 'text-red-400'}`} data-value={stats.avgReturn}>
+                0%
               </div>
             </div>
-            <div className="bg-white/10 backdrop-blur-lg border border-white/20 rounded-xl p-6">
+            <div className="glass border border-white/20 rounded-xl p-6">
               <div className="text-blue-200 text-sm mb-2">Top Return</div>
-              <div className={`text-3xl font-bold ${stats.topReturn >= 0 ? 'text-green-400' : 'text-red-400'}`}>
-                {stats.topReturn >= 0 ? '+' : ''}{stats.topReturn.toFixed(2)}%
+              <div className={`stat-number text-3xl font-bold ${stats.topReturn >= 0 ? 'text-green-400' : 'text-red-400'}`} data-value={stats.topReturn}>
+                0%
               </div>
             </div>
           </div>
@@ -130,7 +170,7 @@ export default function LeaderboardPage() {
             <>
               {/* Desktop Table */}
               <div className="hidden md:block overflow-x-auto">
-                <table className="w-full">
+                <table ref={tableRef} className="w-full">
                   <thead className="bg-white/5 border-b border-white/10">
                     <tr>
                       <th className="px-6 py-4 text-left text-xs font-semibold text-blue-200 uppercase tracking-wider">
@@ -160,12 +200,12 @@ export default function LeaderboardPage() {
                     {leaderboard.map((entry) => {
                       const rankStyle = getRankDisplay(entry.rank);
                       return (
-                        <tr 
-                          key={entry.userId} 
+                        <tr
+                          key={entry.userId}
                           className={`hover:bg-white/5 transition-colors ${rankStyle.bg}`}
                         >
                           <td className="px-6 py-4 whitespace-nowrap">
-                            <div className={`text-2xl font-bold ${rankStyle.color}`}>
+                            <div className={`medal text-2xl font-bold ${rankStyle.color} ${entry.rank <= 3 ? 'glow-' + (entry.rank === 1 ? 'yellow' : entry.rank === 2 ? 'gray' : 'orange') : ''}`}>
                               {rankStyle.emoji}
                             </div>
                           </td>
