@@ -105,13 +105,13 @@ export default function SellModal({ holding, isOpen, onClose, onSuccess }: SellM
   };
 
   return (
-    <div 
+    <div
       className="fixed inset-0 z-50 flex items-center justify-center p-4"
       onClick={handleOverlayClick}
     >
       {/* Backdrop */}
       <div className="absolute inset-0 bg-black/70 backdrop-blur-sm"></div>
-      
+
       {/* Modal */}
       <div className="relative bg-gradient-to-br from-slate-800 to-slate-900 rounded-2xl p-6 w-full max-w-md border border-white/20 shadow-2xl">
         {/* Close Button */}
@@ -138,7 +138,7 @@ export default function SellModal({ holding, isOpen, onClose, onSuccess }: SellM
         <div className="bg-white/5 rounded-xl p-4 mb-6">
           <h3 className="text-white font-semibold mb-1">{bond.name}</h3>
           <p className="text-gray-400 text-sm mb-3">{bond.issuer}</p>
-          
+
           <div className="grid grid-cols-2 gap-4 text-sm">
             <div>
               <p className="text-gray-500">Current Price</p>
