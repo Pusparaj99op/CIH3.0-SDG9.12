@@ -26,6 +26,12 @@ const bondSchema = new mongoose.Schema({
       message: 'Risk level must be Low, Medium, or High'
     }
   },
+  riskScore: {
+    type: Number,
+    min: [0, 'Risk score cannot be negative'],
+    max: [100, 'Risk score cannot exceed 100'],
+    default: 50
+  },
   price: {
     type: Number,
     required: [true, 'Price is required'],
