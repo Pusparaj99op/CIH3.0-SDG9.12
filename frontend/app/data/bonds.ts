@@ -5,6 +5,7 @@ export interface Bond {
   issuer: string;
   returnRate: number;
   riskLevel: 'Low' | 'Medium' | 'High';
+  riskScore?: number;  // AI-generated risk score 0-100
   price: number;
   maturityYears: number;
   description: string;
