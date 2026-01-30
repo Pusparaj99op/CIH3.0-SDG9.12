@@ -5,12 +5,35 @@ import Link from 'next/link';
 import { useAuth } from '../context/AuthContext';
 import Navbar from '../components/Navbar';
 import ProtectedRoute from '../components/ProtectedRoute';
+import dynamic from 'next/dynamic';
+
+// Dynamically import charts to avoid SSR issues
+const PortfolioAllocationChart = dynamic(
+  () => import('../components/charts/PortfolioAllocationChart'),
+  { ssr: false, loading: () => <div className="h-64 flex items-center justify-center"><div className="w-8 h-8 border-4 border-purple-500 border-t-transparent rounded-full animate-spin"></div></div> }
+);
+
+const PortfolioHistoryChart = dynamic(
+  () => import('../components/charts/PortfolioHistoryChart'),
+  { ssr: false, loading: () => <div className="h-64 flex items-center justify-center"><div className="w-8 h-8 border-4 border-green-500 border-t-transparent rounded-full animate-spin"></div></div> }
+);
+
+const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3210/api';
+
+interface Holding {
+  bond: {
+    name: string;
+    sector: string;
+  } | null;
+  currentValue: number;
+}
 
 interface DashboardStats {
   totalInvested: number;
   totalReturns: number;
   bondsOwned: number;
   portfolioValue: number;
+  holdings: Holding[];
 }
 
 export default function DashboardPage() {
@@ -22,17 +45,51 @@ export default function DashboardPage() {
 }
 
 function DashboardContent() {
-  const { user, refreshUser } = useAuth();
-  const [stats] = useState<DashboardStats>({
+  const { user, token, refreshUser } = useAuth();
+  const [stats, setStats] = useState<DashboardStats>({
     totalInvested: 0,
     totalReturns: 0,
     bondsOwned: 0,
-    portfolioValue: 0
+    portfolioValue: 0,
+    holdings: []
   });
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     refreshUser();
-  }, [refreshUser]);
+    fetchPortfolioStats();
+  }, [refreshUser, token]);
+
+  const fetchPortfolioStats = async () => {
+    if (!token) {
+      setLoading(false);
+      return;
+    }
+    
+    try {
+      const response = await fetch(`${API_URL}/portfolio`, {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
+      const data = await response.json();
+      
+      if (data.success && data.data.portfolio) {
+        const portfolio = data.data.portfolio;
+        setStats({
+          totalInvested: portfolio.totalInvested || 0,
+          totalReturns: portfolio.totalReturns || 0,
+          bondsOwned: portfolio.totalBondsOwned || 0,
+          portfolioValue: portfolio.currentValue || 0,
+          holdings: portfolio.holdings || []
+        });
+      }
+    } catch (err) {
+      console.error('Failed to fetch portfolio stats:', err);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const formatCurrency = (amount: number) => {
     return new Intl.NumberFormat('en-IN', {
@@ -164,8 +221,26 @@ function DashboardContent() {
             </div>
           </div>
 
-          {/* Right Column - Quick Actions & Activity */}
+          {/* Right Column - Charts & Quick Actions */}
           <div className="lg:col-span-2 space-y-8">
+            {/* Charts Row */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {/* Portfolio Value History */}
+              <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/20">
+                <h2 className="text-lg font-bold text-white mb-4">Portfolio Value (30 Days)</h2>
+                <PortfolioHistoryChart 
+                  currentValue={stats.portfolioValue} 
+                  totalInvested={stats.totalInvested}
+                />
+              </div>
+
+              {/* Portfolio Allocation */}
+              <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/20">
+                <h2 className="text-lg font-bold text-white mb-4">Sector Allocation</h2>
+                <PortfolioAllocationChart holdings={stats.holdings} />
+              </div>
+            </div>
+
             {/* Quick Actions */}
             <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/20">
               <h2 className="text-xl font-bold text-white mb-6">Quick Actions</h2>
@@ -198,32 +273,6 @@ function DashboardContent() {
                   <span className="text-gray-400 font-medium">Transactions</span>
                   <span className="text-xs text-gray-500">Coming Soon</span>
                 </div>
-              </div>
-            </div>
-
-            {/* Recent Activity */}
-            <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/20">
-              <div className="flex justify-between items-center mb-6">
-                <h2 className="text-xl font-bold text-white">Recent Activity</h2>
-                <Link href="/portfolio" className="text-yellow-400 hover:text-yellow-300 text-sm">
-                  View All →
-                </Link>
-              </div>
-              
-              <div className="text-center py-8">
-                <div className="w-16 h-16 bg-white/5 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <span className="text-3xl">📭</span>
-                </div>
-                <p className="text-gray-400 mb-4">No recent transactions</p>
-                <Link
-                  href="/bonds"
-                  className="inline-flex items-center gap-2 text-yellow-400 hover:text-yellow-300"
-                >
-                  <span>Start investing</span>
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                  </svg>
-                </Link>
               </div>
             </div>
 
