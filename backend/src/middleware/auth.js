@@ -40,7 +40,7 @@ const protect = async (req, res, next) => {
 
     // Verify token
     const decoded = verifyToken(token);
-    
+
     if (!decoded) {
       return res.status(401).json({
         success: false,
