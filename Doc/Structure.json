@@ -1,0 +1,1047 @@
+{
+  "project": {
+    "name": "Infrastructure Bond Tokenization Platform",
+    "id": "9.12",
+    "hackathon": "CIH 3.0",
+    "type": "Monorepo Structure",
+    "description": "Complete project structure for frontend, backend, blockchain, and documentation"
+  },
+  "root_structure": {
+    "/": {
+      "description": "Root directory",
+      "files": [
+        ".gitignore",
+        ".env",
+        ".env.example",
+        "README.md",
+        "LICENSE",
+        "package.json",
+        "docker-compose.yml",
+        "docker-compose.dev.yml",
+        "docker-compose.prod.yml",
+        "tsconfig.json",
+        "turbo.json",
+        "pnpm-workspace.yaml"
+      ],
+      "directories": [
+        "frontend/",
+        "backend/",
+        "blockchain/",
+        "database/",
+        "docs/",
+        "scripts/",
+        "tests/",
+        "shared/",
+        ".github/",
+        "Doc/"
+      ]
+    }
+  },
+  "frontend_structure": {
+    "frontend/": {
+      "description": "Next.js 14 application with App Router",
+      "root_files": [
+        "package.json",
+        "tsconfig.json",
+        "next.config.js",
+        "tailwind.config.ts",
+        "postcss.config.js",
+        ".eslintrc.json",
+        ".prettierrc",
+        "next-env.d.ts"
+      ],
+      "directories": {
+        "src/": {
+          "description": "Source code directory",
+          "subdirectories": {
+            "app/": {
+              "description": "Next.js App Router pages",
+              "(marketing)/": {
+                "description": "Marketing pages group",
+                "files": [
+                  "layout.tsx",
+                  "page.tsx"
+                ],
+                "subdirectories": {
+                  "pricing/": ["page.tsx", "components/PricingCards.tsx"],
+                  "about/": ["page.tsx", "components/TeamSection.tsx"],
+                  "docs/": ["page.tsx", "layout.tsx", "[slug]/page.tsx"],
+                  "contact/": ["page.tsx"]
+                }
+              },
+              "(auth)/": {
+                "description": "Authentication pages",
+                "files": ["layout.tsx"],
+                "subdirectories": {
+                  "login/": ["page.tsx", "LoginForm.tsx"],
+                  "signup/": ["page.tsx", "SignupForm.tsx"],
+                  "forgot-password/": ["page.tsx"],
+                  "reset-password/": ["page.tsx"],
+                  "verify-email/": ["page.tsx"]
+                }
+              },
+              "(dashboard)/": {
+                "description": "Protected dashboard routes",
+                "files": [
+                  "layout.tsx",
+                  "DashboardNav.tsx",
+                  "Sidebar.tsx"
+                ],
+                "subdirectories": {
+                  "dashboard/": ["page.tsx", "components/"],
+                  "bonds/": {
+                    "files": ["page.tsx", "layout.tsx"],
+                    "subdirectories": {
+                      "[id]/": ["page.tsx", "components/"]
+                    }
+                  },
+                  "trading/": ["page.tsx", "components/"],
+                  "portfolio/": ["page.tsx", "components/"],
+                  "transactions/": ["page.tsx", "components/"],
+                  "profile/": ["page.tsx", "components/"],
+                  "settings/": ["page.tsx", "components/"],
+                  "kyc/": ["page.tsx", "components/"],
+                  "paper-trading/": ["page.tsx", "components/"],
+                  "analytics/": ["page.tsx", "components/"],
+                  "regulation/": ["page.tsx", "components/"]
+                }
+              },
+              "api/": {
+                "description": "API routes for server actions",
+                "subdirectories": {
+                  "auth/": ["route.ts"],
+                  "bonds/": ["route.ts"],
+                  "webhooks/": ["route.ts"]
+                }
+              },
+              "layout.tsx": "Root layout with providers",
+              "page.tsx": "Landing page",
+              "error.tsx": "Error boundary",
+              "loading.tsx": "Loading component",
+              "not-found.tsx": "404 page",
+              "global-error.tsx": "Global error handler",
+              "providers.tsx": "All context providers"
+            },
+            "components/": {
+              "description": "Reusable React components",
+              "subdirectories": {
+                "ui/": {
+                  "description": "shadcn/ui components",
+                  "files": [
+                    "button.tsx",
+                    "card.tsx",
+                    "input.tsx",
+                    "select.tsx",
+                    "dialog.tsx",
+                    "dropdown-menu.tsx",
+                    "tabs.tsx",
+                    "accordion.tsx",
+                    "toast.tsx",
+                    "tooltip.tsx",
+                    "slider.tsx",
+                    "checkbox.tsx",
+                    "radio-group.tsx",
+                    "switch.tsx",
+                    "badge.tsx",
+                    "avatar.tsx",
+                    "separator.tsx",
+                    "skeleton.tsx",
+                    "progress.tsx",
+                    "scroll-area.tsx",
+                    "sheet.tsx",
+                    "alert.tsx",
+                    "alert-dialog.tsx"
+                  ]
+                },
+                "layout/": {
+                  "description": "Layout components",
+                  "files": [
+                    "Navbar.tsx",
+                    "Footer.tsx",
+                    "Sidebar.tsx",
+                    "MobileNav.tsx",
+                    "BottomNav.tsx",
+                    "Container.tsx",
+                    "Section.tsx"
+                  ]
+                },
+                "common/": {
+                  "description": "Common reusable components",
+                  "files": [
+                    "Logo.tsx",
+                    "ThemeToggle.tsx",
+                    "LanguageSwitcher.tsx",
+                    "NotificationBell.tsx",
+                    "UserMenu.tsx",
+                    "SearchBar.tsx",
+                    "FilterBar.tsx",
+                    "Pagination.tsx",
+                    "EmptyState.tsx",
+                    "ErrorBoundary.tsx"
+                  ]
+                },
+                "animations/": {
+                  "description": "Animation components",
+                  "subdirectories": {
+                    "gsap/": {
+                      "files": [
+                        "ScrollTriggerWrapper.tsx",
+                        "ParallaxSection.tsx",
+                        "CounterAnimation.tsx",
+                        "TextReveal.tsx",
+                        "SplitTextAnimation.tsx",
+                        "HorizontalScroll.tsx",
+                        "PinSection.tsx"
+                      ]
+                    },
+                    "three/": {
+                      "files": [
+                        "ParticleBackground.tsx",
+                        "ThreeScene.tsx",
+                        "BondVisualization3D.tsx",
+                        "InteractiveGlobe.tsx",
+                        "AnimatedLogo3D.tsx",
+                        "Chart3D.tsx"
+                      ]
+                    },
+                    "framer/": {
+                      "files": [
+                        "PageTransition.tsx",
+                        "CardHover.tsx",
+                        "StaggerChildren.tsx",
+                        "ModalAnimation.tsx",
+                        "TabTransition.tsx",
+                        "SharedLayout.tsx"
+                      ]
+                    },
+                    "lenis/": {
+                      "files": [
+                        "LenisProvider.tsx",
+                        "SmoothScroll.tsx"
+                      ]
+                    }
+                  }
+                },
+                "bonds/": {
+                  "description": "Bond-specific components",
+                  "files": [
+                    "BondCard.tsx",
+                    "BondGrid.tsx",
+                    "BondList.tsx",
+                    "BondDetails.tsx",
+                    "BondFilters.tsx",
+                    "BondSearch.tsx",
+                    "BondComparison.tsx",
+                    "RiskBadge.tsx",
+                    "CreditRating.tsx",
+                    "AIRecommendation.tsx"
+                  ]
+                },
+                "trading/": {
+                  "description": "Trading components",
+                  "files": [
+                    "TradingForm.tsx",
+                    "OrderBook.tsx",
+                    "PriceChart.tsx",
+                    "OrderHistory.tsx",
+                    "TradeConfirmation.tsx",
+                    "QuickTrade.tsx",
+                    "MarketDepth.tsx"
+                  ]
+                },
+                "portfolio/": {
+                  "description": "Portfolio components",
+                  "files": [
+                    "PortfolioOverview.tsx",
+                    "HoldingsTable.tsx",
+                    "PerformanceChart.tsx",
+                    "AssetAllocation.tsx",
+                    "ReturnsSummary.tsx",
+                    "TransactionHistory.tsx"
+                  ]
+                },
+                "dashboard/": {
+                  "description": "Dashboard widgets",
+                  "files": [
+                    "StatsCard.tsx",
+                    "QuickActions.tsx",
+                    "RecentActivity.tsx",
+                    "MarketOverview.tsx",
+                    "TrendingBonds.tsx",
+                    "WatchlistWidget.tsx"
+                  ]
+                },
+                "charts/": {
+                  "description": "Chart components",
+                  "files": [
+                    "LineChart.tsx",
+                    "BarChart.tsx",
+                    "PieChart.tsx",
+                    "AreaChart.tsx",
+                    "CandlestickChart.tsx",
+                    "RiskGauge.tsx",
+                    "SparklineChart.tsx"
+                  ]
+                },
+                "forms/": {
+                  "description": "Form components",
+                  "files": [
+                    "FormField.tsx",
+                    "FormError.tsx",
+                    "FormLabel.tsx",
+                    "KYCForm.tsx",
+                    "ProfileForm.tsx",
+                    "PaymentForm.tsx",
+                    "FileUpload.tsx",
+                    "DatePicker.tsx"
+                  ]
+                },
+                "web3/": {
+                  "description": "Web3/Blockchain components",
+                  "files": [
+                    "WalletConnector.tsx",
+                    "WalletInfo.tsx",
+                    "TransactionStatus.tsx",
+                    "ContractInteraction.tsx",
+                    "GasEstimator.tsx",
+                    "NetworkSwitcher.tsx"
+                  ]
+                },
+                "notifications/": {
+                  "description": "Notification components",
+                  "files": [
+                    "NotificationCenter.tsx",
+                    "NotificationItem.tsx",
+                    "ToastNotification.tsx",
+                    "AlertBanner.tsx"
+                  ]
+                }
+              }
+            },
+            "lib/": {
+              "description": "Utility libraries and configurations",
+              "subdirectories": {
+                "animations/": {
+                  "files": [
+                    "gsap-config.ts",
+                    "three-utils.ts",
+                    "lenis-provider.tsx",
+                    "motion-variants.ts",
+                    "animation-presets.ts"
+                  ]
+                },
+                "api/": {
+                  "files": [
+                    "axios-client.ts",
+                    "api-endpoints.ts",
+                    "auth-api.ts",
+                    "bonds-api.ts",
+                    "trading-api.ts",
+                    "portfolio-api.ts",
+                    "user-api.ts",
+                    "payment-api.ts"
+                  ]
+                },
+                "hooks/": {
+                  "files": [
+                    "useAuth.ts",
+                    "useBonds.ts",
+                    "usePortfolio.ts",
+                    "useWebSocket.ts",
+                    "useTheme.ts",
+                    "useMediaQuery.ts",
+                    "useDebounce.ts",
+                    "useLocalStorage.ts",
+                    "useIntersectionObserver.ts",
+                    "useScrollPosition.ts"
+                  ]
+                },
+                "stores/": {
+                  "files": [
+                    "auth-store.ts",
+                    "theme-store.ts",
+                    "notification-store.ts",
+                    "portfolio-store.ts",
+                    "ui-store.ts"
+                  ]
+                },
+                "utils/": {
+                  "files": [
+                    "cn.ts",
+                    "format.ts",
+                    "validation.ts",
+                    "date.ts",
+                    "currency.ts",
+                    "number.ts",
+                    "string.ts",
+                    "array.ts",
+                    "storage.ts"
+                  ]
+                },
+                "web3/": {
+                  "files": [
+                    "wagmi-config.ts",
+                    "contracts.ts",
+                    "wallet-utils.ts",
+                    "blockchain-utils.ts"
+                  ]
+                },
+                "constants.ts": "Application constants",
+                "types.ts": "TypeScript type definitions",
+                "env.ts": "Environment variable validation"
+              }
+            },
+            "styles/": {
+              "files": [
+                "globals.css",
+                "animations.css",
+                "themes.css"
+              ]
+            },
+            "types/": {
+              "files": [
+                "index.ts",
+                "api.ts",
+                "bond.ts",
+                "user.ts",
+                "transaction.ts",
+                "portfolio.ts",
+                "chart.ts",
+                "web3.ts"
+              ]
+            },
+            "config/": {
+              "files": [
+                "site.ts",
+                "navigation.ts",
+                "pricing.ts",
+                "features.ts"
+              ]
+            }
+          }
+        },
+        "public/": {
+          "description": "Static assets",
+          "subdirectories": {
+            "images/": {
+              "subdirectories": {
+                "logos/": ["logo.svg", "logo-dark.svg", "favicon.ico"],
+                "bonds/": ["bond-placeholder.png"],
+                "team/": ["team-member-1.jpg"],
+                "features/": ["feature-1.svg"]
+              }
+            },
+            "models/": {
+              "description": "3D models for Three.js",
+              "files": ["bond-3d.glb", "globe.glb"]
+            },
+            "fonts/": {
+              "files": ["custom-font.woff2"]
+            },
+            "icons/": {
+              "files": ["icon-192.png", "icon-512.png", "apple-touch-icon.png"]
+            },
+            "manifest.json": "PWA manifest",
+            "robots.txt": "SEO robots file",
+            "sitemap.xml": "SEO sitemap"
+          }
+        }
+      }
+    }
+  },
+  "backend_structure": {
+    "backend/": {
+      "description": "Express.js API server",
+      "root_files": [
+        "package.json",
+        "tsconfig.json",
+        ".eslintrc.json",
+        "nodemon.json",
+        "Dockerfile"
+      ],
+      "directories": {
+        "src/": {
+          "description": "Backend source code",
+          "subdirectories": {
+            "controllers/": {
+              "description": "Route controllers",
+              "files": [
+                "authController.ts",
+                "bondController.ts",
+                "tradingController.ts",
+                "userController.ts",
+                "portfolioController.ts",
+                "transactionController.ts",
+                "paymentController.ts",
+                "analyticsController.ts",
+                "brokerController.ts",
+                "adminController.ts",
+                "kycController.ts",
+                "notificationController.ts",
+                "regulatoryController.ts",
+                "apiController.ts"
+              ]
+            },
+            "models/": {
+              "description": "MongoDB schemas",
+              "files": [
+                "User.ts",
+                "Bond.ts",
+                "Transaction.ts",
+                "Portfolio.ts",
+                "Holding.ts",
+                "Order.ts",
+                "Payment.ts",
+                "Subscription.ts",
+                "BrokerAccount.ts",
+                "KYC.ts",
+                "Notification.ts",
+                "Analytics.ts",
+                "PaperTrade.ts",
+                "ApiUsage.ts",
+                "AuditLog.ts",
+                "Watchlist.ts"
+              ]
+            },
+            "routes/": {
+              "description": "Express routes",
+              "files": [
+                "index.ts",
+                "auth.routes.ts",
+                "bond.routes.ts",
+                "trading.routes.ts",
+                "user.routes.ts",
+                "portfolio.routes.ts",
+                "transaction.routes.ts",
+                "payment.routes.ts",
+                "analytics.routes.ts",
+                "broker.routes.ts",
+                "admin.routes.ts",
+                "kyc.routes.ts",
+                "notification.routes.ts",
+                "regulatory.routes.ts",
+                "api.routes.ts",
+                "webhook.routes.ts"
+              ]
+            },
+            "middleware/": {
+              "description": "Express middleware",
+              "files": [
+                "auth.middleware.ts",
+                "validation.middleware.ts",
+                "rateLimit.middleware.ts",
+                "error.middleware.ts",
+                "logger.middleware.ts",
+                "cors.middleware.ts",
+                "upload.middleware.ts",
+                "subscription.middleware.ts",
+                "admin.middleware.ts"
+              ]
+            },
+            "services/": {
+              "description": "Business logic services",
+              "files": [
+                "bondService.ts",
+                "tradingService.ts",
+                "portfolioService.ts",
+                "aiService.ts",
+                "paymentService.ts",
+                "brokerIntegration.ts",
+                "marketDataService.ts",
+                "notificationService.ts",
+                "emailService.ts",
+                "smsService.ts",
+                "blockchainService.ts",
+                "kycService.ts",
+                "analyticsService.ts",
+                "regulatoryService.ts",
+                "websocketService.ts",
+                "cacheService.ts"
+              ]
+            },
+            "utils/": {
+              "description": "Utility functions",
+              "files": [
+                "encryption.ts",
+                "validation.ts",
+                "helpers.ts",
+                "constants.ts",
+                "logger.ts",
+                "errorHandler.ts",
+                "jwt.ts",
+                "email-templates.ts",
+                "pdf-generator.ts"
+              ]
+            },
+            "config/": {
+              "description": "Configuration files",
+              "files": [
+                "database.ts",
+                "redis.ts",
+                "server.ts",
+                "blockchain.ts",
+                "payment.ts",
+                "aws.ts",
+                "external-apis.ts",
+                "websocket.ts"
+              ]
+            },
+            "jobs/": {
+              "description": "Scheduled jobs",
+              "files": [
+                "portfolioUpdate.job.ts",
+                "marketDataSync.job.ts",
+                "analyticsGeneration.job.ts",
+                "reportGeneration.job.ts",
+                "kycReminder.job.ts"
+              ]
+            },
+            "websocket/": {
+              "description": "WebSocket handlers",
+              "files": [
+                "index.ts",
+                "priceUpdates.ts",
+                "orderUpdates.ts",
+                "notifications.ts",
+                "marketData.ts"
+              ]
+            },
+            "validators/": {
+              "description": "Request validators",
+              "files": [
+                "auth.validator.ts",
+                "bond.validator.ts",
+                "trading.validator.ts",
+                "payment.validator.ts",
+                "user.validator.ts"
+              ]
+            },
+            "types/": {
+              "files": [
+                "index.d.ts",
+                "express.d.ts",
+                "models.d.ts",
+                "api.d.ts"
+              ]
+            },
+            "server.ts": "Main server entry point",
+            "app.ts": "Express app configuration"
+          }
+        },
+        "tests/": {
+          "description": "Backend tests",
+          "subdirectories": {
+            "unit/": ["controllers/", "services/", "utils/"],
+            "integration/": ["api/", "database/"],
+            "e2e/": ["flows/"]
+          }
+        }
+      }
+    }
+  },
+  "blockchain_structure": {
+    "blockchain/": {
+      "description": "Smart contracts and blockchain code",
+      "root_files": [
+        "package.json",
+        "hardhat.config.ts",
+        "tsconfig.json",
+        ".env.example"
+      ],
+      "directories": {
+        "contracts/": {
+          "description": "Solidity smart contracts",
+          "files": [
+            "BondToken.sol",
+            "BondMarketplace.sol",
+            "Escrow.sol",
+            "Governance.sol",
+            "AccessControl.sol",
+            "PriceOracle.sol",
+            "RewardDistributor.sol"
+          ],
+          "subdirectories": {
+            "interfaces/": ["IBondToken.sol", "IMarketplace.sol"],
+            "libraries/": ["SafeMath.sol", "BondLibrary.sol"],
+            "mocks/": ["MockERC20.sol", "MockOracle.sol"]
+          }
+        },
+        "scripts/": {
+          "description": "Deployment and utility scripts",
+          "files": [
+            "deploy.ts",
+            "verify.ts",
+            "upgrade.ts",
+            "configure.ts",
+            "seed-data.ts"
+          ]
+        },
+        "test/": {
+          "description": "Smart contract tests",
+          "files": [
+            "BondToken.test.ts",
+            "BondMarketplace.test.ts",
+            "Escrow.test.ts",
+            "Governance.test.ts",
+            "integration.test.ts"
+          ]
+        },
+        "deployments/": {
+          "description": "Deployment artifacts",
+          "subdirectories": {
+            "mumbai/": ["BondToken.json", "addresses.json"],
+            "polygon/": ["BondToken.json", "addresses.json"]
+          }
+        },
+        "abi/": {
+          "description": "Contract ABIs",
+          "files": [
+            "BondToken.json",
+            "BondMarketplace.json",
+            "Escrow.json"
+          ]
+        }
+      }
+    }
+  },
+  "database_structure": {
+    "database/": {
+      "description": "Database related files",
+      "directories": {
+        "migrations/": {
+          "description": "Database migration scripts",
+          "files": [
+            "001_initial_schema.ts",
+            "002_add_indexes.ts",
+            "003_add_audit_logs.ts"
+          ]
+        },
+        "seeds/": {
+          "description": "Seed data for development",
+          "files": [
+            "001_users.ts",
+            "002_bonds.ts",
+            "003_transactions.ts",
+            "004_demo_accounts.ts"
+          ]
+        },
+        "backups/": {
+          "description": "Database backup storage",
+          "files": [".gitkeep"]
+        }
+      }
+    }
+  },
+  "documentation_structure": {
+    "docs/": {
+      "description": "Project documentation",
+      "directories": {
+        "api/": {
+          "description": "API documentation",
+          "files": [
+            "openapi.yaml",
+            "swagger.json",
+            "authentication.md",
+            "endpoints.md",
+            "websockets.md",
+            "errors.md"
+          ]
+        },
+        "architecture/": {
+          "description": "Architecture diagrams and docs",
+          "files": [
+            "system-overview.md",
+            "data-flow.md",
+            "deployment.md",
+            "security.md",
+            "diagrams/"
+          ]
+        },
+        "guides/": {
+          "description": "Developer and user guides",
+          "files": [
+            "getting-started.md",
+            "development-setup.md",
+            "deployment-guide.md",
+            "testing-guide.md",
+            "contributing.md"
+          ]
+        },
+        "smart-contracts/": {
+          "description": "Smart contract documentation",
+          "files": [
+            "contracts-overview.md",
+            "deployment.md",
+            "interactions.md",
+            "gas-optimization.md"
+          ]
+        }
+      }
+    },
+    "Doc/": {
+      "description": "Hackathon documentation",
+      "files": [
+        "FrontEnd.json",
+        "Structure.json",
+        "README.md"
+      ]
+    }
+  },
+  "shared_structure": {
+    "shared/": {
+      "description": "Shared code between frontend and backend",
+      "directories": {
+        "types/": {
+          "files": [
+            "bond.types.ts",
+            "user.types.ts",
+            "transaction.types.ts",
+            "api.types.ts",
+            "blockchain.types.ts"
+          ]
+        },
+        "constants/": {
+          "files": [
+            "bond-categories.ts",
+            "risk-levels.ts",
+            "error-codes.ts",
+            "api-endpoints.ts"
+          ]
+        },
+        "utils/": {
+          "files": [
+            "validation.ts",
+            "formatting.ts",
+            "calculations.ts"
+          ]
+        }
+      }
+    }
+  },
+  "testing_structure": {
+    "tests/": {
+      "description": "Project-wide tests",
+      "directories": {
+        "e2e/": {
+          "description": "End-to-end tests",
+          "subdirectories": {
+            "cypress/": {
+              "subdirectories": {
+                "e2e/": ["auth.cy.ts", "trading.cy.ts", "portfolio.cy.ts"],
+                "fixtures/": ["users.json", "bonds.json"],
+                "support/": ["commands.ts", "e2e.ts"]
+              },
+              "files": ["cypress.config.ts"]
+            }
+          }
+        },
+        "integration/": {
+          "description": "Integration tests",
+          "files": [
+            "api-integration.test.ts",
+            "websocket-integration.test.ts",
+            "blockchain-integration.test.ts"
+          ]
+        },
+        "load/": {
+          "description": "Load testing",
+          "files": [
+            "jmeter-test-plan.jmx",
+            "k6-script.js"
+          ]
+        }
+      }
+    }
+  },
+  "devops_structure": {
+    ".github/": {
+      "description": "GitHub configuration",
+      "directories": {
+        "workflows/": {
+          "files": [
+            "ci.yml",
+            "deploy-staging.yml",
+            "deploy-production.yml",
+            "test.yml",
+            "lint.yml",
+            "security-scan.yml"
+          ]
+        },
+        "ISSUE_TEMPLATE/": {
+          "files": [
+            "bug_report.md",
+            "feature_request.md"
+          ]
+        },
+        "PULL_REQUEST_TEMPLATE.md": "PR template"
+      }
+    },
+    "scripts/": {
+      "description": "Utility scripts",
+      "files": [
+        "setup.sh",
+        "dev.sh",
+        "build.sh",
+        "deploy.sh",
+        "test.sh",
+        "backup-db.sh",
+        "restore-db.sh",
+        "generate-keys.sh"
+      ]
+    },
+    "docker/": {
+      "description": "Docker configurations",
+      "files": [
+        "Dockerfile.frontend",
+        "Dockerfile.backend",
+        "Dockerfile.nginx",
+        ".dockerignore"
+      ]
+    }
+  },
+  "configuration_files": {
+    "root_config": {
+      ".gitignore": "Git ignore rules",
+      ".env.example": "Environment variables template",
+      "package.json": "Root package.json for monorepo",
+      "tsconfig.json": "Root TypeScript config",
+      "turbo.json": "Turborepo configuration",
+      "pnpm-workspace.yaml": "PNPM workspace config",
+      "README.md": "Project README",
+      "LICENSE": "MIT License",
+      "CONTRIBUTING.md": "Contributing guidelines",
+      "CODE_OF_CONDUCT.md": "Code of conduct",
+      "CHANGELOG.md": "Version changelog"
+    },
+    "docker": {
+      "docker-compose.yml": "Main Docker Compose file",
+      "docker-compose.dev.yml": "Development override",
+      "docker-compose.prod.yml": "Production override"
+    }
+  },
+  "file_count_summary": {
+    "frontend": {
+      "total_files": "~250 files",
+      "components": "~120 files",
+      "pages": "~30 routes",
+      "utilities": "~40 files"
+    },
+    "backend": {
+      "total_files": "~150 files",
+      "controllers": "~15 files",
+      "models": "~16 files",
+      "routes": "~15 files",
+      "services": "~20 files"
+    },
+    "blockchain": {
+      "total_files": "~40 files",
+      "contracts": "~10 files",
+      "tests": "~8 files",
+      "scripts": "~5 files"
+    },
+    "total_project_files": "~500+ files"
+  },
+  "key_technologies_by_directory": {
+    "frontend": [
+      "Next.js 14",
+      "TypeScript",
+      "Tailwind CSS",
+      "GSAP",
+      "Three.js",
+      "Lenis",
+      "Framer Motion",
+      "shadcn/ui",
+      "TanStack Query",
+      "Zustand"
+    ],
+    "backend": [
+      "Node.js",
+      "Express.js",
+      "TypeScript",
+      "MongoDB",
+      "Mongoose",
+      "Redis",
+      "Socket.io",
+      "JWT",
+      "Joi"
+    ],
+    "blockchain": [
+      "Solidity",
+      "Hardhat",
+      "Ethers.js",
+      "OpenZeppelin",
+      "Polygon"
+    ]
+  },
+  "development_commands": {
+    "setup": {
+      "install_dependencies": "pnpm install",
+      "setup_env": "cp .env.example .env",
+      "setup_database": "pnpm db:setup",
+      "generate_types": "pnpm types:generate"
+    },
+    "development": {
+      "start_all": "pnpm dev",
+      "start_frontend": "pnpm dev:frontend",
+      "start_backend": "pnpm dev:backend",
+      "start_blockchain": "pnpm dev:blockchain",
+      "docker_dev": "docker-compose -f docker-compose.dev.yml up"
+    },
+    "build": {
+      "build_all": "pnpm build",
+      "build_frontend": "pnpm build:frontend",
+      "build_backend": "pnpm build:backend",
+      "build_contracts": "pnpm build:contracts"
+    },
+    "testing": {
+      "test_all": "pnpm test",
+      "test_unit": "pnpm test:unit",
+      "test_integration": "pnpm test:integration",
+      "test_e2e": "pnpm test:e2e",
+      "test_coverage": "pnpm test:coverage"
+    },
+    "deployment": {
+      "deploy_staging": "pnpm deploy:staging",
+      "deploy_production": "pnpm deploy:prod",
+      "docker_production": "docker-compose -f docker-compose.prod.yml up -d"
+    }
+  },
+  "naming_conventions": {
+    "files": {
+      "components": "PascalCase (BondCard.tsx)",
+      "utilities": "camelCase (formatCurrency.ts)",
+      "pages": "kebab-case (bond-details/)",
+      "constants": "UPPERCASE (API_ENDPOINTS.ts)",
+      "types": "PascalCase (Bond.types.ts)"
+    },
+    "code": {
+      "variables": "camelCase",
+      "constants": "UPPER_SNAKE_CASE",
+      "classes": "PascalCase",
+      "functions": "camelCase",
+      "interfaces": "PascalCase with I prefix (IBond)",
+      "types": "PascalCase"
+    }
+  },
+  "git_workflow": {
+    "branches": {
+      "main": "Production-ready code",
+      "develop": "Integration branch",
+      "feature/*": "New features",
+      "bugfix/*": "Bug fixes",
+      "hotfix/*": "Production hotfixes",
+      "release/*": "Release preparation"
+    },
+    "commit_convention": "Conventional Commits (feat:, fix:, docs:, style:, refactor:, test:, chore:)"
+  },
+  "notes": {
+    "monorepo_strategy": "Using pnpm workspaces with Turborepo for build caching",
+    "code_sharing": "Shared types and utilities in /shared directory",
+    "scalability": "Modular structure allows easy addition of microservices",
+    "documentation": "Every major directory has a README.md",
+    "testing": "Comprehensive test coverage across all layers",
+    "docker": "Multi-stage builds for optimized container images",
+    "ci_cd": "Automated testing and deployment via GitHub Actions",
+    "security": "Environment variables never committed, use .env.example as template"
+  }
+}
