@@ -28,13 +28,13 @@ export default function RegisterPage() {
     setIsLoading(true);
 
     const result = await register(name, email, password);
-    
+
     if (result.success) {
       router.push('/');
     } else {
       setError(result.message);
     }
-    
+
     setIsLoading(false);
   };
 
@@ -55,7 +55,7 @@ export default function RegisterPage() {
         {/* Register Card */}
         <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-8 border border-white/20 shadow-xl">
           <h1 className="text-2xl font-bold text-white mb-6 text-center">Create Account</h1>
-          
+
           {error && (
             <div className="mb-4 p-3 bg-red-500/20 border border-red-500/50 rounded-lg text-red-200 text-sm">
               {error}
