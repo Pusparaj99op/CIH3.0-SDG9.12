@@ -88,59 +88,165 @@ graph TD
 ## ![Getting Started](https://img.shields.io/badge/Guide-Getting_Started-success?style=for-the-badge)
 
 ### Prerequisites
-- Node.js v18+
-- Docker & Docker Compose
-- MongoDB (Local or Atlas)
+- **Node.js** v18+ (verified with v24.11.1)
+- **MongoDB** v6.0+ (running locally or MongoDB Atlas)
+- **npm** for package management
 
-### Installation
+### Installation & Running
 
-1. **Clone the Repo**
+1. **Clone the Repository**
    ```bash
    git clone https://github.com/Pusparaj99op/CIH3.0-SDG9.12.git
+   cd CIH3.0-SDG9.12
    ```
 
 2. **Install Dependencies**
    ```bash
+   # Frontend dependencies
    cd frontend && npm install
+
+   # Backend dependencies
    cd ../backend && npm install
    ```
 
-3. **Configure Environment**
-   Copy `.env.example` to `.env` and fill in your credentials:
-   ```env
-   MONGODB_URI=mongodb://localhost:27017/bond_platform
-   JWT_SECRET=super_secret_key_cih3
-   BLOCKCHAIN_NETWORK=mumbai
+3. **Start MongoDB Service**
+   ```bash
+   # On Linux/Ubuntu
+   sudo systemctl start mongod
+   sudo systemctl status mongod
+
+   # For other systems, ensure MongoDB is running on mongodb://localhost:27017
    ```
 
-4. **Launch Application**
-   ```bash
-   # Run with Docker (Recommended)
-   docker-compose up --build
+4. **Configure Environment**
+   Backend environment is pre-configured in `backend/.env`:
+   ```env
+   PORT=3210
+   NODE_ENV=development
+   MONGODB_URI=mongodb://localhost:27017/mudra
+   JWT_SECRET=your-super-secret-jwt-key-change-in-production
+   JWT_EXPIRE=7d
    ```
-   *Frontend running on: `http://localhost:3000`*
-   *Backend running on: `http://localhost:3210`*
+
+5. **Launch Backend Server**
+   ```bash
+   cd backend
+   npm start
+   ```
+   ✅ Backend runs on: **`http://localhost:3210`**
+
+6. **Launch Frontend Application**
+   ```bash
+   # In a new terminal
+   cd frontend
+   npm run dev
+   ```
+   ✅ Frontend runs on: **`http://localhost:3001`** (or 3000 if available)
+
+### Quick Test
+
+Verify the platform is working:
+
+```bash
+# Test backend health
+curl http://localhost:3210/api/health
+
+# List all bonds
+curl http://localhost:3210/api/bonds
+```
+
+Then visit [http://localhost:3001](http://localhost:3001) in your browser!
 
 ---
 
 ## ![API Documentation](https://img.shields.io/badge/Docs-API_Reference-lightgrey?style=for-the-badge)
 
-| Method | Endpoint | Description |
-| :--- | :--- | :--- |
-| `GET` | `/api/v1/bonds` | List all available infrastructure bonds |
-| `GET` | `/api/v1/bonds/:id/analytics` | Get AI-driven predictions for a bond |
-| `POST` | `/api/v1/trading/buy` | Execute a buy order (Paper/Real) |
-| `GET` | `/api/v1/portfolio` | Fetch user current holdings & PnL |
+### Core Endpoints (Verified & Working)
 
-> Full Swagger documentation available at `/api-docs`
+| Method | Endpoint | Description | Status |
+| :--- | :--- | :--- | :---: |
+| `GET` | `/api/health` | Backend health check | ✅ |
+| `GET` | `/api/bonds` | List all infrastructure bonds | ✅ |
+| `GET` | `/api/bonds/:id` | Get specific bond details | ✅ |
+| `POST` | `/api/auth/register` | User registration with paper trading | ✅ |
+| `POST` | `/api/auth/login` | User authentication | ✅ |
+| `GET` | `/api/portfolio` | Fetch user holdings & PnL | ✅ |
+| `POST` | `/api/paper-trading/buy` | Execute paper trading buy order | ✅ |
+| `POST` | `/api/paper-trading/sell` | Execute paper trading sell order | ✅ |
+| `GET` | `/api/transactions` | View transaction history | ✅ |
+
+### Sample Response - Bonds API
+
+```json
+{
+  "success": true,
+  "count": 10,
+  "source": "mongodb",
+  "data": [
+    {
+      "_id": "697ca547049befc0b476830c",
+      "name": "National Highway Infrastructure Bond",
+      "issuer": "NHAI",
+      "returnRate": 7.5,
+      "riskLevel": "Low",
+      "price": 10000,
+      "maturityYears": 5,
+      "sector": "Transportation",
+      "totalValue": 50000000000,
+      "availableUnits": 2500000,
+      "isActive": true
+    }
+  ]
+}
+```
+
+---
+
+## ![Live Demo](https://img.shields.io/badge/Live-Demo-brightgreen?style=for-the-badge)
+
+### Current Application Status ✅
+
+The platform is **fully functional** with the following verified features:
+
+#### 🎨 Frontend Features
+- **Modern UI/UX**: Beautiful gradient-based design with purple-blue theme
+- **Bond Discovery**: Search, filter (by risk, sector, return rate), and sort capabilities
+- **Detailed Bond View**: Comprehensive bond information with AI risk assessment
+- **Paper Trading**: Virtual ₹10,00,000 balance for risk-free practice
+- **Authentication**: User registration and login system
+- **Real-time Backend Connection**: Live data from MongoDB
+
+#### 🔧 Backend Features
+- **RESTful API**: Full CRUD operations for bonds, users, and transactions
+- **MongoDB Integration**: 10+ pre-seeded infrastructure bonds
+- **Authentication System**: JWT-based secure authentication
+- **Paper Trading Engine**: Virtual trading without real money
+- **Portfolio Management**: Track holdings and profit/loss
+
+#### 📊 Available Bonds (Live Data)
+
+1. **National Highway Infrastructure Bond** - NHAI (7.5% return, Low risk)
+2. **Metro Rail Development Bond** - DMRC (8.2% return, Low risk)
+3. **Green Energy Infrastructure Bond** - IREDA (9% return, Medium risk)
+4. **Smart City Development Bond** - Smart City SPV (8.8% return, Medium risk)
+5. **Port & Logistics Bond** - Sagarmala SPV (9.5% return, High risk)
+6. **Rural Connectivity Bond** - PMGSY (7.8% return, Low risk)
+7. **Water Infrastructure Bond** - Jal Jeevan Mission (8.5% return, Medium risk)
+8. **Airport Modernization Bond** - AAI (9.2% return, Medium risk)
+9. **Railway Infrastructure Bond** - Indian Railways (8% return, Low risk)
+10. **Industrial Corridor Bond** - NICDIT (10% return, High risk)
 
 ---
 
 ## ![Roadmap](https://img.shields.io/badge/Project-Roadmap-yellow?style=for-the-badge)
 
-- [x] **Phase 1**: Core Platform & Tokenization (MVP for CIH3.0)
-- [ ] **Phase 2**: Mobile App (React Native) & Secondary Market
-- [ ] **Phase 3**: Institutional Dashboard & Cross-chain Bridge
+- [x] **Phase 0**: Project Setup & Architecture (✅ Completed)
+- [x] **Phase 1**: Core Platform & MongoDB Integration (✅ Completed)
+- [x] **Phase 2**: Frontend UI & Paper Trading (✅ Completed for CIH3.0 MVP)
+- [ ] **Phase 3**: Blockchain Integration (Polygon Mumbai testnet)
+- [ ] **Phase 4**: AI/ML Risk Assessment & Predictions
+- [ ] **Phase 5**: Mobile App (React Native) & Secondary Market
+- [ ] **Phase 6**: Institutional Dashboard & Cross-chain Bridge
 
 ---
 
