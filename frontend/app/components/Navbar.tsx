@@ -41,12 +41,20 @@ export default function Navbar() {
               Bonds
             </Link>
             {isAuthenticated && (
-              <Link 
-                href="/portfolio" 
-                className="text-gray-300 hover:text-white transition-colors"
-              >
-                Portfolio
-              </Link>
+              <>
+                <Link 
+                  href="/dashboard" 
+                  className="text-gray-300 hover:text-white transition-colors"
+                >
+                  Dashboard
+                </Link>
+                <Link 
+                  href="/portfolio" 
+                  className="text-gray-300 hover:text-white transition-colors"
+                >
+                  Portfolio
+                </Link>
+              </>
             )}
             
             {/* Auth Section */}
@@ -125,13 +133,22 @@ export default function Navbar() {
                 Bonds
               </Link>
               {isAuthenticated && (
-                <Link 
-                  href="/portfolio" 
-                  className="text-gray-300 hover:text-white transition-colors"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                >
-                  Portfolio
-                </Link>
+                <>
+                  <Link 
+                    href="/dashboard" 
+                    className="text-gray-300 hover:text-white transition-colors"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                  >
+                    Dashboard
+                  </Link>
+                  <Link 
+                    href="/portfolio" 
+                    className="text-gray-300 hover:text-white transition-colors"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                  >
+                    Portfolio
+                  </Link>
+                </>
               )}
               
               {/* Mobile Auth */}
