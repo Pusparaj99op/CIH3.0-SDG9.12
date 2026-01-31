@@ -1,0 +1,76 @@
+
+> frontend@0.1.0 dev
+> next dev -p 5001
+
+⚠ Warning: Next.js inferred your workspace root, but it may not be correct.
+ We detected multiple lockfiles and selected the directory of /home/pranay/Documents/GitHub/CIH3.0-SDG9.12/package-lock.json as the root directory.
+ To silence this warning, set `turbopack.root` in your Next.js config, or consider removing one of the lockfiles if it's not needed.
+   See https://nextjs.org/docs/app/api-reference/config/next-config-js/turbopack#root-directory for more information.
+ Detected additional lockfiles: 
+   * /home/pranay/Documents/GitHub/CIH3.0-SDG9.12/frontend/package-lock.json
+
+▲ Next.js 16.1.6 (Turbopack)
+- Local:         http://localhost:5001
+- Network:       http://192.168.154.234:5001
+
+✓ Starting...
+✓ Ready in 945ms
+ GET / 200 in 3.0s (compile: 2.6s, render: 415ms)
+Error: Can't resolve 'tailwindcss' in '/home/pranay/Documents/GitHub/CIH3.0-SDG9.12'
+    [2m[at finishWithoutResolve (/home/pranay/Documents/GitHub/CIH3.0-SDG9.12/frontend/node_modules/enhanced-resolve/lib/Resolver.js:565:18)][0m
+    [2m[at /home/pranay/Documents/GitHub/CIH3.0-SDG9.12/frontend/node_modules/enhanced-resolve/lib/Resolver.js:657:14][0m
+    [2m[at /home/pranay/Documents/GitHub/CIH3.0-SDG9.12/frontend/node_modules/enhanced-resolve/lib/Resolver.js:718:5][0m
+    [2m[at eval (eval at create (/home/pranay/Documents/GitHub/CIH3.0-SDG9.12/frontend/node_modules/tapable/lib/HookCodeFactory.js:31:10), <anonymous>:15:1)][0m
+    [2m[at /home/pranay/Documents/GitHub/CIH3.0-SDG9.12/frontend/node_modules/enhanced-resolve/lib/Resolver.js:718:5][0m
+    [2m[at eval (eval at create (/home/pranay/Documents/GitHub/CIH3.0-SDG9.12/frontend/node_modules/tapable/lib/HookCodeFactory.js:31:10), <anonymous>:27:1)][0m
+    [2m[at /home/pranay/Documents/GitHub/CIH3.0-SDG9.12/frontend/node_modules/enhanced-resolve/lib/DescriptionFilePlugin.js:89:43][0m
+    [2m[at /home/pranay/Documents/GitHub/CIH3.0-SDG9.12/frontend/node_modules/enhanced-resolve/lib/Resolver.js:718:5][0m
+    [2m[at eval (eval at create (/home/pranay/Documents/GitHub/CIH3.0-SDG9.12/frontend/node_modules/tapable/lib/HookCodeFactory.js:31:10), <anonymous>:15:1)][0m
+    [2m[at /home/pranay/Documents/GitHub/CIH3.0-SDG9.12/frontend/node_modules/enhanced-resolve/lib/Resolver.js:718:5][0m {
+  details: "resolve 'tailwindcss' in '/home/pranay/Documents/GitHub/CIH3.0-SDG9.12'\n" +
+    '  Parsed request is a module\n' +
+    '  using description file: /home/pranay/Documents/GitHub/CIH3.0-SDG9.12/package.json (relative path: .)\n' +
+    '    resolve as module\n' +
+    '      looking for modules in /home/pranay/Documents/GitHub/CIH3.0-SDG9.12/node_modules\n' +
+    '        single file module\n' +
+    '          using description file: /home/pranay/Documents/GitHub/CIH3.0-SDG9.12/package.json (relative path: ./node_modules/tailwindcss)\n' +
+    '            no extension\n' +
+    "              /home/pranay/Documents/GitHub/CIH3.0-SDG9.12/node_modules/tailwindcss doesn't exist\n" +
+    '            .css\n' +
+    "              /home/pranay/Documents/GitHub/CIH3.0-SDG9.12/node_modules/tailwindcss.css doesn't exist\n" +
+    "        /home/pranay/Documents/GitHub/CIH3.0-SDG9.12/node_modules/tailwindcss doesn't exist\n" +
+    "      /home/pranay/Documents/GitHub/node_modules doesn't exist or is not a directory\n" +
+    "      /home/pranay/Documents/node_modules doesn't exist or is not a directory\n" +
+    "      /home/pranay/node_modules doesn't exist or is not a directory\n" +
+    "      /home/node_modules doesn't exist or is not a directory\n" +
+    "      /node_modules doesn't exist or is not a directory"
+}
+Error: Can't resolve 'tailwindcss' in '/home/pranay/Documents/GitHub/CIH3.0-SDG9.12'
+    [2m[at finishWithoutResolve (/home/pranay/Documents/GitHub/CIH3.0-SDG9.12/frontend/node_modules/enhanced-resolve/lib/Resolver.js:565:18)][0m
+    [2m[at /home/pranay/Documents/GitHub/CIH3.0-SDG9.12/frontend/node_modules/enhanced-resolve/lib/Resolver.js:657:14][0m
+    [2m[at /home/pranay/Documents/GitHub/CIH3.0-SDG9.12/frontend/node_modules/enhanced-resolve/lib/Resolver.js:718:5][0m
+    [2m[at eval (eval at create (/home/pranay/Documents/GitHub/CIH3.0-SDG9.12/frontend/node_modules/tapable/lib/HookCodeFactory.js:31:10), <anonymous>:15:1)][0m
+    [2m[at /home/pranay/Documents/GitHub/CIH3.0-SDG9.12/frontend/node_modules/enhanced-resolve/lib/Resolver.js:718:5][0m
+    [2m[at eval (eval at create (/home/pranay/Documents/GitHub/CIH3.0-SDG9.12/frontend/node_modules/tapable/lib/HookCodeFactory.js:31:10), <anonymous>:27:1)][0m
+    [2m[at /home/pranay/Documents/GitHub/CIH3.0-SDG9.12/frontend/node_modules/enhanced-resolve/lib/DescriptionFilePlugin.js:89:43][0m
+    [2m[at /home/pranay/Documents/GitHub/CIH3.0-SDG9.12/frontend/node_modules/enhanced-resolve/lib/Resolver.js:718:5][0m
+    [2m[at eval (eval at create (/home/pranay/Documents/GitHub/CIH3.0-SDG9.12/frontend/node_modules/tapable/lib/HookCodeFactory.js:31:10), <anonymous>:15:1)][0m
+    [2m[at /home/pranay/Documents/GitHub/CIH3.0-SDG9.12/frontend/node_modules/enhanced-resolve/lib/Resolver.js:718:5][0m {
+  details: "resolve 'tailwindcss' in '/home/pranay/Documents/GitHub/CIH3.0-SDG9.12'\n" +
+    '  Parsed request is a module\n' +
+    '  using description file: /home/pranay/Documents/GitHub/CIH3.0-SDG9.12/package.json (relative path: .)\n' +
+    '    resolve as module\n' +
+    '      looking for modules in /home/pranay/Documents/GitHub/CIH3.0-SDG9.12/node_modules\n' +
+    '        single file module\n' +
+    '          using description file: /home/pranay/Documents/GitHub/CIH3.0-SDG9.12/package.json (relative path: ./node_modules/tailwindcss)\n' +
+    '            no extension\n' +
+    "              /home/pranay/Documents/GitHub/CIH3.0-SDG9.12/node_modules/tailwindcss doesn't exist\n" +
+    '            .css\n' +
+    "              /home/pranay/Documents/GitHub/CIH3.0-SDG9.12/node_modules/tailwindcss.css doesn't exist\n" +
+    "        /home/pranay/Documents/GitHub/CIH3.0-SDG9.12/node_modules/tailwindcss doesn't exist\n" +
+    "      /home/pranay/Documents/GitHub/node_modules doesn't exist or is not a directory\n" +
+    "      /home/pranay/Documents/node_modules doesn't exist or is not a directory\n" +
+    "      /home/pranay/node_modules doesn't exist or is not a directory\n" +
+    "      /home/node_modules doesn't exist or is not a directory\n" +
+    "      /node_modules doesn't exist or is not a directory"
+}
