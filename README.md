@@ -38,11 +38,14 @@ We address the critical gap in infrastructure financing by democratizing access 
   - **Return Prediction**: LSTM-based forecasts for informed decisions.
 - **e-Rupee Integration**: Seamless payments via CBDC (Digital Rupee).
 - **Paper Trading**: Practice with ₹10 Lakh virtual portfolio before investing.
+- **AI Personal Banker**: 'Saraswati' - An AI-powered financial advisor for personalized investment strategies.
 
 ### For Issuers & Platform
 - **Smart Contract Settlement**: Instant, trustless settlements on the Polygon network.
 - **Regulatory Compliance**: Automated KYC (Aadhaar/DigiLocker) & SEBI reporting.
 - **Real-time Transparency**: Immutable ledger records for every transaction.
+- **Government Dashboard**: Specialized view for regulators to monitor infrastructure projects and bond performance.
+- **Multi-Role Access**: Dedicated interfaces for Retail Investors, Institutions, and Government bodies.
 
 ---
 
@@ -50,11 +53,11 @@ We address the critical gap in infrastructure financing by democratizing access 
 
 | Domain | Technologies |
 | :--- | :--- |
-| **Frontend** | Next.js 14, Tailwind CSS, Shadcn UI, Framer Motion |
+| **Frontend** | Next.js 14, Tailwind CSS, Shadcn UI, Framer Motion, GSAP, Lenis Scroll |
 | **Backend** | Node.js, Express.js, Socket.io (Real-time) |
 | **Database** | MongoDB (Data), Redis (Caching) |
 | **Blockchain** | Solidity, Hardhat, Ethers.js, Polygon Mumbai |
-| **AI / ML** | Python microservices (LSTM, Random Forest) |
+| **AI / ML** | Python microservices (LSTM, Random Forest), OpenAI API |
 | **DevOps** | Docker, Nginx, GitHub Actions |
 
 ---
@@ -213,7 +216,7 @@ The platform is **fully functional** with the following verified features:
 - **Bond Discovery**: Search, filter (by risk, sector, return rate), and sort capabilities
 - **Detailed Bond View**: Comprehensive bond information with AI risk assessment
 - **Paper Trading**: Virtual ₹10,00,000 balance for risk-free practice
-- **Authentication**: User registration and login system
+- **Authentication**: Secure Multi-Role Login (User, Admin, Gov) & OTP-based Password Reset
 - **Real-time Backend Connection**: Live data from MongoDB
 
 #### 🔧 Backend Features
@@ -222,6 +225,7 @@ The platform is **fully functional** with the following verified features:
 - **Authentication System**: JWT-based secure authentication
 - **Paper Trading Engine**: Virtual trading without real money
 - **Portfolio Management**: Track holdings and profit/loss
+- **AI Service**: Sentiment analysis and investment scoring engine
 
 #### 📊 Available Bonds (Live Data)
 
@@ -243,8 +247,8 @@ The platform is **fully functional** with the following verified features:
 - [x] **Phase 0**: Project Setup & Architecture (✅ Completed)
 - [x] **Phase 1**: Core Platform & MongoDB Integration (✅ Completed)
 - [x] **Phase 2**: Frontend UI & Paper Trading (✅ Completed for CIH3.0 MVP)
-- [ ] **Phase 3**: Blockchain Integration (Polygon Mumbai testnet)
-- [ ] **Phase 4**: AI/ML Risk Assessment & Predictions
+- [x] **Phase 3**: Blockchain Integration (Polygon Mumbai testnet) (🚧 In Progress)
+- [x] **Phase 4**: AI/ML Risk Assessment & Predictions (✅ Implemented)
 - [ ] **Phase 5**: Mobile App (React Native) & Secondary Market
 - [ ] **Phase 6**: Institutional Dashboard & Cross-chain Bridge
 
