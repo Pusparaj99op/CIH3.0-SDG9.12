@@ -1,13 +1,22 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef, Suspense } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
+import gsap from 'gsap';
+import { useGSAP } from '@gsap/react';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { Canvas } from '@react-three/fiber';
+import { Float, OrbitControls, Sphere, Box } from '@react-three/drei';
+import * as THREE from 'three';
 import Navbar from '../../components/Navbar';
 import BuyModal from '../../components/BuyModal';
 import RiskGauge from '../../components/RiskGauge';
 import { Bond, fetchBondById, getBondId } from '../../data/bonds';
 import { useAuth } from '../../context/AuthContext';
+import { animateCounter, scrollStagger, prefersReducedMotion, isMobile } from '@/lib/animations';
+
+gsap.registerPlugin(ScrollTrigger);
 
 export default function BondDetailsPage() {
   const params = useParams();
@@ -17,6 +26,8 @@ export default function BondDetailsPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [isBuyModalOpen, setIsBuyModalOpen] = useState(false);
+  const statsGridRef = useRef<HTMLDivElement>(null);
+  const detailsRef = useRef<HTMLDivElement>(null);
 
   const loadBond = async () => {
     try {
@@ -78,6 +89,106 @@ export default function BondDetailsPage() {
     return formatCurrency(num);
   };
 
+  // 3D Bond Visualization Component
+  function BondVisualization({ bond }: { bond: Bond }) {
+    const meshRef = useRef<THREE.Mesh>(null);
+    const orbitsRef = useRef<THREE.Group>(null);
+
+    useEffect(() => {
+      if (!meshRef.current || !orbitsRef.current || prefersReducedMotion()) return;
+
+      const mesh = meshRef.current;
+      const orbits = orbitsRef.current;
+
+      gsap.to(mesh.rotation, {
+        y: Math.PI * 2,
+        duration: 20,
+        repeat: -1,
+        ease: 'none'
+      });
+
+      gsap.to(orbits.rotation, {
+        y: -Math.PI * 2,
+        duration: 15,
+        repeat: -1,
+        ease: 'none'
+      });
+    }, []);
+
+    const bondColor = bond.riskLevel === 'Low' ? '#10b981' : bond.riskLevel === 'Medium' ? '#f59e0b' : '#ef4444';
+
+    return (
+      <group>
+        {/* Central Bond Cube */}
+        <Float speed={2} rotationIntensity={0.5} floatIntensity={0.5}>
+          <Box ref={meshRef} args={[2, 2, 2]}>
+            <meshStandardMaterial
+              color={bondColor}
+              metalness={0.8}
+              roughness={0.2}
+              emissive={bondColor}
+              emissiveIntensity={0.3}
+            />
+          </Box>
+        </Float>
+
+        {/* Orbiting Data Points */}
+        <group ref={orbitsRef}>
+          {/* Price Orbit */}
+          <Sphere position={[3, 0, 0]} args={[0.3, 32, 32]}>
+            <meshStandardMaterial color="#3b82f6" emissive="#3b82f6" emissiveIntensity={0.5} />
+          </Sphere>
+
+          {/* Return Rate Orbit */}
+          <Sphere position={[0, 3, 0]} args={[0.3, 32, 32]}>
+            <meshStandardMaterial color="#10b981" emissive="#10b981" emissiveIntensity={0.5} />
+          </Sphere>
+
+          {/* Maturity Orbit */}
+          <Sphere position={[-3, 0, 0]} args={[0.3, 32, 32]}>
+            <meshStandardMaterial color="#f59e0b" emissive="#f59e0b" emissiveIntensity={0.5} />
+          </Sphere>
+
+          {/* Risk Orbit */}
+          <Sphere position={[0, -3, 0]} args={[0.3, 32, 32]}>
+            <meshStandardMaterial color={bondColor} emissive={bondColor} emissiveIntensity={0.5} />
+          </Sphere>
+        </group>
+
+        {/* Lighting */}
+        <ambientLight intensity={0.5} />
+        <directionalLight position={[10, 10, 5]} intensity={1} />
+        <pointLight position={[-10, -10, -5]} intensity={0.5} color="#8b5cf6" />
+      </group>
+    );
+  }
+
+  // Animate stats on load
+  useGSAP(() => {
+    if (statsGridRef.current && bond && !prefersReducedMotion()) {
+      scrollStagger(statsGridRef.current, '.stat-card', {
+        y: 20,
+        opacity: 0,
+        stagger: 0.1,
+        duration: 0.5,
+        ease: 'power2.out'
+      });
+    }
+  }, [bond]);
+
+  // Animate details sections
+  useGSAP(() => {
+    if (detailsRef.current && bond && !prefersReducedMotion()) {
+      scrollStagger(detailsRef.current, '.detail-section', {
+        y: 30,
+        opacity: 0,
+        stagger: 0.15,
+        duration: 0.6,
+        ease: 'power3.out'
+      });
+    }
+  }, [bond]);
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-900 via-purple-900 to-indigo-900">
       <Navbar />
@@ -121,8 +232,23 @@ export default function BondDetailsPage() {
           {/* Bond Details */}
           {!loading && bond && (
             <div className="space-y-6">
+              {/* 3D Visualization Section - Desktop Only */}
+              {!isMobile() && (
+                <div className="glass rounded-2xl p-8 border border-white/20 h-[400px]">
+                  <h2 className="text-xl font-bold text-white mb-4">Bond Visualization</h2>
+                  <div className="h-[320px] rounded-xl overflow-hidden">
+                    <Canvas camera={{ position: [0, 0, 8], fov: 50 }}>
+                      <Suspense fallback={null}>
+                        <BondVisualization bond={bond} />
+                        <OrbitControls enableZoom={false} autoRotate autoRotateSpeed={0.5} />
+                      </Suspense>
+                    </Canvas>
+                  </div>
+                </div>
+              )}
+
               {/* Header Card */}
-              <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-8 border border-white/20">
+              <div className="glass rounded-2xl p-8 border border-white/20">
                 <div className="flex flex-col md:flex-row md:justify-between md:items-start gap-4 mb-6">
                   <div>
                     <div className="flex items-center gap-3 mb-2">
@@ -147,27 +273,28 @@ export default function BondDetailsPage() {
               </div>
 
               {/* Stats Grid */}
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                <div className="bg-white/10 backdrop-blur-lg rounded-xl p-6 border border-white/20 text-center">
+              <div ref={statsGridRef} className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div className="stat-card glass rounded-xl p-6 border border-white/20 text-center">
                   <p className="text-gray-400 text-sm mb-2">Min. Investment</p>
                   <p className="text-2xl font-bold text-white">{formatCurrency(bond.price)}</p>
                 </div>
-                <div className="bg-white/10 backdrop-blur-lg rounded-xl p-6 border border-white/20 text-center">
+                <div className="stat-card glass rounded-xl p-6 border border-white/20 text-center">
                   <p className="text-gray-400 text-sm mb-2">Maturity Period</p>
                   <p className="text-2xl font-bold text-white">{bond.maturityYears} Years</p>
                 </div>
-                <div className="bg-white/10 backdrop-blur-lg rounded-xl p-6 border border-white/20 text-center">
+                <div className="stat-card glass rounded-xl p-6 border border-white/20 text-center">
                   <p className="text-gray-400 text-sm mb-2">Total Value</p>
                   <p className="text-2xl font-bold text-white">{bond.totalValue ? formatLargeNumber(bond.totalValue) : 'N/A'}</p>
                 </div>
-                <div className="bg-white/10 backdrop-blur-lg rounded-xl p-6 border border-white/20 text-center">
+                <div className="stat-card glass rounded-xl p-6 border border-white/20 text-center">
                   <p className="text-gray-400 text-sm mb-2">Available Units</p>
                   <p className="text-2xl font-bold text-white">{bond.availableUnits?.toLocaleString('en-IN') || 'N/A'}</p>
                 </div>
               </div>
 
               {/* Risk Assessment */}
-              <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-8 border border-white/20">
+              <div ref={detailsRef} className="space-y-6">
+                <div className="detail-section glass rounded-2xl p-8 border border-white/20">
                 <h2 className="text-xl font-bold text-white mb-6">AI Risk Assessment</h2>
                 <div className="grid md:grid-cols-2 gap-8 items-center">
                   <div className="flex justify-center">
@@ -209,7 +336,7 @@ export default function BondDetailsPage() {
               </div>
 
               {/* Investment Calculator Preview */}
-              <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-8 border border-white/20">
+              <div className="detail-section glass rounded-2xl p-8 border border-white/20">
                 <h2 className="text-xl font-bold text-white mb-6">Investment Calculator</h2>
                 <div className="grid md:grid-cols-3 gap-6">
                   <div className="bg-white/5 rounded-xl p-4">
@@ -229,6 +356,7 @@ export default function BondDetailsPage() {
                     </p>
                   </div>
                 </div>
+              </div>
               </div>
 
               {/* Action Buttons */}
