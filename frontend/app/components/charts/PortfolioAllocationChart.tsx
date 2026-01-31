@@ -1,6 +1,7 @@
 'use client';
 
-import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend } from 'recharts';
+import { useEffect, useRef } from 'react';
+import { createPieChart, bondColors, PieDataPoint } from '@/lib/d3Helpers';
 
 interface Holding {
   bond: {
@@ -14,43 +15,63 @@ interface PortfolioAllocationChartProps {
   holdings: Holding[];
 }
 
-const COLORS = ['#8b5cf6', '#06b6d4', '#10b981', '#f59e0b', '#ef4444', '#ec4899', '#6366f1', '#14b8a6'];
-
 export default function PortfolioAllocationChart({ holdings }: PortfolioAllocationChartProps) {
-  // Group by sector
-  const sectorData = holdings.reduce((acc, holding) => {
-    const sector = holding.bond?.sector || 'Unknown';
-    const existing = acc.find(item => item.name === sector);
-    if (existing) {
-      existing.value += holding.currentValue;
-    } else {
-      acc.push({ name: sector, value: holding.currentValue });
+  const chartRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!chartRef.current || holdings.length === 0) return;
+
+    // Group by sector
+    const sectorData = holdings.reduce((acc, holding) => {
+      const sector = holding.bond?.sector || 'Unknown';
+      const existing = acc.find((item) => item.name === sector);
+      if (existing) {
+        existing.value += holding.currentValue;
+      } else {
+        acc.push({ name: sector, value: holding.currentValue });
+      }
+      return acc;
+    }, [] as { name: string; value: number }[]);
+
+    // Sort by value descending
+    sectorData.sort((a, b) => b.value - a.value);
+
+    // Calculate total for percentages
+    const total = sectorData.reduce((sum, item) => sum + item.value, 0);
+
+    // Convert to D3 pie data format
+    const pieData: PieDataPoint[] = sectorData.map((item) => ({
+      label: item.name,
+      value: (item.value / total) * 100, // Convert to percentage
+      color: bondColors[item.name as keyof typeof bondColors] || bondColors.default,
+    }));
+
+    // Create the chart
+    createPieChart(chartRef.current, pieData, {
+      width: chartRef.current.clientWidth,
+      height: 320,
+      innerRadius: 70,
+      outerRadius: 120,
+      showLabels: true,
+      showLegend: false,
+      animationDuration: 1000,
+    });
+
+    // Create custom legend below the chart
+    const legendContainer = document.querySelector('.d3-legend');
+    if (legendContainer) {
+      legendContainer.innerHTML = '';
+      pieData.forEach((item) => {
+        const legendItem = document.createElement('div');
+        legendItem.className = 'flex items-center gap-2 text-sm';
+        legendItem.innerHTML = `
+          <div class="w-4 h-4 rounded" style="background-color: ${item.color}"></div>
+          <span class="text-gray-300">${item.label}: <span class="font-semibold">${item.value.toFixed(1)}%</span></span>
+        `;
+        legendContainer.appendChild(legendItem);
+      });
     }
-    return acc;
-  }, [] as { name: string; value: number }[]);
-
-  // Sort by value descending
-  sectorData.sort((a, b) => b.value - a.value);
-
-  const formatCurrency = (value: number) => {
-    return new Intl.NumberFormat('en-IN', {
-      style: 'currency',
-      currency: 'INR',
-      maximumFractionDigits: 0
-    }).format(value);
-  };
-
-  const CustomTooltip = ({ active, payload }: { active?: boolean; payload?: { name: string; value: number }[] }) => {
-    if (active && payload && payload.length) {
-      return (
-        <div className="bg-slate-800 border border-white/20 rounded-lg p-3 shadow-xl">
-          <p className="text-white font-medium">{payload[0].name}</p>
-          <p className="text-purple-400">{formatCurrency(payload[0].value)}</p>
-        </div>
-      );
-    }
-    return null;
-  };
+  }, [holdings]);
 
   if (holdings.length === 0) {
     return (
@@ -64,28 +85,9 @@ export default function PortfolioAllocationChart({ holdings }: PortfolioAllocati
   }
 
   return (
-    <ResponsiveContainer width="100%" height={280}>
-      <PieChart>
-        <Pie
-          data={sectorData}
-          cx="50%"
-          cy="50%"
-          innerRadius={60}
-          outerRadius={100}
-          paddingAngle={2}
-          dataKey="value"
-        >
-          {sectorData.map((entry, index) => (
-            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-          ))}
-        </Pie>
-        <Tooltip content={<CustomTooltip />} />
-        <Legend
-          verticalAlign="bottom"
-          height={36}
-          formatter={(value) => <span className="text-gray-300 text-sm">{value}</span>}
-        />
-      </PieChart>
-    </ResponsiveContainer>
+    <div className="space-y-4">
+      <div ref={chartRef} className="w-full relative" style={{ minHeight: '320px' }} />
+      <div className="d3-legend grid grid-cols-2 gap-3 px-4" />
+    </div>
   );
 }
