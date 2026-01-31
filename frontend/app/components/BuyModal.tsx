@@ -1,8 +1,10 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { Bond } from '../data/bonds';
+import gsap from 'gsap';
+import { prefersReducedMotion, getAnimDuration } from '@/lib/animations';
 
 interface BuyModalProps {
   bond: Bond;
@@ -20,6 +22,9 @@ export default function BuyModal({ bond, isOpen, onClose, onSuccess }: BuyModalP
   const [success, setSuccess] = useState('');
   const { user, token, refreshUser } = useAuth();
 
+  const modalRef = useRef<HTMLDivElement>(null);
+  const backdropRef = useRef<HTMLDivElement>(null);
+
   const availableUnits = bond.availableUnits || 10000;
   const totalCost = bond.price * quantity;
   const walletBalance = user?.wallet?.balance || 0;
@@ -32,6 +37,28 @@ export default function BuyModal({ bond, isOpen, onClose, onSuccess }: BuyModalP
       setQuantity(1);
       setError('');
       setSuccess('');
+
+      // Animate modal entrance
+      if (modalRef.current && backdropRef.current && !prefersReducedMotion()) {
+        gsap.fromTo(
+          backdropRef.current,
+          { opacity: 0 },
+          { opacity: 1, duration: getAnimDuration(0.3), ease: 'power2.out' }
+        );
+
+        gsap.fromTo(
+          modalRef.current,
+          { scale: 0.8, opacity: 0, y: 50 },
+          {
+            scale: 1,
+            opacity: 1,
+            y: 0,
+            duration: getAnimDuration(0.4),
+            ease: 'back.out(1.4)',
+            delay: 0.1
+          }
+        );
+      }
     }
   }, [isOpen]);
 
@@ -65,6 +92,18 @@ export default function BuyModal({ bond, isOpen, onClose, onSuccess }: BuyModalP
 
       if (data.success) {
         setSuccess(data.message);
+
+        // Success animation
+        if (modalRef.current && !prefersReducedMotion()) {
+          gsap.to(modalRef.current, {
+            scale: 1.05,
+            duration: 0.2,
+            ease: 'power2.out',
+            yoyo: true,
+            repeat: 1
+          });
+        }
+
         await refreshUser();
         setTimeout(() => {
           onSuccess();
@@ -87,12 +126,13 @@ export default function BuyModal({ bond, isOpen, onClose, onSuccess }: BuyModalP
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
       {/* Backdrop */}
       <div
+        ref={backdropRef}
         className="absolute inset-0 bg-black/60 backdrop-blur-sm"
         onClick={onClose}
       />
 
       {/* Modal */}
-      <div className="relative bg-slate-900/95 backdrop-blur-xl rounded-2xl p-6 w-full max-w-md border border-white/20 shadow-2xl">
+      <div ref={modalRef} className="relative glass-strong rounded-2xl p-6 w-full max-w-md border border-white/20 shadow-2xl">
         {/* Close button */}
         <button
           onClick={onClose}
