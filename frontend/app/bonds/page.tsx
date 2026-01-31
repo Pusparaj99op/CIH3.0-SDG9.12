@@ -1,9 +1,15 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
+import gsap from 'gsap';
+import { useGSAP } from '@gsap/react';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Navbar from '../components/Navbar';
 import BondCard from '../components/BondCard';
 import { Bond, fetchBonds, getBondId } from '../data/bonds';
+import { scrollStagger, prefersReducedMotion } from '@/lib/animations';
+
+gsap.registerPlugin(ScrollTrigger);
 
 type SortOption = 'returnRate-desc' | 'returnRate-asc' | 'price-desc' | 'price-asc' | 'name-asc' | 'name-desc';
 
@@ -12,6 +18,7 @@ export default function BondsPage() {
   const [filteredBonds, setFilteredBonds] = useState<Bond[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const gridRef = useRef<HTMLDivElement>(null);
 
   // Filters
   const [searchQuery, setSearchQuery] = useState('');
@@ -112,6 +119,19 @@ export default function BondsPage() {
 
   const hasActiveFilters = searchQuery || riskFilter !== 'all' || sectorFilter !== 'all' ||
     minReturn > dataMinReturn || maxReturn < dataMaxReturn || sortBy !== 'returnRate-desc';
+
+  // Animate bond grid on load and filter changes
+  useGSAP(() => {
+    if (gridRef.current && !loading && !prefersReducedMotion()) {
+      scrollStagger(gridRef.current, '.bond-card-item', {
+        y: 30,
+        opacity: 0,
+        stagger: 0.1,
+        duration: 0.6,
+        ease: 'power3.out'
+      });
+    }
+  }, [filteredBonds, loading]);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-900 via-purple-900 to-indigo-900">
@@ -272,9 +292,11 @@ export default function BondsPage() {
           {!loading && !error && (
             <>
               {filteredBonds.length > 0 ? (
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div ref={gridRef} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                   {filteredBonds.map((bond) => (
-                    <BondCard key={getBondId(bond)} bond={bond} />
+                    <div key={getBondId(bond)} className="bond-card-item">
+                      <BondCard bond={bond} />
+                    </div>
                   ))}
                 </div>
               ) : (
